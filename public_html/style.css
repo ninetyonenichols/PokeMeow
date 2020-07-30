@@ -1,0 +1,61 @@
+/* Filename: style.css
+   Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
+   Class: CSc 337 Summer 2020
+   Description: This file contains the general styling rules for the entire
+        site. Rules that are more specific to individual pages or elements can
+        be placed into a separate CSS file and linked to in addition to this
+        file.
+*/
+
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #ffccff;
+}
+
+#top {
+    padding-left: 30px;
+    width: 100%;
+    height: 130px;
+    background-color: #ccffff;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0;
+    line-height: 130px;
+}
+
+h2 {
+    margin: 0;
+    line-height: 100px;
+}
+
+.inputSection {
+    margin-left: 30px;
+    margin-bottom: 75px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    margin-bottom: 30px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+input {
+    font-size: 16px;
+}
+
+#issueMsg {
+    color: red;
+}

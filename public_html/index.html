@@ -1,0 +1,69 @@
+<!-- Filename: index.html
+     Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
+     Class: CSc 337 Summer 2020
+     Description: This file contains the html for the login/root page. From
+        this page, users can login or create an account.
+-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>PokeMeow</title>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="top">
+            <h1>PokeMeow</h1>
+        </div>
+
+        <div id="userLogin" class="inputSection">
+            <h2>Account Login</h2>
+
+            <ul>
+                <li>
+                    <label for="username">Username: </label>
+                    <input type="text" id="username" class="loginInput"
+                           name="username" value="">
+                </li>
+
+                <li>
+                    <label for="pass">Password: </label>
+                    <input type="password" id="pass" class="loginInput"
+                           name="pass" value="">
+                </li>
+
+                <li>
+                    <input type="button" id="loginBtn" value="Login">
+                </li>
+            </ul>
+
+            <span id="issueMsg" hidden>Issue logging in with that info.</span>
+        </div>
+
+        <div id="userCreate" class="inputSection">
+            <h2>Create Account</h2>
+
+            <ul>
+                <li>
+                    <label for="newUsername">Username: </label>
+                    <input type="text" id="newUsername" class="createInput"
+                           name="newUsername" value="">
+                </li>
+
+                <li>
+                    <label for="newPass">Password: </label>
+                    <input type="password" id="newPass" class="createInput"
+                           name="newPass" value="">
+                </li>
+
+                <li>
+                    <input type="button" id="createBtn" value="Create">
+                </li>
+            </ul>
+        </div>
+
+        <script src="./login.js"></script>
+    </body>
+</html>
