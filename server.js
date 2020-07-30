@@ -13,7 +13,7 @@ const express = require('express');
 
 // Set up the express server
 const app = express();
-const port = 5000;
+const port = 80;
 
 app.use('/', express.static('public_html'));
 // NOTE: I'm using a regular expression here, but '/' would probably work too?
