@@ -6,14 +6,22 @@
  * 	and this script will make calls to all of them as needed. 
  */
 
-// Connect to the database
+// setting up connection to database
+const mongoose = require('mongoose');
 const mongoDBURL = 'mongodb://127.0.0.1/pokemeow';
 mongoose.connect(mongoDBURL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
 });
-//get the connection object
 const db = mongoose.connection;
-//set up connection error reporting
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+// importing scripts for each separate collection
+// note: to access the Account model, type "account.Account"
+const account = require('./accountDB.js')(mongoose);
+const battle = require('./battleDB.js')(mongoose);
+const move = require('./moveDB.js')(mongoose);
+const pokemon = require('./pokemonDB.js')(mongoose);
+const trainer = require('./trainerDB.js')(mongoose);
+const type = require('./typeDB.js')(mongoose);

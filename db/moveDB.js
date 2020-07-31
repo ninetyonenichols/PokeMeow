@@ -4,26 +4,19 @@
  * Description: This file handles access to the 'moves' collection.
  */
 
-const mongoose = require('mongoose');
+module.exports = (mongoose) => { 
+    const Schema = mongoose.Schema;
 
-// Connect to the database
-const mongoDBURL = 'mongodb://127.0.0.1/pokemeow';
-mongoose.connect(mongoDBURL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-});
-//get the connection object
-const db = mongoose.connection;
-//set up connection error reporting
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+    const MoveSchema = new Schema({
+        name: { type: String, unique: true, required: true },
+        type: { type: ObjectId, ref: 'Type', required: true },
+        baseDmg: { type: Number, required: true }
+    });
 
-// Set up our database structure
-const Schema = mongoose.Schema;
+    // Preparing exports
+    var exports = { 
+        Move : mongoose.model('Move', MoveSchema)
+    };
 
-const MoveSchema = new Schema({
-    name: { type: String, unique: true, required: true },
-    type: { type: ObjectId, ref: 'Type', required: true },
-    baseDmg: { type: Number, required: true }
-});
-const Move = mongoose.model('Move', MoveSchema);
+    return exports;
+};
