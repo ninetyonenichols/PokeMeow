@@ -6,4 +6,4 @@
  */
 
 //constants
-const serverURL = 'http://localhost:5000';
+const serverURL = '157.245.236.86';
