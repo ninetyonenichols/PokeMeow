@@ -24,6 +24,6 @@ const Schema = mongoose.Schema;
 const BattleSchema = new Schema({
 	trainer1: {type: ObjectId, ref: 'Trainer', unique: true},
 	trainer2: {type: ObjectId, ref: 'Trainer', unique: true},
-	currTurn: {type: ObjectId, ref: 'Trainer', unique: true},
+	currTurn: {type: ObjectId, ref: 'Trainer', unique: true}
 });
 const Battle = mongoose.model('Battle', BattleSchema);

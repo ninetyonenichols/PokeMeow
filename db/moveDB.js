@@ -21,9 +21,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // Set up our database structure
 const Schema = mongoose.Schema;
 
-const moveSchema = new Schema({
+const MoveSchema = new Schema({
     name: { type: String, unique: true, required: true },
     type: { type: ObjectId, ref: 'Type', required: true },
-    baseDmg: { type: Number, req: true }
+    baseDmg: { type: Number, required: true }
 });
 const Move = mongoose.model('Move', MoveSchema);

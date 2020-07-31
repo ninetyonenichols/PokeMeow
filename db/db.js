@@ -1,4 +1,4 @@
-/* Filename: DB.js
+/* Filename: db.js
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
  * Description: This file acts as a controller for the whole database. There
