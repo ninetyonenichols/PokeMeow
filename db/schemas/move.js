@@ -6,10 +6,17 @@
 
 module.exports = (mongoose) => { 
     const Schema = mongoose.Schema;
+    const ObjectId = Schema.Types.ObjectId;
 
     const MoveSchema = new Schema({
         name: { type: String, unique: true, required: true },
-        type: { type: ObjectId, ref: 'Type', required: true },
+        pType: {
+            type: String,        
+            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 
+                'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
+                 'poison', 'psychic', 'rock', 'steel', 'water' ],
+            default: 'normal'
+        },
         baseDmg: { type: Number, required: true }
     });
 
