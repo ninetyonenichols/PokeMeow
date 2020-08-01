@@ -19,9 +19,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // importing scripts for each separate collection
 // note: to access the Account model, type "account.Account"
-const account = require('./accountDB.js')(mongoose);
-const battle = require('./battleDB.js')(mongoose);
-const move = require('./moveDB.js')(mongoose);
-const pokemon = require('./pokemonDB.js')(mongoose);
-const trainer = require('./trainerDB.js')(mongoose);
-const type = require('./typeDB.js')(mongoose);
+const account = require('./schemas/account.js')(mongoose);
+const battle = require('./schemas/battle.js')(mongoose);
+const move = require('./schemas/move.js')(mongoose);
+const pokemon = require('./schemas/pokemon.js')(mongoose);
+const trainer = require('./schemas/trainer.js')(mongoose);
+const vs = require('./data/versus.js').versus;

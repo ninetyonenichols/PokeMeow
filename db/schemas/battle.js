@@ -6,6 +6,7 @@
 
 module.exports = (mongoose) => { 
     const Schema = mongoose.Schema;
+    const ObjectId = Schema.Types.ObjectId;
 
     // Ongoing battles
     const BattleSchema = new Schema({
