@@ -10,6 +10,7 @@ module.exports = (mongoose) => {
 
     const TrainerSchema = new Schema({
         name: { type: String, unique: true, required: true },
+        photo: { type: String, default: '../avatars/default.jpg' },
         pokemon: [{ type: ObjectId, ref: 'Pokemon' }], 
         party: [{ type: ObjectId, ref: 'Pokemon' }], 
         battle: { type: ObjectId, ref: 'Battle' }
