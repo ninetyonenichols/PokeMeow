@@ -3,7 +3,7 @@
  * Class: CSc 337 Summer 2020
  * Description: This file acts as a controller for the whole database. There
  * 	will be many separate scripts that control small portions of the database,
- * 	and this script will make calls to all of them as needed. 
+ * 	and this script will make calls to all of them as needed.
  */
 
 // setting up connection to database
@@ -19,9 +19,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // importing scripts for each separate collection
 // note: to access the Account model, type "account.Account"
-const account = require('./schemas/account.js')(mongoose);
-const battle = require('./schemas/battle.js')(mongoose);
-const move = require('./schemas/move.js')(mongoose);
-const pokemon = require('./schemas/pokemon.js')(mongoose);
-const trainer = require('./schemas/trainer.js')(mongoose);
-const vs = require('./data/versus.js').versus;
+exports.account = require('./schemas/account.js')(mongoose);
+exports.battle = require('./schemas/battle.js')(mongoose);
+exports.move = require('./schemas/move.js')(mongoose);
+exports.pokemon = require('./schemas/pokemon.js')(mongoose);
+exports.trainer = require('./schemas/trainer.js')(mongoose);
+exports.vs = require('./data/versus.js').versus;

@@ -7,3 +7,65 @@
 
 //constants
 const serverURL = '157.245.236.86';
+
+
+$('#loginBtn').click(() => {
+    //check that the fields have been filled in
+    const nameInput = $('#username').val();
+    const passInput = $('#pass').val();
+    if (!nameInput || !passInput) {
+        alert('You need to fill in all the fields.');
+        return;
+    }
+
+    //construct data to send
+    const data = {
+        username: nameInput,
+        password: passInput
+    };
+
+    //send new user info
+    $.ajax({
+        type: "POST",
+        url: serverURL + '/login/',
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        success: (response) => {
+            if (response.validUser) {
+                $('#issueMsg').hide();
+            } else {
+                $('#issueMsg').show();
+            }
+        }
+    });
+});
+
+
+$('#createBtn').click(() => {
+    //check that the fields have been filled in
+    const nameInput = $('#newUsername').val();
+    const passInput = $('#newPass').val();
+    if (!nameInput || !passInput) {
+        alert('You need to fill in all the fields.');
+        return;
+    }
+
+    //construct data to send
+    const data = {
+        username: nameInput,
+        password: passInput
+    };
+
+    //send new user info
+    $.ajax({
+        type: "POST",
+        url: serverURL + '/signup/',
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        success: (response) => {
+            if (!response.validUser) {
+                alert('Could not add user.');
+            }
+        }
+    });
+});
