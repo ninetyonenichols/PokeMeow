@@ -47,31 +47,40 @@ app.use(/\/.*/, express.json()); //parse request body json into req.body
 
 app.listen(port, () => {
     console.log('App listening');
-    let valid = await database.account.authenticate("testAccount", "1");
-    console.log(valid);
-    console.log(database.account.authenticate("testAcc", "1"));
-    console.log(database.account.userExists("testAccount"));
+    database.account.authenticate("testAccount", "1", (result) => {
+        console.log(result);
+    });
+    database.account.authenticate("testAcc", "1", (result) => {
+        console.log(result);
+    });
+    database.account.userExists("testAccount", (result) => {
+        console.log(result);
+    });
 });
 
 app.post('/login/', (req, res) => {
     const u = req.body.username;
     console.log(req.body);
-    if (database.account.authenticate(u, req.body.password)) {
-        req.session.user = u;
-        res.sendFile(__dirname + './public_html/home.html');
-    } else {
-        res.json({validUser: false});
-    }
+    database.account.authenticate(u, req.body.password, (valid) => {
+        if (valid) {
+            req.session.user = u;
+            res.sendFile(__dirname + './public_html/home.html');
+        } else {
+            res.json({validUser: false});
+        }
+    });
 });
 
 
 app.post('/signup/', (req, res) => {
     const u = req.body.username;
     console.log(req.body);
-    if (database.account.create(u, req.body.password)) {
-        req.session.user = u;
-        res.sendFile(__dirname + './public_html/home.html');
-    } else {
-        res.json({validUser: false});
-    }
+    database.account.create(u, req.body.password, (success) => {
+        if (success) {
+            req.session.user = u;
+            res.sendFile(__dirname + './public_html/home.html');
+        } else {
+            res.json({validUser: false});
+        }
+    });
 });
