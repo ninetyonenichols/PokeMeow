@@ -57,6 +57,7 @@ app.listen(port, () => {
 });
 
 
+// Handle a login request by authenticating and adding a session if valid
 app.post('/login/', (req, res) => {
     const u = req.body.username;
     database.account.authenticate(u, req.body.password, (valid) => {
@@ -70,6 +71,8 @@ app.post('/login/', (req, res) => {
 });
 
 
+// Handle a signup request by attempting to create an account, then if
+// successful, add a session as well
 app.post('/signup/', (req, res) => {
     const u = req.body.username;
     database.account.create(u, req.body.password, (success) => {
