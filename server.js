@@ -49,6 +49,7 @@ app.listen(port, () => {
     console.log('App listening');
     console.log(db.account.authenticate("testAccount", "1"));
     console.log(db.account.authenticate("testAcc", "1"));
+    console.log(db.account.userExists("testAccount"));
 });
 
 app.post('/login/', (req, res) => {
@@ -60,7 +61,6 @@ app.post('/login/', (req, res) => {
     } else {
         res.json({validUser: false});
     }
-    res.send("hi");
 });
 
 

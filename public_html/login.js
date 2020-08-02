@@ -73,6 +73,9 @@ $('#createBtn').click(() => {
             if (!response.validUser) {
                 alert('Could not add user.');
             }
+        },
+        error: (err) => {
+            console.log(err);
         }
     });
 });

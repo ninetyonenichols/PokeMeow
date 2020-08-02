@@ -25,44 +25,48 @@ module.exports = (mongoose) => {
                 passSalt: 'temp'
             });
 
-            return newAccount.save((err) => {
+            let success;
+            newAccount.save((err) => {
                 if (err) {
                     console.log('Error creating account: ' + err);
                     //if username already exists: err.code == 11000
-                    return false;
+                    success = false;
                 } else {
                     console.log('USER CREATED:\n' + newAccount.username);
-                    return true;
+                    success = true;
                 }
             });
+            return success;
         },
 
         userExists: function (user) {
-            return Account.findOne({username: user}, (err, result) => {
+            Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
                     return true;
                 } else {
-                    return false;
+                    return = false;
                 }
             });
         },
 
         authenticate: function (user, pass) {
-            return Account.findOne({username: user}, (err, result) => {
+            let valid;
+            Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
                     if (result.passHash == pass) {
-                        return true;
+                        valid = true;
                     } else {
-                        return false;
+                        valid = false;
                     }
                 } else {
-                    return false;
+                    valid = false;
                 }
             });
+            return valid;
         }
     };
 };
