@@ -4,7 +4,7 @@
  * Description: This file handles access to the 'battles' collection.
  */
 
-module.exports = (mongoose) => { 
+module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
 
@@ -14,11 +14,12 @@ module.exports = (mongoose) => {
         trainer2: {type: ObjectId, ref: 'Trainer', unique: true},
         currTurn: {type: ObjectId, ref: 'Trainer', unique: true}
     });
+    const Battle = mongoose.model('Battle', BattleSchema)
 
     // Preparing exports
-    var exports = { 
-        Battle : mongoose.model('Battle', BattleSchema)
+    return {
+        create: function(trainer1, trainer2, callback) {},
+        switchTurn: function(callback) {},
+        getBattle: function(battle, callback) {},
     };
-
-    return exports;
 };

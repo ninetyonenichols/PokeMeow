@@ -4,26 +4,26 @@
  * Description: This file handles access to the 'moves' collection.
  */
 
-module.exports = (mongoose) => { 
+module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
 
     const MoveSchema = new Schema({
         name: { type: String, unique: true, required: true },
         pType: {
-            type: String,        
-            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 
+            type: String,
+            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
                 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
                  'poison', 'psychic', 'rock', 'steel', 'water' ],
             default: 'normal'
         },
         baseDmg: { type: Number, required: true }
     });
+    const Move = mongoose.model('Move', MoveSchema)
 
     // Preparing exports
-    var exports = { 
-        Move : mongoose.model('Move', MoveSchema)
+    return {
+        create: function(name, type, dmg, callback) {},
+        getMove: function(move, callback) {}
     };
-
-    return exports;
 };

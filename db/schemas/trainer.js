@@ -4,23 +4,25 @@
  * Description: This file handles access to the 'trainers' collection.
  */
 
-module.exports = (mongoose) => { 
+module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
 
     const TrainerSchema = new Schema({
         name: { type: String, unique: true, required: true },
         photo: { type: String, default: '../avatars/default.jpg' },
-        pokemon: [{ type: ObjectId, ref: 'Pokemon' }], 
-        party: [{ type: ObjectId, ref: 'Pokemon' }], 
+        pokemon: [{ type: ObjectId, ref: 'Pokemon' }],
+        party: [{ type: ObjectId, ref: 'Pokemon' }],
         battle: { type: ObjectId, ref: 'Battle' }
     });
+    const Trainer = mongoose.model('Trainer', TrainerSchema)
 
     // Preparing exports
-    var exports = { 
-        Trainer : mongoose.model('Trainer', TrainerSchema)
+    return {
+        create: function(name, callback) {},
+        addPokemon: function(pokemon, callback) {},
+        removeParty: function(pokemon, callback) {},
+        addParty: function(pokemon, callback) {},
+        setBattle: function(battle, callback) {}
     };
-
-    return exports;
 };
-
