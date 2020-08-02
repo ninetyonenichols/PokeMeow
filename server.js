@@ -84,3 +84,13 @@ app.post('/signup/', (req, res) => {
         }
     });
 });
+
+
+// Handle a request to log out by destroying the session and going to login page
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) console.log('Problem logging out: ' + err);
+        console.log('Logged out');
+        res.redirect('/');
+    });
+});
