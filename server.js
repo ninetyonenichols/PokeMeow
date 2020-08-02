@@ -16,6 +16,7 @@ const session = require('express-session');
 // Set up the express server
 const app = express();
 const port = 80;
+const sessionAge = 10000;
 
 
 function authenticate(req, res, next) {
@@ -31,16 +32,15 @@ function authenticate(req, res, next) {
 // NOTE: I'm using a regular expression here, but '/' would probably work too?
 app.use(/\/.*/, express.json()); //parse request body json into req.body
 app.use(session({
-    key: 'login',
     secret: 'unsecure secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        maxAge: 10000,
+        maxAge: sessionAge,
         secure: false
     }
 }));
-app.use('/home.html', authenticate);
+app.use(/\/((?!index.html).)*/, authenticate);
 app.use('/', express.static('public_html'));
 
 
