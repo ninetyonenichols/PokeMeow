@@ -73,8 +73,3 @@ app.post('/signup/', (req, res) => {
         }
     });
 });
-
-
-app.get('/home.html', authenticate, (req, res) => {
-    res.send('authenticated');
-});
