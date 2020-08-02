@@ -47,8 +47,9 @@ app.use(/\/.*/, express.json()); //parse request body json into req.body
 
 app.listen(port, () => {
     console.log('App listening');
+    console.log(db.account.authenticate("testAccount", "1"));
+    console.log(db.account.authenticate("testAcc", "1"));
 });
-
 
 app.post('/login/', (req, res) => {
     const u = req.body.username;
@@ -59,6 +60,7 @@ app.post('/login/', (req, res) => {
     } else {
         res.json({validUser: false});
     }
+    res.send("hi");
 });
 
 

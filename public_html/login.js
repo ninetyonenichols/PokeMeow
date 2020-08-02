@@ -23,7 +23,7 @@ $('#loginBtn').click(() => {
         username: nameInput,
         password: passInput
     };
-    console.log(data);
+
     //send new user info
     $.ajax({
         type: "POST",
@@ -38,6 +38,9 @@ $('#loginBtn').click(() => {
             } else {
                 $('#issueMsg').show();
             }
+        },
+        error: (err) => {
+            console.log(err);
         }
     });
 });
@@ -57,7 +60,7 @@ $('#createBtn').click(() => {
         username: nameInput,
         password: passInput
     };
-    console.log(data);
+
     //send new user info
     $.ajax({
         type: "POST",
