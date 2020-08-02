@@ -16,12 +16,12 @@ const session = require('express-session');
 // Set up the express server
 const app = express();
 const port = 80;
-const sessionAge = 10000;
+const sessionAge = 600000;
 
 
 function authenticate(req, res, next) {
     if (req.session.user) {
-        console.log(req.session.user + '\n');
+        console.log(req.session.user + ': ' + req.session.cookie.maxAge);
         next();
     } else {
         res.send('NOT ALLOWED');
