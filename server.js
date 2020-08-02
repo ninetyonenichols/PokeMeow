@@ -21,7 +21,7 @@ const sessionAge = 600000;
 
 function authenticate(req, res, next) {
     if (req.session.user) {
-        console.log(req.session.user + ': ' + req.session.cookie.maxAge);
+        console.log(req.session.user);
         next();
     } else {
         res.send('NOT ALLOWED');
