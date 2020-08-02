@@ -47,7 +47,7 @@ app.use(/\/.*/, express.json()); //parse request body json into req.body
 
 app.listen(port, () => {
     console.log('App listening');
-    console.log(database.account.authenticate("testAccount", "1"));
+    console.log(await database.account.authenticate("testAccount", "1"));
     console.log(database.account.authenticate("testAcc", "1"));
     console.log(database.account.userExists("testAccount"));
 });
@@ -57,7 +57,7 @@ app.post('/login/', (req, res) => {
     console.log(req.body);
     if (database.account.authenticate(u, req.body.password)) {
         req.session.user = u;
-        res.sendFile('./public_html/home.html');
+        res.sendFile(__dirname + './public_html/home.html');
     } else {
         res.json({validUser: false});
     }
@@ -69,7 +69,7 @@ app.post('/signup/', (req, res) => {
     console.log(req.body);
     if (database.account.create(u, req.body.password)) {
         req.session.user = u;
-        res.sendFile('./public_html/home.html');
+        res.sendFile(__dirname + './public_html/home.html');
     } else {
         res.json({validUser: false});
     }
