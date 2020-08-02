@@ -46,7 +46,7 @@ module.exports = (mongoose) => {
                 } else if (result) {
                     return true;
                 } else {
-                    return = false;
+                    return false;
                 }
             });
         },
