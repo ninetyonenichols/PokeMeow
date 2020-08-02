@@ -34,7 +34,7 @@ $('#loginBtn').click(() => {
         success: (response) => {
             if (response.validUser) {
                 $('#issueMsg').hide();
-                window.location = './home.html';
+                window.location.href = './home.html';
             } else {
                 $('#issueMsg').show();
             }
@@ -70,7 +70,7 @@ $('#createBtn').click(() => {
         dataType: "json",
         success: (response) => {
             if (response.validUser) {
-                window.location = './home.html';
+                window.location.href = './home.html';
             } else {
                 alert('Could not add user.');
             }
