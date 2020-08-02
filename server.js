@@ -19,17 +19,15 @@ const port = 80;
 
 
 function authenticate(req, res, next) {
-    if (Object.keys(req.cookies).length > 0) {
-        if (req.cookies.login && req.session.user) {
-            next();
-        } else {
-            res.sendFile(__dirname + '/public_html/index.html');
-        }
+    if (req.cookies.login && req.session.user) {
+        console.log(req.cookies.login + '\n' + req.session.user + '\n');
+        next();
+    } else {
+        res.send('NOT ALLOWED');
     }
 }
 
 
-app.use('/', express.static('public_html'));
 // NOTE: I'm using a regular expression here, but '/' would probably work too?
 app.use(/\/.*/, express.json()); //parse request body json into req.body
 app.use(session({
@@ -43,6 +41,7 @@ app.use(session({
     }
 }));
 app.use('/home.html', authenticate);
+app.use('/', express.static('public_html'));
 
 
 app.listen(port, () => {
