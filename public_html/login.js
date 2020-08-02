@@ -23,7 +23,7 @@ $('#loginBtn').click(() => {
         username: nameInput,
         password: passInput
     };
-
+    console.log(data);
     //send new user info
     $.ajax({
         type: "POST",

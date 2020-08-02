@@ -35,7 +35,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 10000
+        maxAge: 10000,
+        secure: false
     }
 }));
 app.use('/home.html', authenticate);
@@ -61,7 +62,7 @@ app.post('/login/', (req, res) => {
 });
 
 
-app.post('/signup', (req, res) => {
+app.post('/signup/', (req, res) => {
     const u = req.body.username;
     console.log(req.body);
     if (db.account.create(u, req.body.password)) {
