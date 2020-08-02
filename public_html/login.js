@@ -32,9 +32,9 @@ $('#loginBtn').click(() => {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
-            console.log(response);
             if (response.validUser) {
                 $('#issueMsg').hide();
+                window.location = './home.html';
             } else {
                 $('#issueMsg').show();
             }
@@ -69,8 +69,9 @@ $('#createBtn').click(() => {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
-            console.log(response);
-            if (!response.validUser) {
+            if (response.validUser) {
+                window.location = './home.html';
+            } else {
                 alert('Could not add user.');
             }
         },

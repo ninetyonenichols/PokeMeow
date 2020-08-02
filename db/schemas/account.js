@@ -4,6 +4,8 @@
  * Description: This file handles access to the 'accounts' collection.
  */
 
+const crypto = require('crypto');
+
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
 
@@ -19,26 +21,38 @@ module.exports = (mongoose) => {
     // Return exports
     return {
         create: function (user, pass, callback) {
-            const newAccount = new Account({
-                username: user,
-                passHash: pass,
-                passSalt: 'temp'
-            });
+            //generate salt
+            crypto.randomBytes(256, (err, buf) => {
+                if (err) throw err;
+                const salt = buf.tostring('base64');
 
-            return newAccount.save((err) => {
-                if (err) {
-                    console.log('Error creating account: ' + err);
-                    //if username already exists: err.code == 11000
-                    callback(false);
-                } else {
-                    console.log('USER CREATED:\n' + newAccount.username);
-                    callback(true);
-                }
+                //generate encrypted key
+                crypto.scrypt(pass, salt, 64, (err, derivedKey) => {
+                    if (err) throw err;
+                    const key = derivedKey.toString('hex');
+
+                    const newAccount = new Account({
+                        username: user,
+                        passHash: key,
+                        passSalt: salt
+                    });
+
+                    newAccount.save((err) => {
+                        if (err) {
+                            console.log('Error creating account: ' + err);
+                            //if username already exists: err.code == 11000
+                            callback(false);
+                        } else {
+                            console.log('USER CREATED:\n' + newAccount.username);
+                            callback(true);
+                        }
+                    });
+                });
             });
         },
 
         userExists: function (user, callback) {
-            return Account.findOne({username: user}, (err, result) => {
+            Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
@@ -50,15 +64,23 @@ module.exports = (mongoose) => {
         },
 
         authenticate: function (user, pass, callback) {
-            return Account.findOne({username: user}, (err, result) => {
+            Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
-                    if (result.passHash == pass) {
-                        callback(true);
-                    } else {
-                        callback(false);
-                    }
+                    //encrypt the given 'pass' using the account's salt
+                    const salt = result.passSalt;
+                    crypto.scrypt(pass, salt, 64, (err, derivedKey) => {
+                        if (err) throw err;
+                        const key = derivedKey.toString('hex');
+
+                        //compare the resultant key to the account's 'passHash'
+                        if (result.passHash == key) {
+                            callback(true);
+                        } else {
+                            callback(false);
+                        }
+                    });
                 } else {
                     callback(false);
                 }

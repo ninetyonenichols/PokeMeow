@@ -23,12 +23,15 @@ function authenticate(req, res, next) {
         if (req.cookies.login && req.session.user) {
             next();
         } else {
-            res.sendFile('./public_html/index.html');
+            res.sendFile(__dirname + '/public_html/index.html');
         }
     }
 }
 
 
+app.use('/', express.static('public_html'));
+// NOTE: I'm using a regular expression here, but '/' would probably work too?
+app.use(/\/.*/, express.json()); //parse request body json into req.body
 app.use(session({
     key: 'login',
     secret: 'unsecure secret',
@@ -40,31 +43,19 @@ app.use(session({
     }
 }));
 app.use('/home.html', authenticate);
-app.use('/', express.static('public_html'));
-// NOTE: I'm using a regular expression here, but '/' would probably work too?
-app.use(/\/.*/, express.json()); //parse request body json into req.body
 
 
 app.listen(port, () => {
     console.log('App listening');
-    database.account.authenticate("testAccount", "1", (result) => {
-        console.log(result);
-    });
-    database.account.authenticate("testAcc", "1", (result) => {
-        console.log(result);
-    });
-    database.account.userExists("testAccount", (result) => {
-        console.log(result);
-    });
 });
+
 
 app.post('/login/', (req, res) => {
     const u = req.body.username;
-    console.log(req.body);
     database.account.authenticate(u, req.body.password, (valid) => {
         if (valid) {
             req.session.user = u;
-            res.sendFile(__dirname + './public_html/home.html');
+            res.json({validUser: true});
         } else {
             res.json({validUser: false});
         }
@@ -74,11 +65,10 @@ app.post('/login/', (req, res) => {
 
 app.post('/signup/', (req, res) => {
     const u = req.body.username;
-    console.log(req.body);
     database.account.create(u, req.body.password, (success) => {
         if (success) {
             req.session.user = u;
-            res.sendFile(__dirname + './public_html/home.html');
+            res.json({validUser: true});
         } else {
             res.json({validUser: false});
         }
