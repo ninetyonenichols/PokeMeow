@@ -25,7 +25,7 @@ module.exports = (mongoose) => {
                 passSalt: 'temp'
             });
 
-            let success;
+            let success = false;
             newAccount.save((err) => {
                 if (err) {
                     console.log('Error creating account: ' + err);
@@ -40,19 +40,21 @@ module.exports = (mongoose) => {
         },
 
         userExists: function (user) {
+            let exists = false;
             Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
-                    return true;
+                    exists = true;
                 } else {
-                    return false;
+                    exists = false;
                 }
             });
+            return exists;
         },
 
         authenticate: function (user, pass) {
-            let valid;
+            let valid = false;
             Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
