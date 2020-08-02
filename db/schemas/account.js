@@ -1,7 +1,8 @@
 /* Filename: account.js
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
- * Description: This file handles access to the 'accounts' collection.
+ * Description: This file handles access to the 'accounts' collection. It
+ *      exports three functions: 'create', 'userExists', and 'authenticate'.
  */
 
 const crypto = require('crypto');
@@ -20,6 +21,15 @@ module.exports = (mongoose) => {
 
     // Return exports
     return {
+        /*  Description: This function creates a new Account document with a
+         *      randomly generated salt and uses pbkdf2 to hash the password
+         *      before storing it.
+         *  Parameters:
+         *      user - the username
+         *      pass - the plaintext password
+         *      callback(boolean) - the callback function (basically used in
+         *          place of a 'return' statement)
+         */
         create: function (user, pass, callback) {
             //generate salt
             crypto.randomBytes(256, (err, buf) => {
@@ -51,10 +61,19 @@ module.exports = (mongoose) => {
             });
         },
 
+        /*  Description: This function searches the database for an account
+         *      matching the given 'user' and returns true if an account is
+         *      found.
+         *  Parameters:
+         *      user - the username
+         *      callback(boolean) - the callback function (basically used in
+         *          place of a 'return' statement)
+         */
         userExists: function (user, callback) {
             Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
+                    callback(false);
                 } else if (result) {
                     callback(true);
                 } else {
@@ -63,10 +82,19 @@ module.exports = (mongoose) => {
             });
         },
 
+        /*  Description: This function authenticates a user's name and password
+         *      against those in the database.
+         *  Parameters:
+         *      user - the username
+         *      pass - the plaintext password
+         *      callback(boolean) - the callback function (basically used in
+         *          place of a 'return' statement)
+         */
         authenticate: function (user, pass, callback) {
             Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
+                    callback(false);
                 } else if (result) {
                     //encrypt the given 'pass' using the account's salt
                     const salt = result.passSalt;

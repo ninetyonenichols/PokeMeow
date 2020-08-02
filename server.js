@@ -19,6 +19,12 @@ const port = 80;
 const sessionAge = 600000;
 
 
+/*  Description: This function determines if a session exists in the request
+ *      (the session middleware should have added it there if such a session
+ *      existed on the server that matched the req's cookie). If it exists,
+ *      next() is called.
+ *  Parameters: Basic express middleware parameters: req, res, next.
+ */
 function authenticate(req, res, next) {
     if (req.session.user) {
         console.log(req.session.user);
