@@ -47,7 +47,8 @@ app.use(/\/.*/, express.json()); //parse request body json into req.body
 
 app.listen(port, () => {
     console.log('App listening');
-    console.log(await database.account.authenticate("testAccount", "1"));
+    let valid = await database.account.authenticate("testAccount", "1");
+    console.log(valid);
     console.log(database.account.authenticate("testAcc", "1"));
     console.log(database.account.userExists("testAccount"));
 });
