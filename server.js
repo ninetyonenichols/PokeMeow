@@ -19,8 +19,8 @@ const port = 80;
 
 
 function authenticate(req, res, next) {
-    if (req.cookies.login && req.session.user) {
-        console.log(req.cookies.login + '\n' + req.session.user + '\n');
+    if (req.session.user) {
+        console.log(req.session.user + '\n');
         next();
     } else {
         res.send('NOT ALLOWED');
