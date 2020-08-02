@@ -36,7 +36,7 @@ app.use(session({
     key: 'login',
     secret: 'unsecure secret',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
         maxAge: 10000,
         secure: false

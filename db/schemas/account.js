@@ -24,10 +24,10 @@ module.exports = (mongoose) => {
             //generate salt
             crypto.randomBytes(256, (err, buf) => {
                 if (err) throw err;
-                const salt = buf.tostring('base64');
+                const salt = buf.toString('base64');
 
                 //generate encrypted key
-                crypto.scrypt(pass, salt, 64, (err, derivedKey) => {
+                crypto.pbkdf2(pass, salt, 100000, 64, 'sha512', (err, derivedKey) => {
                     if (err) throw err;
                     const key = derivedKey.toString('hex');
 
@@ -70,7 +70,7 @@ module.exports = (mongoose) => {
                 } else if (result) {
                     //encrypt the given 'pass' using the account's salt
                     const salt = result.passSalt;
-                    crypto.scrypt(pass, salt, 64, (err, derivedKey) => {
+                    crypto.pbkdf2(pass, salt, 100000, 64, 'sha512', (err, derivedKey) => {
                         if (err) throw err;
                         const key = derivedKey.toString('hex');
 
