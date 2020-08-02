@@ -25,50 +25,44 @@ module.exports = (mongoose) => {
                 passSalt: 'temp'
             });
 
-            let success = false;
-            newAccount.save((err) => {
+            return await newAccount.save((err) => {
                 if (err) {
                     console.log('Error creating account: ' + err);
                     //if username already exists: err.code == 11000
-                    success = false;
+                    return false;
                 } else {
                     console.log('USER CREATED:\n' + newAccount.username);
-                    success = true;
+                    return true;
                 }
             });
-            return success;
         },
 
         userExists: function (user) {
-            let exists = false;
-            Account.findOne({username: user}, (err, result) => {
+            return await Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
-                    exists = true;
+                    return true;
                 } else {
-                    exists = false;
+                    return false;
                 }
             });
-            return exists;
         },
 
         authenticate: function (user, pass) {
-            let valid = false;
-            Account.findOne({username: user}, (err, result) => {
+            return await Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
                 } else if (result) {
                     if (result.passHash == pass) {
-                        valid = true;
+                        return true;
                     } else {
-                        valid = false;
+                        return false;
                     }
                 } else {
-                    valid = false;
+                    return false;
                 }
             });
-            return valid;
         }
     };
 };

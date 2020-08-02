@@ -6,7 +6,7 @@
  */
 
 //constants
-const serverURL = '157.245.236.86';
+const serverURL = 'http://157.245.236.86';
 
 
 $('#loginBtn').click(() => {
