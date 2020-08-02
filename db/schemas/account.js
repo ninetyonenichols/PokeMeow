@@ -18,7 +18,7 @@ module.exports = (mongoose) => {
 
     // Return exports
     return {
-        create: function (user, pass) {
+        create: async function (user, pass) {
             const newAccount = new Account({
                 username: user,
                 passHash: pass,
@@ -37,7 +37,7 @@ module.exports = (mongoose) => {
             });
         },
 
-        userExists: function (user) {
+        userExists: async function (user) {
             return await Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
@@ -49,7 +49,7 @@ module.exports = (mongoose) => {
             });
         },
 
-        authenticate: function (user, pass) {
+        authenticate: async function (user, pass) {
             return await Account.findOne({username: user}, (err, result) => {
                 if (err) {
                     console.log('Error querying account: ' + err);
