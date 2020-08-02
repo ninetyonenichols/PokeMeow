@@ -11,7 +11,6 @@
 
 const express = require('express');
 const database = require('./db/db.js');
-const cookieParser = require('cookieParser');
 const session = require('express-session');
 
 // Set up the express server
@@ -30,7 +29,6 @@ function authenticate(req, res, next) {
 }
 
 
-app.use(cookieParser());
 // NOTE: I'm using a regular expression here, but '/' would probably work too?
 app.use(/\/.*/, express.json()); //parse request body json into req.body
 app.use(session({
