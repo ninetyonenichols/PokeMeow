@@ -28,8 +28,9 @@ $('#loginBtn').click(() => {
     $.ajax({
         type: "POST",
         url: serverURL + '/login/',
-        data: data,
+        data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
+        dataType: "json",
         success: (response) => {
             if (response.validUser) {
                 $('#issueMsg').hide();
@@ -60,8 +61,9 @@ $('#createBtn').click(() => {
     $.ajax({
         type: "POST",
         url: serverURL + '/signup/',
-        data: data,
+        data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
+        dataType: "json",
         success: (response) => {
             if (!response.validUser) {
                 alert('Could not add user.');

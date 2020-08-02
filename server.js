@@ -19,10 +19,12 @@ const port = 80;
 
 
 function authenticate(req, res, next) {
-    if (req.cookies.login && req.session.user) {
-        next();
-    } else {
-        res.sendFile('./public_html/index.html');
+    if (Object.keys(req.cookies).length > 0) {
+        if (req.cookies.login && req.session.user) {
+            next();
+        } else {
+            res.sendFile('./public_html/index.html');
+        }
     }
 }
 
@@ -36,7 +38,7 @@ app.use(session({
         maxAge: 10000
     }
 }));
-app.use(/\/((?!index.html).)*/, authenticate);
+app.use('/home.html', authenticate);
 app.use('/', express.static('public_html'));
 // NOTE: I'm using a regular expression here, but '/' would probably work too?
 app.use(/\/.*/, express.json()); //parse request body json into req.body
@@ -49,6 +51,7 @@ app.listen(port, () => {
 
 app.post('/login/', (req, res) => {
     const u = req.body.username;
+    console.log(req.body);
     if (db.account.authenticate(u, req.body.password)) {
         req.session.user = u;
         res.sendFile('./public_html/home.html');
