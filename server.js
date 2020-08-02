@@ -63,6 +63,7 @@ app.post('/login/', (req, res) => {
 
 app.post('/signup', (req, res) => {
     const u = req.body.username;
+    console.log(req.body);
     if (db.account.create(u, req.body.password)) {
         req.session.user = u;
         res.sendFile('./public_html/home.html');

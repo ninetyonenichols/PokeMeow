@@ -32,6 +32,7 @@ $('#loginBtn').click(() => {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
+            console.log(response);
             if (response.validUser) {
                 $('#issueMsg').hide();
             } else {
@@ -65,6 +66,7 @@ $('#createBtn').click(() => {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
+            console.log(response);
             if (!response.validUser) {
                 alert('Could not add user.');
             }
