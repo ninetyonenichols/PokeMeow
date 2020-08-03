@@ -9,8 +9,7 @@ const serverURL = 'http://157.245.236.86';
 
 
 // Submit the command when either the button is clicked or 'Enter' is pressed
-$('#commandBtn').click(submitCommand());
-
+$('#commandBtn').click(() => { submitCommand(); });
 $('#command').keypress(function (e) {
     if (e.which == 13) {
         submitCommand();
