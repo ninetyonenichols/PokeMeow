@@ -29,7 +29,7 @@ function submitCommand() {
     $.ajax({
         type: 'POST',
         url: serverURL + '/command/',
-        data: JSON.stringify(cmdStr),
+        data: JSON.stringify({command: cmdStr}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
