@@ -49,6 +49,7 @@ app.use(session({
 app.use('/home.html', authenticate);
 app.use('/account.html', authenticate);
 app.use('/help.html', authenticate);
+app.use('/command/', authenticate);
 app.use('/', express.static('public_html'));
 
 
@@ -94,3 +95,10 @@ app.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
+
+
+// Handle a post request that contains a pokemeow command
+app.post('/command/', (req, res) => {
+    console.log(req.body);
+    res.json({valid: true, output: 'Server Response'});
+})
