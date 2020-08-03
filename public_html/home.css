@@ -1,0 +1,46 @@
+/* Filename: home.css
+   Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
+   Class: CSc 337 Summer 2020
+   Description: This file contains the styling rules specific to the home.html
+        page, such as styling the game input and output sections.
+*/
+
+#gameSection {
+    width: 100%;
+    height: calc(100% - 130px);
+}
+
+#outputSection {
+    width: 100%;
+    height: calc(100% - 160px);
+}
+
+#inputSection {
+    padding-top: 60px;
+    width: 100%;
+    height: 160px;
+    background-color: #ff3333;
+}
+
+#commandSection {
+    margin: 0 auto;
+    width: 750px;
+}
+
+label {
+    font-family: Courier, monospace;
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+}
+
+#command {
+    margin-right: 25px;
+    width: 500px;
+    font-family: Courier, monospace;
+    font-size: 18px;
+}
+
+#commandBtn {
+    font-size: 18px;
+}
