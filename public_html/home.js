@@ -29,7 +29,7 @@ function submitCommand() {
     $.ajax({
         type: 'POST',
         url: serverURL + '/command/',
-        data: JSON.stringify(cmdStr);
+        data: JSON.stringify(cmdStr),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
@@ -39,7 +39,7 @@ function submitCommand() {
                 alert('Invalid Command');
             }
         }
-    })
+    });
 
     //clear input
     cmd.val("");
