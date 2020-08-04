@@ -1,3 +1,7 @@
+# Sprites / avatars
+db/sprites
+db/avatars
+
 # Logs
 logs
 *.log

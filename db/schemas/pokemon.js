@@ -9,7 +9,7 @@ module.exports = (mongoose) => {
     const ObjectId = Schema.Types.ObjectId;
 
     const PokemonSchema = new Schema({
-        name: { type: String, unique: true, required: true },
+        name: { type: String, required: true },
         sprite: { type: String, default: '../sprites/default.jpg' },
         pType1: {
             type: String,
@@ -34,10 +34,23 @@ module.exports = (mongoose) => {
     });
     const Pokemon = mongoose.model('Pokemon', PokemonSchema, 'pokemon')
 
-    // Preparing exports
-    return {
-        create: function(name, moves, callback) {},
-        subtractHp: function(num, callback) {},
-        resetHp: function(callback) {}
-    };
+    // Creates an 'instance' of a pokemon by copying the data from that
+    // pokemon specie's document into a new document.
+    PokemonSchema.statics.create = async (specie) => {
+        pkmnJSON = await this.model.findOne({ name: specie }).lean();
+        delete pkmnJSON['_id'];
+        return pkmnJSON;
+    },  
+
+    // Subtracts HP from a pokemon 
+    PokemonSchema.methods.subtractHp = (loss) => {
+        this.currHp = max(0, this.currHp - loss);
+    },
+
+    // Resets a Pokemon's hit-points
+    PokemonSchema.methods.resetHp = () => {
+        this.currHp = this.maxHp;
+    }
+
+    return mongoose.model('Pokemon', PokemonSchema, 'pokemon');
 };
