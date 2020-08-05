@@ -6,6 +6,7 @@
 
 //constants
 const serverURL = 'http://157.245.236.86';
+var modeURL = '/command/';
 
 
 // Submit the command when either the button is clicked or 'Enter' is pressed
@@ -17,6 +18,10 @@ $('#command').keypress(function (e) {
 });
 
 
+/*  Description: This function submits the command string given by the user to
+ *      the server, then it handles the response by calling 'printOutput'.
+ *  Parameters: none.
+ */
 function submitCommand() {
     //if no input, do nothing
     const cmdStr = $('#command').val();
@@ -26,15 +31,23 @@ function submitCommand() {
 
     $.ajax({
         type: 'POST',
-        url: serverURL + '/command/',
+        url: serverURL + modeURL,
         data: JSON.stringify({command: cmdStr}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (response) => {
-            if (response.valid) {
-                printOutput(response.output);
+            if (response.main) {
+                printOutput(response.main);
+                if (response.main == 'Random Encounter') {
+                    modeURL = '/command/rand-enc/';
+                }
+            else if (response.encounter) {
+                printOutput(response.encounter);
+                if (response.encounter == 'Run Away') {
+                    modeURL = '/command/';
+                }
             } else {
-                alert('Invalid Command');
+                printOutput('Invalid Command');
             }
         }
     });
@@ -50,5 +63,5 @@ function submitCommand() {
  *      output - the object containing the server's output from the command
  */
 function printOutput(output) {
-    $('#outputSection').append(output);
+    $('#outputSection').append(output + '<br>');
 }
