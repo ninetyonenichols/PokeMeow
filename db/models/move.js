@@ -19,11 +19,8 @@ module.exports = (mongoose) => {
         },
         baseDmg: { type: Number, required: true }
     });
-    const Move = mongoose.model('Move', MoveSchema)
 
-    // Preparing exports
-    return {
-        create: function(name, type, dmg, callback) {},
-        getMove: function(move, callback) {}
-    };
+    //getMove: function(move, callback) {}
+    
+    return mongoose.model('Move', MoveSchema)
 };
