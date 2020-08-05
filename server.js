@@ -138,6 +138,11 @@ function parseCommand(command) {
                 return 'Add ' + command[1] + ' to Party';
                 break;
             }
+        case 'release':
+            if (command.length == 2) {
+                return 'Release ' + command[1];
+                break;
+            }
         default:
             return null;
     }
