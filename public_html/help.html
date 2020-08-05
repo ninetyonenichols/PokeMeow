@@ -11,6 +11,7 @@
         <meta charset="utf-8">
         <title>PokeMeow</title>
         <link rel="stylesheet" type="text/css" href="./style.css">
+        <link rel="stylesheet" type="text/css" href="./help.css">
     </head>
     <body>
         <div id="top">
@@ -23,6 +24,31 @@
                 <a href="./account.html">Account</a>
                 <a href="/logout">Logout</a>
             </nav>
+        </div>
+
+        <div id="overview" class="explanation">
+            <p>
+                PokeMeow is a simplified, command-line version of Pokemon. It is based on theDiscord bot “PokeMeow,” which allows users to catch (and soon, battle) Pokemonwithin a chat window.
+            </p>
+        </div>
+
+        <div id="commandList" class="explanation">
+            Main Commands:
+            <ul>
+                <li><span class="cmd">random-encounter</span> - starts an encounter with a random pokemon</li>
+                <li><span class="cmd">view-party</span> - prints out a list of pokemon in your party</li>
+                <li><span class="cmd">view-pokemon</span> - prints out a list of the pokemon you've caught</li>
+                <li><span class="cmd">view name</span> - prints out more information about pokemon 'name'</li>
+                <li><span class="cmd">remove name</span> - removes pokemon 'name' from your party</li>
+                <li><span class="cmd">add name</span> - adds pokemon 'name' to your party</li>
+                <li><span class="cmd">release name</span> - releases the pokemon 'name' back to the wild</li>
+            </ul>
+
+            Random Encounter Commands:
+            <ul>
+                <li><span class="cmd">throw-ball</span> - throws a ball to try and catch a pokemon</li>
+                <li><span class="cmd">run</span> - run from the random encounter</li>
+            </ul>
         </div>
     </body>
 </html>
