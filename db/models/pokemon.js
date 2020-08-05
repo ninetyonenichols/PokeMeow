@@ -42,12 +42,12 @@ module.exports = (mongoose) => {
     },  
 
     // Subtracts HP from a pokemon 
-    PokemonSchema.methods.subtractHp = (loss) => {
+    PokemonSchema.methods.subtractHp = function() {
         this.currHp = max(0, this.currHp - loss);
     },
 
     // Resets a Pokemon's hit-points
-    PokemonSchema.methods.resetHp = () => {
+    PokemonSchema.methods.resetHp = function() {
         this.currHp = this.maxHp;
     }
 
