@@ -41,7 +41,7 @@ function submitCommand() {
                 if (response.main == 'Random Encounter') {
                     modeURL = '/command/rand-enc/';
                 }
-            else if (response.encounter) {
+            } else if (response.encounter) {
                 printOutput(response.encounter);
                 if (response.encounter == 'Run Away') {
                     modeURL = '/command/';

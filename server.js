@@ -99,7 +99,7 @@ app.get('/logout', (req, res) => {
 
 // Handle a post request that contains a pokemeow command (req.body.command)
 app.post('/command/', (req, res) => {
-    console.log(req.body);
+    console.log('/command/: ' + req.body);
     const cmd = parseCommand(req.body.command);
     res.json({main: cmd, encounter: null});
 });
@@ -114,26 +114,26 @@ app.post('/command/', (req, res) => {
 function parseCommand(command) {
     command = command.split(' ');
     switch (command[0]) {
-        case /random-encounter/:
+        case 'random-encounter':
             return 'Random Encounter';
             break;
-        case /view-party/:
+        case 'view-party':
             return 'View Party';
             break;
-        case /view-pokemon/:
+        case 'view-pokemon':
             return 'View Pokemon';
             break;
-        case /view/:
+        case 'view':
             if (command.length == 2) {
                 return 'View ' + command[1];
                 break;
             }
-        case /remove/:
+        case 'remove':
             if (command.length == 2) {
                 return 'Remove ' + command[1] + ' from Party';
                 break;
             }
-        case /add/:
+        case 'add':
             if (command.length == 2) {
                 return 'Add ' + command[1] + ' to Party';
                 break;
@@ -146,7 +146,7 @@ function parseCommand(command) {
 
 // Handle a post request that contains a random encounter command
 app.post('/command/rand-enc/', (req, res) => {
-    console.log(req.body);
+    console.log('/command/rand-enc/: ' + req.body);
     const cmd = parseRandEncCommand(req.body.command);
     res.json({main: null, encounter: cmd});
 });
@@ -161,10 +161,10 @@ app.post('/command/rand-enc/', (req, res) => {
 function parseRandEncCommand(command) {
     command = command.split(' ');
     switch (command[0]) {
-        case /throw-ball/:
+        case 'throw-ball':
             return 'Throw Ball';
             break;
-        case /run/:
+        case 'run':
             return 'Run Away';
             break;
         default:
