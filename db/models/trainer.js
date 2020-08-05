@@ -22,17 +22,17 @@ module.exports = (mongoose) => {
     // Creates a new trainer document
     TrainerSchema.statics.create = function(trainerName) {
         return new mongoose.model('Trainer')({ name: trainerName });
-    }
+    };
 
     // Adds a pokemon to this trainer's collection
     TrainerSchema.methods.addPokemon = function(pkmn) {
         this.pokemon.push(pkmn);
-    }
+    };
 
     // Adds a pokemon to this trainer's party
     TrainerSchema.methods.addParty = function(pkmn) {
         if (this.party.length < MAX_PARTY_SIZE) this.party.push(pkmn);
-    }
+    };
 
     // Removes a pokemon from this trainer's party
     TrainerSchema.methods.removeParty = function(pkmn) {
@@ -41,12 +41,12 @@ module.exports = (mongoose) => {
                 delete this.party[i];
             }
         } 
-    }
+    };
 
     // Sets a reference to the battle that this trainer is currently fighting
     TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle;
-    }
+    };
 
     return mongoose.model('Trainer', TrainerSchema);
 };

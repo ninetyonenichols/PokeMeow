@@ -35,21 +35,24 @@ module.exports = (mongoose) => {
 
     // Creates an 'instance' of a pokemon by copying the data from that
     // pokemon specie's document into a new document.
-    PokemonSchema.statics.create = async function(specie) {
-        var pkmnJSON = await mongoose.model('Pokemon').findOne({ name: specie }).lean();
-        delete pkmnJSON['_id'];
-        return new mongoose.model('Pokemon')(pkmnJSON);
-    },  
+    PokemonSchema.statics.create = function(specie, callback) {
+        var pkmnJSON = mongoose.model('Pokemon').findOne({ name: specie })
+            .lean()
+            .exec((err, pkmnObj) => {
+                delete pkmnObj['_id'];
+                callback(new mongoose.model('Pokemon')(pkmnObj));
+            })
+    }; 
 
     // Subtracts HP from a pokemon 
     PokemonSchema.methods.subtractHp = function() {
         this.currHp = max(0, this.currHp - loss);
-    },
+    };
 
     // Resets a Pokemon's hit-points
     PokemonSchema.methods.resetHp = function() {
         this.currHp = this.maxHp;
-    }
+    };
 
     return mongoose.model('Pokemon', PokemonSchema, 'pokemon');
 };
