@@ -9,6 +9,15 @@
 
 
 //NOTES:
+// PURPOSE: To separate the command parsing etc from server.js (which should
+//      only have to worry about recieving/sending information). server.js is
+//      also kind of acting as a controller (as in it has control/logic
+//      elements to it like (as of writing this) determining what each command
+//      is or how to respond to it). For good separation of responsibilities,
+//      server.js should only be concerned with sending/recieving information,
+//      not with what to do with that information. Having this separation is
+//      good for readability b/c it 1. separates/distributes the logic, and 2.
+//      shortens the length of the file.
 // Necessary functionality: parse command, then return object for client's use
 // Do i want to use a protoype to construct it from?
 //      ->maybe then i can include only the relevant properties? (this may make
@@ -32,5 +41,21 @@
  *      database - the database that the command manipulates
  */
 function Command(cmdStr, database) {
+    //properties that say which command this object represents
+    //NOTE: there's got to be a better way to do this right?
+    this.encounter = false;
+    this.party = false;
+    this.caught = false;
+    this.view = false;
+    this.remove = false;
+    this.add = false;
+    this.release = false;
+    this.throw = false;
+    this.run = false;
 
+    //if i define a javascript class instead, this could be an actual class constructor
+    constructor();
+    function constructor() {
+
+    }
 }
