@@ -7,7 +7,6 @@
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
-    const PokemonSchema = mongoose.models('Pokemon').schema;
 
     const PokemonSchema = new Schema({
         name: { type: String, required: true },
@@ -36,10 +35,10 @@ module.exports = (mongoose) => {
 
     // Creates an 'instance' of a pokemon by copying the data from that
     // pokemon specie's document into a new document.
-    PokemonSchema.statics.create = async (specie) => {
-        pkmnJSON = await this.model.findOne({ name: specie }).lean();
+    PokemonSchema.statics.create = async function(specie) {
+        var pkmnJSON = await mongoose.model('Pokemon').findOne({ name: specie }).lean();
         delete pkmnJSON['_id'];
-        return new Pokemon(pkmnJSON);
+        return new mongoose.model('Pokemon')(pkmnJSON);
     },  
 
     // Subtracts HP from a pokemon 
