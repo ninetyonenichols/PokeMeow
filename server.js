@@ -49,7 +49,7 @@ app.use(session({
 app.use('/home.html', authenticate);
 app.use('/account.html', authenticate);
 app.use('/help.html', authenticate);
-app.use('/command/', authenticate);
+app.use(/\/command\/.*/, authenticate);
 app.use('/', express.static('public_html'));
 
 

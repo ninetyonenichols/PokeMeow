@@ -41,21 +41,74 @@
  *      database - the database that the command manipulates
  */
 function Command(cmdStr, database) {
-    //properties that say which command this object represents
-    //NOTE: there's got to be a better way to do this right?
-    this.encounter = false;
-    this.party = false;
-    this.caught = false;
-    this.view = false;
-    this.remove = false;
-    this.add = false;
-    this.release = false;
-    this.throw = false;
-    this.run = false;
+    this.db = database;
+    this.cmd = cmdStr.split(' ');
 
-    //if i define a javascript class instead, this could be an actual class constructor
-    constructor();
-    function constructor() {
+    //Parse the command and set execute to appropriate function
+    this.parse = function() {
+        this.execute = parseMainCmd(parseEncCmd);
+    }
+
+    //Execute the command's function (maybe just remove this?)
+    this.execute = function(callback) {
+        callback('Command not parsed yet!',
+                 {main: null, encounter: null, battle: null});
+    };
+
+    /* Use:
+
+    const c = new Command(cmd, db);
+    c.parse();
+    c.execute((err, output) => {
+        if (err) console.log('Error: ' + err);
+        res.json(output);
+    });
+
+    */
+
+
+    // Parser Helper Functions //
+
+    function parseMainCmd(next) {
+        //if parsed
+        return execEncounter; //or the other exec... functions (as appropriate)
+        //if not parsed
+        next(parseBattleCmd);
+    }
+
+    function parseEncCmd(next) {
 
     }
+
+    function parseBattleCmd(next) {
+
+    }
+
+
+    // Execute Helper Functions //
+
+    function execEncounter(callback) {
+        //execute command
+        this.db.startEncounter((err, result) => {
+            //success:
+            callback(null, {main: null, encounter: {/*output*/}, battle: null});
+            //error:
+            callback(err, {main: null, encounter: null, battle: null});
+        });
+    }
+
+    function execParty(callback) {
+        //success:
+        callback(null, {main: {/*output*/}, encounter: null, battle: null});
+        //error:
+        callback(err, {main: null, encounter: null, battle: null});
+    }
+
+    this.caught = null;
+    this.view = null;
+    this.remove = null;
+    this.add = null;
+    this.release = null;
+    this.throw = null;
+    this.run = null;
 }

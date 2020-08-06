@@ -38,14 +38,10 @@ function submitCommand() {
         success: (response) => {
             if (response.main) {
                 printOutput(response.main);
-                if (response.main == 'Random Encounter') {
-                    modeURL = '/command/rand-enc/';
-                }
+                modeURL = '/command/';
             } else if (response.encounter) {
                 printOutput(response.encounter);
-                if (response.encounter == 'Run Away') {
-                    modeURL = '/command/';
-                }
+                modeURL = '/command/rand-enc/';
             } else {
                 printOutput('Invalid Command');
             }
