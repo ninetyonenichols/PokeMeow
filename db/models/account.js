@@ -33,7 +33,7 @@ module.exports = (Trainer, mongoose) => {
          */
         create: function (user, pass, callback) {
             //generate salt
-            crypto.randomBytes(256, (err, buf) => {
+            crypto.randomBytes(64, (err, buf) => {
                 if (err) throw err;
                 const salt = buf.toString('base64');
 
