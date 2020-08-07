@@ -1,6 +1,5 @@
-# Sprites / avatars
-db/sprites
-db/avatars
+# Justin's test-files
+db/test.js
 
 # Logs
 logs

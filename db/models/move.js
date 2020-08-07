@@ -4,6 +4,9 @@
  * Description: This file handles access to the 'moves' collection.
  */
 
+const vs = require('../data/versus.js');
+const stab_bonus = 1.2; 
+
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
@@ -19,6 +22,20 @@ module.exports = (mongoose) => {
         },
         baseDmg: { type: Number, required: true }
     });
+
+    // Calculates the damage done by this move from pkmn1 against pkmn2
+    // Damage = Floor ((1/2)(movepower)(att/def)(STAB)(Effectiveness)) + 1
+    MoveSchema.methods.damage = function(attacker, defender) {
+        let mvDmg = this.baseDmg;
+        let atk = attacker.atk;
+        let def = defender.def;
+        let mvType = this.pType;
+        let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
+            stab_bonus : 1;
+        let effectiveness = vs[mvType][defender.pType1] * 
+            vs[mvType][defender.pType2];
+        return Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);  
+    }
 
     //getMove: function(move, callback) {}
     

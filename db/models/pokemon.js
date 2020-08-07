@@ -36,7 +36,7 @@ module.exports = (mongoose) => {
     // Creates an 'instance' of a pokemon by copying the data from that
     // pokemon specie's document into a new document.
     PokemonSchema.statics.create = function(specie, callback) {
-        var pkmnJSON = mongoose.model('Pokemon').findOne({ name: specie })
+        mongoose.model('Pokemon').find({ name: specie })
             .lean()
             .exec((err, pkmnObj) => {
                 delete pkmnObj['_id'];
@@ -44,9 +44,21 @@ module.exports = (mongoose) => {
             })
     }; 
 
+    // Generates a new random pokemon
+    PokemonSchema.statics.encounter = function(callback) {
+        this.count()
+            .exec((err, count) => { 
+                if (err) return callback(err); 
+                var rand = Math.floor(Math.random() * count); 
+                this.findOne()
+                    .skip(rand)
+                    .exec((err, randPkmn) => { callback(randPkmn); });
+            });
+    };
+
     // Subtracts HP from a pokemon 
-    PokemonSchema.methods.subtractHp = function() {
-        this.currHp = max(0, this.currHp - loss);
+    PokemonSchema.methods.subtractHp = function(loss) {
+        this.currHp = Math.max(0, this.currHp - loss);
     };
 
     // Resets a Pokemon's hit-points
