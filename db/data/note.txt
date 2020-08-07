@@ -6,7 +6,7 @@ the 'types' collection if it were ever cleared from the database.
 
 To import moves.json into the types collection, use the command below:
 
-mongoimport --db pokemeow --collection moves --file movesList.js --jsonArray
+mongoimport --db pokemeow --collection moves --drop --file movesList.js --jsonArray
 
 
 
@@ -33,3 +33,22 @@ PokemonSchema:
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
+
+TrainerSchema:
+
+    {
+        "_id": "",
+        "name": "", 
+        "photo": "../avatars/.jpg",
+        "party": [
+            {
+
+            },
+            {
+
+            },
+            {
+
+            }
+        ] 
+    }

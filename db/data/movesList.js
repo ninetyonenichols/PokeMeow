@@ -6,10 +6,10 @@
         "baseDmg": "10"
     },
     {
-        "_id": "darkPulse"
+        "_id": "darkPulse",
         "name": "Dark Pulse",
         "pType": "dark",
-        "baseDmg": "10"
+        "baseDmg": "10",
     },
     {
         "_id": "outrage",
