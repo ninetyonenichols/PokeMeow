@@ -32,8 +32,8 @@ module.exports = (mongoose) => {
         let mvType = this.pType;
         let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
             stab_bonus : 1;
-        let effectiveness = vs[mvType][defender.pType1] * 
-            vs[mvType][defender.pType2];
+        let effectiveness = vs[defender.pType1][mvType] * 
+            vs[defender.pType2][mvType];
         return Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);  
     }
 

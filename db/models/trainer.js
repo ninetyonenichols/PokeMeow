@@ -4,7 +4,7 @@
  * Description: This file handles access to the 'trainers' collection.
  */
 
-const MAX_PARTY_SIZE = 6;
+const MAX_PARTY_SIZE = 3;
 
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
@@ -17,7 +17,7 @@ module.exports = (mongoose) => {
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
         battle: { type: ObjectId, ref: 'Battle' },
-        encounter: { type: ObjectId, ref: 'Pokemon' }
+        encounter: PokemonSchema
     });
 
     // Creates a new trainer document
@@ -27,12 +27,34 @@ module.exports = (mongoose) => {
 
     // Adds a pokemon to this trainer's collection
     TrainerSchema.methods.addPokemon = function(pkmn) {
+        if (this.pokemon.includes(pkmn)) { return; }
         this.pokemon.push(pkmn);
     };
+     
+    // Releases a pokemon into the wild
+    TrainerSchema.methods.release = function(pkmn) {
+        if (!this.pokemon.includes(pkmn)) { return; }
+        if (this.party.includes(pkmn)) { this.removeParty(pkmn); }
+        for (i in this.pokemon) {
+            if (this.pokemon[i]._id == pkmn._id) {
+                delete this.pokemon[i];
+                return;
+            }
+        }
+    }
 
     // Adds a pokemon to this trainer's party
     TrainerSchema.methods.addParty = function(pkmn) {
-        if (this.party.length < MAX_PARTY_SIZE) this.party.push(pkmn);
+        var spaceAvail = this.party.length < MAX_PARTY_SIZE;
+        var ownsPkmn = this.pokemon.includes(pkmn); 
+        var unique = !this.party.includes(pkmn);
+        console.log('spaceAvail = ' + spaceAvail);
+        console.log('ownsPkmn = ' + ownsPkmn);
+        console.log('unique = ' + unique);
+        if (spaceAvail && ownsPkmn && unique) {
+            this.party.push(pkmn);
+            console.log('party inside brackets = ' + this.party);
+        }
     };
 
     // Removes a pokemon from this trainer's party
@@ -40,6 +62,7 @@ module.exports = (mongoose) => {
         for (i in this.party) {
             if (this.party[i]._id == pkmn._id) {
                 delete this.party[i];
+                return;
             }
         }
     };
@@ -48,6 +71,14 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle;
     };
+    
+    // Adds a pokemon to trainer's party or collection, whichever is appropriate
+    TrainerSchema.methods.add = function() {
+        var pkmn = this.encounter;
+        this.addPokemon(pkmn);
+        var spaceAvail = this.party.length < MAX_PARTY_SIZE;
+        if (spaceAvail) { this.addParty(pkmn); } 
+    } 
 
     return mongoose.model('Trainer', TrainerSchema);
 };

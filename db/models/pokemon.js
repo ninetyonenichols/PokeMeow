@@ -33,10 +33,8 @@ module.exports = (mongoose) => {
         fleeRate: { type: Number, default: 0.1 },
     });
 
-    // Creates an 'instance' of a pokemon by copying the data from that
-    // pokemon specie's document into a new document.
-    PokemonSchema.statics.create = function(specie, callback) {
-        mongoose.model('Pokemon').find({ name: specie })
+    PokemonSchema.statics.create = function(pkmnId, callback) {
+        mongoose.model('Pokemon').find({ _id: pkmnId })
             .lean()
             .exec((err, pkmnObj) => {
                 delete pkmnObj['_id'];
@@ -52,7 +50,11 @@ module.exports = (mongoose) => {
                 var rand = Math.floor(Math.random() * count); 
                 this.findOne()
                     .skip(rand)
-                    .exec((err, randPkmn) => { callback(randPkmn); });
+                    .lean()
+                    .exec((err, pkmnObj) => {
+                        delete pkmnObj['_id'];
+                        callback(new mongoose.model('Pokemon')(pkmnObj));
+                    });
             });
     };
 
@@ -65,6 +67,14 @@ module.exports = (mongoose) => {
     PokemonSchema.methods.resetHp = function() {
         this.currHp = this.maxHp;
     };
+
+    // Attempts to catch this pokemon
+    PokemonSchema.methods.attemptCapture = function() {
+        let roll = Math.random(); 
+        if (roll <= this.catchRate) { return "caught"; }
+        else if (roll <= this.catchRate + this.fleeRate) { return "ran"; }
+        else { return "missed"; }
+    } 
 
     return mongoose.model('Pokemon', PokemonSchema, 'pokemon');
 };

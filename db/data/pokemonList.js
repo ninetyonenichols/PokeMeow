@@ -9,7 +9,7 @@
         "currHp": "190",
         "atk": "198",
         "def": "189",
-        "moves": "['solarBeam', 'sludgeWave']",
+        "moves": ['solarBeam', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -23,7 +23,7 @@
         "currHp": "186",
         "atk": "223",
         "def": "173",
-        "moves": "['flamethrower', 'skyAttack']",
+        "moves": ['flamethrower', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -36,7 +36,7 @@
         "currHp": "188",
         "atk": "171",
         "def": "207",
-        "moves": "['hydroCannon', 'iceBeam']",
+        "moves": ['hydroCannon', 'iceBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -50,7 +50,7 @@
         "currHp": "155",
         "atk": "167",
         "def": "137",
-        "moves": "['bugBuzz', 'sky attack']",
+        "moves": ['bugBuzz', 'sky attack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -64,7 +64,7 @@
         "currHp": "163",
         "atk": "169",
         "def": "130",
-        "moves": "['bugBuzz', 'sludgeWave']",
+        "moves": ['bugBuzz', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -78,7 +78,7 @@
         "currHp": "195",
         "atk": "166",
         "def": "154",
-        "moves": "['hyperBeam', 'skyAttack']",
+        "moves": ['hyperBeam', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -91,7 +91,7 @@
         "currHp": "146",
         "atk": "161",
         "def": "139",
-        "moves": "['hyperBeam', 'moonblast']",
+        "moves": ['hyperBeam', 'moonblast'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -105,7 +105,7 @@
         "currHp": "163",
         "atk": "182",
         "def": "133",
-        "moves": "['skyAttack', 'hyperBeam']",
+        "moves": ['skyAttack', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -118,7 +118,7 @@
         "currHp": "155",
         "atk": "167",
         "def": "153",
-        "moves": "['sludgeWave', 'darkPulse']",
+        "moves": ['sludgeWave', 'darkPulse'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -131,7 +131,7 @@
         "currHp": "111",
         "atk": "112",
         "def": "96",
-        "moves": "['thunderbolt', 'solarBeam']",
+        "moves": ['thunderbolt', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -144,7 +144,7 @@
         "currHp": "155",
         "atk": "193",
         "def": "151",
-        "moves": "['thunderbolt', 'solarBeam']",
+        "moves": ['thunderbolt', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -157,7 +157,7 @@
         "currHp": "181",
         "atk": "182",
         "def": "175",
-        "moves": "['earthquake', 'solarBeam']",
+        "moves": ['earthquake', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -171,7 +171,7 @@
         "currHp": "207",
         "atk": "180",
         "def": "173",
-        "moves": "['earthquake', 'sludgeWave']",
+        "moves": ['earthquake', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -185,7 +185,7 @@
         "currHp": "191",
         "atk": "204",
         "def": "156",
-        "moves": "['earthquake', 'sludgeWave']",
+        "moves": ['earthquake', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -198,7 +198,7 @@
         "currHp": "216",
         "atk": "178",
         "def": "162",
-        "moves": "['moonblast', 'psychic']",
+        "moves": ['moonblast', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -211,7 +211,7 @@
         "currHp": "177",
         "atk": "169",
         "def": "190",
-        "moves": "['flamethrower', 'solarBeam']",
+        "moves": ['flamethrower', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -225,7 +225,7 @@
         "currHp": "295",
         "atk": "156",
         "def": "90",
-        "moves": "['moonblast', 'hyperBeam']",
+        "moves": ['moonblast', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -239,7 +239,7 @@
         "currHp": "181",
         "atk": "161",
         "def": "150",
-        "moves": "['skyAttack', 'sludgeWave']",
+        "moves": ['skyAttack', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -253,7 +253,7 @@
         "currHp": "181",
         "atk": "202",
         "def": "167",
-        "moves": "['solarBeam', 'sludgeWave']",
+        "moves": ['solarBeam', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -267,7 +267,7 @@
         "currHp": "155",
         "atk": "165",
         "def": "146",
-        "moves": "['bugBuzz', 'solarBeam']",
+        "moves": ['bugBuzz', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -281,7 +281,7 @@
         "currHp": "172",
         "atk": "179",
         "def": "143",
-        "moves": "['bugBuss', 'sludgeWave']",
+        "moves": ['bugBuss', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -294,7 +294,7 @@
         "currHp": "111",
         "atk": "167",
         "def": "136",
-        "moves": "['earthquake', 'sludgeWave']",
+        "moves": ['earthquake', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -307,7 +307,7 @@
         "currHp": "163",
         "atk": "150",
         "def": "136",
-        "moves": "['hyperBeam', 'moonblast']",
+        "moves": ['hyperBeam', 'moonblast'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -320,7 +320,7 @@
         "currHp": "190",
         "atk": "191",
         "def": "162",
-        "moves": "['hydroCannon', 'psychic']",
+        "moves": ['hydroCannon', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -333,7 +333,7 @@
         "currHp": "163",
         "atk": "207",
         "def": "138",
-        "moves": "['closeCombat', 'darkPulse']",
+        "moves": ['closeCombat', 'darkPulse'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -346,7 +346,7 @@
         "currHp": "207",
         "atk": "227",
         "def": "166",
-        "moves": "['flamethrower', 'earthquake']",
+        "moves": ['flamethrower', 'earthquake'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -360,7 +360,7 @@
         "currHp": "207",
         "atk": "182",
         "def": "184",
-        "moves": "['closeCombat', 'hydroCannon']",
+        "moves": ['closeCombat', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -373,7 +373,7 @@
         "currHp": "147",
         "atk": "271",
         "def": "167",
-        "moves": "['psychic', 'thunderbolt']",
+        "moves": ['psychic', 'thunderbolt'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -386,7 +386,7 @@
         "currHp": "207",
         "atk": "234",
         "def": "159",
-        "moves": "['closeCombat', 'rockSlide']",
+        "moves": ['closeCombat', 'rockSlide'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -400,7 +400,7 @@
         "currHp": "190",
         "atk": "207",
         "def": "135",
-        "moves": "['solarBeam', 'sludgeWave']",
+        "moves": ['solarBeam', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -414,7 +414,7 @@
         "currHp": "190",
         "atk": "166",
         "def": "209",
-        "moves": "['sludgeWave', 'hydroCannon']",
+        "moves": ['sludgeWave', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -428,7 +428,7 @@
         "currHp": "190",
         "atk": "211",
         "def": "198",
-        "moves": "['earthquake', 'rockSlide']",
+        "moves": ['earthquake', 'rockSlide'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -441,7 +441,7 @@
         "currHp": "163",
         "atk": "207",
         "def": "162",
-        "moves": "['flamethrower', 'solarBeam']",
+        "moves": ['flamethrower', 'solarBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -455,7 +455,7 @@
         "currHp": "216",
         "atk": "177",
         "def": "180",
-        "moves": "['psychic', 'hydroCannon']",
+        "moves": ['psychic', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -469,7 +469,7 @@
         "currHp": "137",
         "atk": "223",
         "def": "169",
-        "moves": "['thunderbolt', 'flashCannon']",
+        "moves": ['thunderbolt', 'flashCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -483,7 +483,7 @@
         "currHp": "141",
         "atk": "124",
         "def": "115",
-        "moves": "['skyAttack', 'hyperBeam']",
+        "moves": ['skyAttack', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -497,7 +497,7 @@
         "currHp": "155",
         "atk": "218",
         "def": "140",
-        "moves": "['skyAttack', 'hyperBeam']",
+        "moves": ['skyAttack', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -511,7 +511,7 @@
         "currHp": "207",
         "atk": "139",
         "def": "177",
-        "moves": "['iceBeam', 'hydroCannon']",
+        "moves": ['iceBeam', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -524,7 +524,7 @@
         "currHp": "233",
         "atk": "190",
         "def": "172",
-        "moves": "['sludgeWave', 'darkPulse']",
+        "moves": ['sludgeWave', 'darkPulse'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -538,7 +538,7 @@
         "currHp": "137",
         "atk": "186",
         "def": "256",
-        "moves": "['iceBeam', 'hydroCannon']",
+        "moves": ['iceBeam', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -552,7 +552,7 @@
         "currHp": "155",
         "atk": "261",
         "def": "149",
-        "moves": "['shadowBall', 'sludgeWave']",
+        "moves": ['shadowBall', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -566,7 +566,7 @@
         "currHp": "111",
         "atk": "85",
         "def": "232",
-        "moves": "['earthquake', 'rockSlide']",
+        "moves": ['earthquake', 'rockSlide'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -579,7 +579,7 @@
         "currHp": "198",
         "atk": "144",
         "def": "193",
-        "moves": "['psychic', 'thunderbolt']",
+        "moves": ['psychic', 'thunderbolt'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -592,7 +592,7 @@
         "currHp": "146",
         "atk": "240",
         "def": "181",
-        "moves": "['hydroCannon', 'hyperBeam']",
+        "moves": ['hydroCannon', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -605,7 +605,7 @@
         "currHp": "155",
         "atk": "173",
         "def": "173",
-        "moves": "['thunderbolt', 'hyperBeam']",
+        "moves": ['thunderbolt', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -619,7 +619,7 @@
         "currHp": "215",
         "atk": "233",
         "def": "149",
-        "moves": "['solarBeam', 'psychic']",
+        "moves": ['solarBeam', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -632,7 +632,7 @@
         "currHp": "155",
         "atk": "144",
         "def": "186",
-        "moves": "['earthquake', 'thunderbolt']",
+        "moves": ['earthquake', 'thunderbolt'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -645,7 +645,7 @@
         "currHp": "137",
         "atk": "224",
         "def": "181",
-        "moves": "['closeCombat', 'hyperBeam']",
+        "moves": ['closeCombat', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -658,7 +658,7 @@
         "currHp": "137",
         "atk": "193",
         "def": "197",
-        "moves": "['closeCombat', 'darkPulse']",
+        "moves": ['closeCombat', 'darkPulse'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -671,7 +671,7 @@
         "currHp": "207",
         "atk": "108",
         "def": "137",
-        "moves": "['hyperBeam', 'psychic']",
+        "moves": ['hyperBeam', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -684,7 +684,7 @@
         "currHp": "163",
         "atk": "174",
         "def": "197",
-        "moves": "['sludgeWave', 'darkPulse']",
+        "moves": ['sludgeWave', 'darkPulse'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -698,7 +698,7 @@
         "currHp": "233",
         "atk": "222",
         "def": "171",
-        "moves": "['earthquake', 'rockSlide']",
+        "moves": ['earthquake', 'rockSlide'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -711,7 +711,7 @@
         "currHp": "487",
         "atk": "60",
         "def": "128",
-        "moves": "['hyperBeam', 'moonblast']",
+        "moves": ['hyperBeam', 'moonblast'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -724,7 +724,7 @@
         "currHp": "163",
         "atk": "183",
         "def": "169",
-        "moves": "['solarBeam', 'hyperBeam']",
+        "moves": ['solarBeam', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -737,7 +737,7 @@
         "currHp": "233",
         "atk": "181",
         "def": "165",
-        "moves": "['hyperBeam', 'closeCombat']",
+        "moves": ['hyperBeam', 'closeCombat'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -750,7 +750,7 @@
         "currHp": "146",
         "atk": "187",
         "def": "156",
-        "moves": "['hydroCannon', 'outrage']",
+        "moves": ['hydroCannon', 'outrage'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -763,7 +763,7 @@
         "currHp": "190",
         "atk": "175",
         "def": "147",
-        "moves": "['hydroCannon', 'sludgeWave']",
+        "moves": ['hydroCannon', 'sludgeWave'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -777,7 +777,7 @@
         "currHp": "155",
         "atk": "210",
         "def": "184",
-        "moves": "['psychic', 'hydroCannon']",
+        "moves": ['psychic', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -791,7 +791,7 @@
         "currHp": "120",
         "atk": "192",
         "def": "205",
-        "moves": "['moonblast', 'psychic']",
+        "moves": ['moonblast', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -805,7 +805,7 @@
         "currHp": "172",
         "atk": "218",
         "def": "170",
-        "moves": "['bugBuzz', 'skyAttack']",
+        "moves": ['bugBuzz', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -819,7 +819,7 @@
         "currHp": "163",
         "atk": "223",
         "def": "151",
-        "moves": "['iceBeam', 'psychic']",
+        "moves": ['iceBeam', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -832,7 +832,7 @@
         "currHp": "163",
         "atk": "198",
         "def": "158",
-        "moves": "['thunderbolt', 'closeCombat']",
+        "moves": ['thunderbolt', 'closeCombat'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -845,7 +845,7 @@
         "currHp": "163",
         "atk": "206",
         "def": "154",
-        "moves": "['flamethrower', 'closeCombat']",
+        "moves": ['flamethrower', 'closeCombat'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -858,7 +858,7 @@
         "currHp": "163",
         "atk": "238",
         "def": "182",
-        "moves": "['bugBuzz', 'closeCombat']",
+        "moves": ['bugBuzz', 'closeCombat'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -871,7 +871,7 @@
         "currHp": "181",
         "atk": "198",
         "def": "183",
-        "moves": "['hyperBeam', 'earthquake']",
+        "moves": ['hyperBeam', 'earthquake'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -885,7 +885,7 @@
         "currHp": "216",
         "atk": "237",
         "def": "186",
-        "moves": "['hydroCannon', 'outrage']",
+        "moves": ['hydroCannon', 'outrage'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -899,7 +899,7 @@
         "currHp": "277",
         "atk": "165",
         "def": "174",
-        "moves": "['iceBeam', 'hydroCannon']",
+        "moves": ['iceBeam', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -912,7 +912,7 @@
         "currHp": "134",
         "atk": "91",
         "def": "91",
-        "moves": "['hyperBeam', 'moonblast']",
+        "moves": ['hyperBeam', 'moonblast'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -925,7 +925,7 @@
         "currHp": "277",
         "atk": "205",
         "def": "161",
-        "moves": "['hydroCannon', 'hyperBeam']",
+        "moves": ['hydroCannon', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -938,7 +938,7 @@
         "currHp": "163",
         "atk": "232",
         "def": "182",
-        "moves": "['thunderbolt', 'hyperBeam']",
+        "moves": ['thunderbolt', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -951,7 +951,7 @@
         "currHp": "163",
         "atk": "246",
         "def": "179",
-        "moves": "['flamethrower', 'hyperBeam']",
+        "moves": ['flamethrower', 'hyperBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -964,7 +964,7 @@
         "currHp": "163",
         "atk": "153",
         "def": "136",
-        "moves": "['hyperBeam', 'psychic']",
+        "moves": ['hyperBeam', 'psychic'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -978,7 +978,7 @@
         "currHp": "172",
         "atk": "207",
         "def": "201",
-        "moves": "['rockSlide', 'hydroCannon']",
+        "moves": ['rockSlide', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -992,7 +992,7 @@
         "currHp": "155",
         "atk": "220",
         "def": "186",
-        "moves": "['rockSlide', 'hydroCannon']",
+        "moves": ['rockSlide', 'hydroCannon'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1006,7 +1006,7 @@
         "currHp": "190",
         "atk": "221",
         "def": "159",
-        "moves": "['skyAttack', 'rockSlide']",
+        "moves": ['skyAttack', 'rockSlide'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1019,7 +1019,7 @@
         "currHp": "330",
         "atk": "190",
         "def": "169",
-        "moves": "['hyperBeam', 'earthquake']",
+        "moves": ['hyperBeam', 'earthquake'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1033,7 +1033,7 @@
         "currHp": "207",
         "atk": "192",
         "def": "236",
-        "moves": "['skyAttack', 'iceBeam']",
+        "moves": ['skyAttack', 'iceBeam'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1047,7 +1047,7 @@
         "currHp": "207",
         "atk": "253",
         "def": "185",
-        "moves": "['thunderbolt', 'skyAttack']",
+        "moves": ['thunderbolt', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1061,7 +1061,7 @@
         "currHp": "207",
         "atk": "251",
         "def": "181",
-        "moves": "['flamethrower', 'skyAttack']",
+        "moves": ['flamethrower', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1075,7 +1075,7 @@
         "currHp": "209",
         "atk": "263",
         "def": "198",
-        "moves": "['outrage', 'skyAttack']",
+        "moves": ['outrage', 'skyAttack'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1088,7 +1088,7 @@
         "currHp": "214",
         "atk": "300",
         "def": "182",
-        "moves": "['psychic', 'shadowBall']",
+        "moves": ['psychic', 'shadowBall'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     },
@@ -1101,7 +1101,7 @@
         "currHp": "225",
         "atk": "210",
         "def": "210",
-        "moves": "['darkPulse', 'moonblast']",
+        "moves": ['darkPulse', 'moonblast'],
         "catchRate": "0.6",
         "fleeRate": "0.1"
     }

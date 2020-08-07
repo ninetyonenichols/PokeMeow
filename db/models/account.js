@@ -6,8 +6,9 @@
  */
 
 const crypto = require('crypto');
+const Trainer = require('./trainer.js');
 
-module.exports = (Trainer, mongoose) => {
+module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
 
     // User accounts
