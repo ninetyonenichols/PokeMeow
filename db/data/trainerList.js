@@ -2,7 +2,7 @@
     {
         "_id": "bugCatcher",
         "name": "Bug Catcher", 
-        "photo": "../avatars/bugCatcher.jpg",
+        "photo": "../avatars/bugCatcher.png",
         "party": [
             {
                 "_id": "beedrill",
@@ -44,7 +44,7 @@
     {
         "_id": "blue",
         "name": "Blue", 
-        "photo": "../avatars/blue.jpg",
+        "photo": "../avatars/blue.png",
         "party": [
             {
                 "_id": "arcanine",
@@ -85,7 +85,7 @@
     {
         "_id": "lorelei",
         "name": "Lorelei", 
-        "photo": "../avatars/lorelei.jpg",
+        "photo": "../avatars/lorelei.png",
         "party": [
             {
                 "_id": "slowbro",
@@ -127,7 +127,7 @@
     {
         "_id": "giovanni",
         "name": "Giovanni", 
-        "photo": "../avatars/giovanni.jpg",
+        "photo": "../avatars/giovanni.png",
         "party": [
             {
                 "_id": "persian",
@@ -169,7 +169,7 @@
     {
         "_id": "lance",
         "name": "Lance", 
-        "photo": "../avatars/lance.jpg",
+        "photo": "../avatars/lance.png",
         "party": [
             {
                 "_id": "gyarados",
