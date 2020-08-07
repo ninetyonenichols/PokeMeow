@@ -16,12 +16,12 @@ module.exports = (mongoose) => {
     });
 
     // Createes and returns a new battle document
-    BattleSchema.statics.create(id1, id2) {
+    BattleSchema.statics.create = function(id1, id2) {
         return new mongoose.model('Battle')({ trainer1: id1, trainer2: id2, currTurn: trainer1 });
     }
 
     // Switches the trainer whose turn it is for this battle
-    BattleSchema.methods.switchTurn() {
+    BattleSchema.methods.switchTurn = function() {
         switch(this.currTurn) {
             case this.trainer1: 
                 this.currTurn = this.trainer2;
@@ -29,12 +29,12 @@ module.exports = (mongoose) => {
             case this.trainer2:
                 this.currTurn = this.trainer1;
                 break;
-            case default:
+            default:
                 console.log('Error: current turn id is invalid.');
         } 
     }
 
     //getBattle: function(battle, callback) {},
 
-    return mongoose.mode('Battle', BattleSchema);
+    return mongoose.model('Battle', BattleSchema);
 };

@@ -2,7 +2,7 @@
     {
         "_id": "venusaur",
         "name": "Venusaur",
-        "sprite": "../sprites/venusaur.jpg",
+        "sprite": "../sprites/venusaur.png",
         "pType1": "grass",
         "pType2": "poison",
         "maxHp": "190",
@@ -16,7 +16,7 @@
     {
         "_id": "charizard",
         "name": "Charizard",
-        "sprite": "../sprites/charizard.jpg",
+        "sprite": "../sprites/charizard.png",
         "pType1": "fire",
         "pType2": "flying",
         "maxHp": "186",
@@ -30,7 +30,7 @@
     {
         "_id": "blastoise",
         "name": "Blastoise",
-        "sprite": "../sprites/blastoise.jpg",
+        "sprite": "../sprites/blastoise.png",
         "pType1": "water",
         "maxHp": "188",
         "currHp": "188",
@@ -43,7 +43,7 @@
     {
         "_id": "butterfree",
         "name": "Butterfree",
-        "sprite": "../sprites/butterfree.jpg",
+        "sprite": "../sprites/butterfree.png",
         "pType1": "bug",
         "pType2": "flying",
         "maxHp": "155",
@@ -57,7 +57,7 @@
     {
         "_id": "beedrill",
         "name": "Beedrill",
-        "sprite": "../sprites/beedrill.jpg",
+        "sprite": "../sprites/beedrill.png",
         "pType1": "bug",
         "pType2": "poison",
         "maxHp": "163",
@@ -71,7 +71,7 @@
     {
         "_id": "pigeot",
         "name": "Pigeot",
-        "sprite": "../sprites/pigeot.jpg",
+        "sprite": "../sprites/pigeot.png",
         "pType1": "Flying",
         "pType2": "Normal",
         "maxHp": "195",
@@ -85,7 +85,7 @@
     {
         "_id": "raticate",
         "name": "Raticate",
-        "sprite": "../sprites/raticate.jpg",
+        "sprite": "../sprites/raticate.png",
         "pType1": "normal",
         "maxHp": "146",
         "currHp": "146",
@@ -98,7 +98,7 @@
     {
         "_id": "fearow",
         "name": "Fearow",
-        "sprite": "../sprites/fearow.jpg",
+        "sprite": "../sprites/fearow.png",
         "pType1": "Flying",
         "pType2": "Normal",
         "maxHp": "163",
@@ -112,7 +112,7 @@
     {
         "_id": "arbok",
         "name": "Arbok",
-        "sprite": "../sprites/arbok.jpg",
+        "sprite": "../sprites/arbok.png",
         "pType1": "poison",
         "maxHp": "155",
         "currHp": "155",
@@ -125,7 +125,7 @@
     {
         "_id": "pikachu",
         "name": "Pikachu",
-        "sprite": "../sprites/pikachu.jpg",
+        "sprite": "../sprites/pikachu.png",
         "pType1": "electric",
         "maxHp": "111",
         "currHp": "111",
@@ -138,7 +138,7 @@
     {
         "_id": "raichu",
         "name": "Raichu",
-        "sprite": "../sprites/raichu.jpg",
+        "sprite": "../sprites/raichu.png",
         "pType1": "electric",
         "maxHp": "155",
         "currHp": "155",
@@ -151,7 +151,7 @@
     {
         "_id": "sandslash",
         "name": "Sandslash",
-        "sprite": "../sprites/sandslash.jpg",
+        "sprite": "../sprites/sandslash.png",
         "pType1": "ground",
         "maxHp": "181",
         "currHp": "181",
@@ -164,7 +164,7 @@
     {
         "_id": "nidoqueen",
         "name": "Nidoqueen",
-        "sprite": "../sprites/nidoqueen.jpg",
+        "sprite": "../sprites/nidoqueen.png",
         "pType1": "ground",
         "pType2": "poison",
         "maxHp": "207",
@@ -178,7 +178,7 @@
     {
         "_id": "nidoking",
         "name": "Nidoking",
-        "sprite": "../sprites/nidoking.jpg",
+        "sprite": "../sprites/nidoking.png",
         "pType1": "ground",
         "pType2": "poison",
         "maxHp": "191",
@@ -192,7 +192,7 @@
     {
         "_id": "clefable",
         "name": "Clefable",
-        "sprite": "../sprites/clefable.jpg",
+        "sprite": "../sprites/clefable.png",
         "pType1": "fairy",
         "maxHp": "216",
         "currHp": "216",
@@ -205,7 +205,7 @@
     {
         "_id": "ninetales",
         "name": "Ninetales",
-        "sprite": "../sprites/ninetales.jpg",
+        "sprite": "../sprites/ninetales.png",
         "pType1": "fire",
         "maxHp": "177",
         "currHp": "177",
@@ -218,7 +218,7 @@
     {
         "_id": "wigglytuff",
         "name": "Wigglytuff",
-        "sprite": "../sprites/wigglytuff.jpg",
+        "sprite": "../sprites/wigglytuff.png",
         "pType1": "fairy",
         "pType2": "normal",
         "maxHp": "295",
@@ -232,7 +232,7 @@
     {
         "_id": "golbat",
         "name": "Golbat",
-        "sprite": "../sprites/golbat.jpg",
+        "sprite": "../sprites/golbat.png",
         "pType1": "flying",
         "pType2": "poison",
         "maxHp": "181",
@@ -246,7 +246,7 @@
     {
         "_id": "vileplume",
         "name": "Vileplume",
-        "sprite": "../sprites/vileplume.jpg",
+        "sprite": "../sprites/vileplume.png",
         "pType1": "grass",
         "pType2": "poison",
         "maxHp": "181",
@@ -260,7 +260,7 @@
     {
         "_id": "parasect",
         "name": "Parasect",
-        "sprite": "../sprites/parasect.jpg",
+        "sprite": "../sprites/parasect.png",
         "pType1": "bug",
         "pType2": "grass",
         "maxHp": "155",
@@ -274,7 +274,7 @@
     {
         "_id": "venomoth",
         "name": "Venomoth",
-        "sprite": "../sprites/venomoth.jpg",
+        "sprite": "../sprites/venomoth.png",
         "pType1": "bug",
         "pType2": "poison",
         "maxHp": "172",
@@ -288,7 +288,7 @@
     {
         "_id": "dugtrio",
         "name": "Dugtrio",
-        "sprite": "../sprites/dugtrio.jpg",
+        "sprite": "../sprites/dugtrio.png",
         "pType1": "ground",
         "maxHp": "111",
         "currHp": "111",
@@ -301,7 +301,7 @@
     {
         "_id": "persian",
         "name": "Persian",
-        "sprite": "../sprites/persian.jpg",
+        "sprite": "../sprites/persian.png",
         "pType1": "normal",
         "maxHp": "163",
         "currHp": "163",
@@ -314,7 +314,7 @@
     {
         "_id": "golduck",
         "name": "Golduck",
-        "sprite": "../sprites/golduck.jpg",
+        "sprite": "../sprites/golduck.png",
         "pType1": "water",
         "maxHp": "190",
         "currHp": "190",
@@ -327,7 +327,7 @@
     {
         "_id": "primeape",
         "name": "Primeape",
-        "sprite": "../sprites/primeape.jpg",
+        "sprite": "../sprites/primeape.png",
         "pType1": "fighting",
         "maxHp": "163",
         "currHp": "163",
@@ -340,7 +340,7 @@
     {
         "_id": "arcanine",
         "name": "Arcanine",
-        "sprite": "../sprites/arcanine.jpg",
+        "sprite": "../sprites/arcanine.png",
         "pType1": "fire",
         "maxHp": "207",
         "currHp": "207",
@@ -353,7 +353,7 @@
     {
         "_id": "poliwrath",
         "name": "Poliwrath",
-        "sprite": "../sprites/poliwrath.jpg",
+        "sprite": "../sprites/poliwrath.png",
         "pType1": "fighting",
         "pType2": "water",
         "maxHp": "207",
@@ -367,7 +367,7 @@
     {
         "_id": "alakazam",
         "name": "Alakazam",
-        "sprite": "../sprites/alakazam.jpg",
+        "sprite": "../sprites/alakazam.png",
         "pType1": "psychic",
         "maxHp": "146",
         "currHp": "147",
@@ -380,7 +380,7 @@
     {
         "_id": "machamp",
         "name": "Machamp",
-        "sprite": "../sprites/machamp.jpg",
+        "sprite": "../sprites/machamp.png",
         "pType1": "fighting",
         "maxHp": "207",
         "currHp": "207",
@@ -393,7 +393,7 @@
     {
         "_id": "victreebel",
         "name": "Victreebel",
-        "sprite": "../sprites/victreebel.jpg",
+        "sprite": "../sprites/victreebel.png",
         "pType1": "grass",
         "pType2": "poison",
         "maxHp": "190",
@@ -407,7 +407,7 @@
     {
         "_id": "tentacruel",
         "name": "Tentacruel",
-        "sprite": "../sprites/tentacruel.jpg",
+        "sprite": "../sprites/tentacruel.png",
         "pType1": "poison",
         "pType2": "water",
         "maxHp": "190",
@@ -421,7 +421,7 @@
     {
         "_id": "golem",
         "name": "Golem",
-        "sprite": "../sprites/golem.jpg",
+        "sprite": "../sprites/golem.png",
         "pType1": "ground",
         "pType2": "rock",
         "maxHp": "190",
@@ -435,7 +435,7 @@
     {
         "_id": "rapidash",
         "name": "Rapidash",
-        "sprite": "../sprites/rapidash.jpg",
+        "sprite": "../sprites/rapidash.png",
         "pType1": "fire",
         "maxHp": "163",
         "currHp": "163",
@@ -448,7 +448,7 @@
     {
         "_id": "slowbro",
         "name": "Slowbro",
-        "sprite": "../sprites/slowbro.jpg",
+        "sprite": "../sprites/slowbro.png",
         "pType1": "psychic",
         "pType2": "water",
         "maxHp": "216",
@@ -462,7 +462,7 @@
     {
         "_id": "magneton",
         "name": "Magneton",
-        "sprite": "../sprites/magneton.jpg",
+        "sprite": "../sprites/magneton.png",
         "pType1": "electric",
         "pType2": "steel",
         "maxHp": "137",
@@ -476,7 +476,7 @@
     {
         "_id": "farfetchd",
         "name": "Farfetch'd",
-        "sprite": "../sprites/farfechd.jpg",
+        "sprite": "../sprites/farfechd.png",
         "pType1": "flying",
         "pType2": "normal",
         "maxHp": "141",
@@ -490,7 +490,7 @@
     {
         "_id": "dodrio",
         "name": "Dodrio",
-        "sprite": "../sprites/dodrio.jpg",
+        "sprite": "../sprites/dodrio.png",
         "pType1": "flying",
         "pType2": "normal",
         "maxHp": "155",
@@ -504,7 +504,7 @@
     {
         "_id": "dewgong",
         "name": "Dewgong",
-        "sprite": "../sprites/dewgong.jpg",
+        "sprite": "../sprites/dewgong.png",
         "pType1": "ice",
         "pType2": "water",
         "maxHp": "207",
@@ -518,7 +518,7 @@
     {
         "_id": "muk",
         "name": "Muk",
-        "sprite": "../sprites/muk.jpg",
+        "sprite": "../sprites/muk.png",
         "pType1": "poison",
         "maxHp": "233",
         "currHp": "233",
@@ -531,7 +531,7 @@
     {
         "_id": "cloyster",
         "name": "Cloyster",
-        "sprite": "../sprites/cloyster.jpg",
+        "sprite": "../sprites/cloyster.png",
         "pType1": "ice",
         "pType2": "water",
         "maxHp": "137",
@@ -545,7 +545,7 @@
     {
         "_id": "gengar",
         "name": "Gengar",
-        "sprite": "../sprites/gengar.jpg",
+        "sprite": "../sprites/gengar.png",
         "pType1": "ghost",
         "pType2": "poison",
         "maxHp": "155",
@@ -559,7 +559,7 @@
     {
         "_id": "onix",
         "name": "Onix",
-        "sprite": "../sprites/onix.jpg",
+        "sprite": "../sprites/onix.png",
         "pType1": "ground",
         "pType2": "rock",
         "maxHp": "111",
@@ -573,7 +573,7 @@
     {
         "_id": "hypno",
         "name": "Hypno",
-        "sprite": "../sprites/hypno.jpg",
+        "sprite": "../sprites/hypno.png",
         "pType1": "psychic",
         "maxHp": "198",
         "currHp": "198",
@@ -586,7 +586,7 @@
     {
         "_id": "kingler",
         "name": "Kingler",
-        "sprite": "../sprites/kingler.jpg",
+        "sprite": "../sprites/kingler.png",
         "pType1": "water",
         "maxHp": "146",
         "currHp": "146",
@@ -599,7 +599,7 @@
     {
         "_id": "electrode",
         "name": "Electrode",
-        "sprite": "../sprites/electrode.jpg",
+        "sprite": "../sprites/electrode.png",
         "pType1": "electric",
         "maxHp": "155",
         "currHp": "155",
@@ -612,7 +612,7 @@
     {
         "_id": "exeggutor",
         "name": "Exeggutor",
-        "sprite": "../sprites/exeggutor.jpg",
+        "sprite": "../sprites/exeggutor.png",
         "pType1": "grass",
         "pType2": "psychic",
         "maxHp": "216",
@@ -626,7 +626,7 @@
     {
         "_id": "marowak",
         "name": "Marowak",
-        "sprite": "../sprites/marowak.jpg",
+        "sprite": "../sprites/marowak.png",
         "pType1": "ground",
         "maxHp": "155",
         "currHp": "155",
@@ -639,7 +639,7 @@
     {
         "_id": "hitmonlee",
         "name": "Hitmonlee",
-        "sprite": "../sprites/hitmonlee.jpg",
+        "sprite": "../sprites/hitmonlee.png",
         "pType1": "fighting",
         "maxHp": "137",
         "currHp": "137",
@@ -652,7 +652,7 @@
     {
         "_id": "hitmonchan",
         "name": "Hitmonchan",
-        "sprite": "../sprites/hitmonchan.jpg",
+        "sprite": "../sprites/hitmonchan.png",
         "pType1": "fighting",
         "maxHp": "137",
         "currHp": "137",
@@ -665,7 +665,7 @@
     {
         "_id": "lickitung",
         "name": "Lickitung",
-        "sprite": "../sprites/lickitung.jpg",
+        "sprite": "../sprites/lickitung.png",
         "pType1": "normal",
         "maxHp": "207",
         "currHp": "207",
@@ -678,7 +678,7 @@
     {
         "_id": "weezing",
         "name": "Weezing",
-        "sprite": "../sprites/weezing.jpg",
+        "sprite": "../sprites/weezing.png",
         "pType1": "poison",
         "maxHp": "163",
         "currHp": "163",
@@ -691,7 +691,7 @@
     {
         "_id": "rhydon",
         "name": "Rhydon",
-        "sprite": "../sprites/rhydon.jpg",
+        "sprite": "../sprites/rhydon.png",
         "pType1": "ground",
         "pType2": "rock",
         "maxHp": "233",
@@ -705,7 +705,7 @@
     {
         "_id": "chansey",
         "name": "Chansey",
-        "sprite": "../sprites/chansey.jpg",
+        "sprite": "../sprites/chansey.png",
         "pType1": "normal",
         "maxHp": "487",
         "currHp": "487",
@@ -718,7 +718,7 @@
     {
         "_id": "tangela",
         "name": "Tangela",
-        "sprite": "../sprites/tangela.jpg",
+        "sprite": "../sprites/tangela.png",
         "pType1": "grass",
         "maxHp": "163",
         "currHp": "163",
@@ -731,7 +731,7 @@
     {
         "_id": "kangaskan",
         "name": "Kangaskan",
-        "sprite": "../sprites/kangaskan.jpg",
+        "sprite": "../sprites/kangaskan.png",
         "pType1": "normal",
         "maxHp": "233",
         "currHp": "233",
@@ -744,7 +744,7 @@
     {
         "_id": "seadra",
         "name": "Seadra",
-        "sprite": "../sprites/seadra.jpg",
+        "sprite": "../sprites/seadra.png",
         "pType1": "water",
         "maxHp": "146",
         "currHp": "146",
@@ -757,7 +757,7 @@
     {
         "_id": "seaking",
         "name": "Seaking",
-        "sprite": "../sprites/seaking.jpg",
+        "sprite": "../sprites/seaking.png",
         "pType1": "water",
         "maxHp": "190",
         "currHp": "190",
@@ -770,7 +770,7 @@
     {
         "_id": "starmie",
         "name": "Starmie",
-        "sprite": "../sprites/starmie.jpg",
+        "sprite": "../sprites/starmie.png",
         "pType1": "psychic",
         "pType2": "water",
         "maxHp": "155",
@@ -784,7 +784,7 @@
     {
         "_id": "mrmime",
         "name": "Mr. Mime",
-        "sprite": "../sprites/mrmime.jpg",
+        "sprite": "../sprites/mrmime.png",
         "pType1": "fairy",
         "pType2": "psychic",
         "maxHp": "120",
@@ -798,7 +798,7 @@
     {
         "_id": "scyther",
         "name": "Scyther",
-        "sprite": "../sprites/scyther.jpg",
+        "sprite": "../sprites/scyther.png",
         "pType1": "bug",
         "pType2": "flying",
         "maxHp": "172",
@@ -812,7 +812,7 @@
     {
         "_id": "jynx",
         "name": "Jynx",
-        "sprite": "../sprites/jynx.jpg",
+        "sprite": "../sprites/jynx.png",
         "pType1": "ice",
         "pType2": "psychic",
         "maxHp": "163",
@@ -826,7 +826,7 @@
     {
         "_id": "electabuzz",
         "name": "Electabuzz",
-        "sprite": "../sprites/electabuzz.jpg",
+        "sprite": "../sprites/electabuzz.png",
         "pType1": "electric",
         "maxHp": "163",
         "currHp": "163",
@@ -839,7 +839,7 @@
     {
         "_id": "magmar",
         "name": "Magmar",
-        "sprite": "../sprites/magmar.jpg",
+        "sprite": "../sprites/magmar.png",
         "pType1": "fire",
         "maxHp": "163",
         "currHp": "163",
@@ -852,7 +852,7 @@
     {
         "_id": "pinsir",
         "name": "Pinsir",
-        "sprite": "../sprites/pinsir.jpg",
+        "sprite": "../sprites/pinsir.png",
         "pType1": "bug",
         "maxHp": "163",
         "currHp": "163",
@@ -865,7 +865,7 @@
     {
         "_id": "tauros",
         "name": "Tauros",
-        "sprite": "../sprites/tauros.jpg",
+        "sprite": "../sprites/tauros.png",
         "pType1": "normal",
         "maxHp": "181",
         "currHp": "181",
@@ -878,7 +878,7 @@
     {
         "_id": "gyarados",
         "name": "Gyarados",
-        "sprite": "../sprites/gyarados.jpg",
+        "sprite": "../sprites/gyarados.png",
         "pType1": "flying",
         "pType2": "water",
         "maxHp": "216",
@@ -892,7 +892,7 @@
     {
         "_id": "lapras",
         "name": "Lapras",
-        "sprite": "../sprites/lapras.jpg",
+        "sprite": "../sprites/lapras.png",
         "pType1": "ice",
         "pType2": "water",
         "maxHp": "277",
@@ -906,7 +906,7 @@
     {
         "_id": "ditto",
         "name": "Ditto",
-        "sprite": "../sprites/ditto.jpg",
+        "sprite": "../sprites/ditto.png",
         "pType1": "normal",
         "maxHp": "134",
         "currHp": "134",
@@ -919,7 +919,7 @@
     {
         "_id": "vaporeon",
         "name": "Vaporeon",
-        "sprite": "../sprites/vaporeon.jpg",
+        "sprite": "../sprites/vaporeon.png",
         "pType1": "water",
         "maxHp": "277",
         "currHp": "277",
@@ -932,7 +932,7 @@
     {
         "_id": "jolteon",
         "name": "Jolteon",
-        "sprite": "../sprites/jolteon.jpg",
+        "sprite": "../sprites/jolteon.png",
         "pType1": "electric",
         "maxHp": "163",
         "currHp": "163",
@@ -945,7 +945,7 @@
     {
         "_id": "flareon",
         "name": "Flareon",
-        "sprite": "../sprites/flareon.jpg",
+        "sprite": "../sprites/flareon.png",
         "pType1": "fire",
         "maxHp": "163",
         "currHp": "163",
@@ -958,7 +958,7 @@
     {
         "_id": "porygon",
         "name": "Porygon",
-        "sprite": "../sprites/porygon.jpg",
+        "sprite": "../sprites/porygon.png",
         "pType1": "normal",
         "maxHp": "163",
         "currHp": "163",
@@ -971,7 +971,7 @@
     {
         "_id": "omastar",
         "name": "Omastar",
-        "sprite": "../sprites/omastar.jpg",
+        "sprite": "../sprites/omastar.png",
         "pType1": "rock",
         "pType2": "water",
         "maxHp": "172",
@@ -985,7 +985,7 @@
     {
         "_id": "kabutops",
         "name": "Kabutops",
-        "sprite": "../sprites/kabutops.jpg",
+        "sprite": "../sprites/kabutops.png",
         "pType1": "rock",
         "pType2": "water",
         "maxHp": "155",
@@ -999,7 +999,7 @@
     {
         "_id": "aerodactyl",
         "name": "Aerodactyl",
-        "sprite": "../sprites/aerodactyl.jpg",
+        "sprite": "../sprites/aerodactyl.png",
         "pType1": "flying",
         "pType2": "rock",
         "maxHp": "190",
@@ -1013,7 +1013,7 @@
     {
         "_id": "snorlax",
         "name": "Snorlax",
-        "sprite": "../sprites/snorlax.jpg",
+        "sprite": "../sprites/snorlax.png",
         "pType1": "normal",
         "maxHp": "330",
         "currHp": "330",
@@ -1026,7 +1026,7 @@
     {
         "_id": "articuno",
         "name": "Articuno",
-        "sprite": "../sprites/articuno.jpg",
+        "sprite": "../sprites/articuno.png",
         "pType1": "flying",
         "pType2": "ice",
         "maxHp": "207",
@@ -1040,7 +1040,7 @@
     {
         "_id": "zapdos",
         "name": "Zapdos",
-        "sprite": "../sprites/zapdos.jpg",
+        "sprite": "../sprites/zapdos.png",
         "pType1": "electric",
         "pType2": "flying",
         "maxHp": "207",
@@ -1054,7 +1054,7 @@
     {
         "_id": "moltres",
         "name": "Moltres",
-        "sprite": "../sprites/moltres.jpg",
+        "sprite": "../sprites/moltres.png",
         "pType1": "fire",
         "pType2": "flying",
         "maxHp": "207",
@@ -1068,7 +1068,7 @@
     {
         "_id": "dragonite",
         "name": "Dragonite",
-        "sprite": "../sprites/dragonite.jpg",
+        "sprite": "../sprites/dragonite.png",
         "pType1": "dragon",
         "pType2": "flying",
         "maxHp": "209",
@@ -1082,7 +1082,7 @@
     {
         "_id": "mewtwo",
         "name": "Mewtwo",
-        "sprite": "../sprites/mewtwo.jpg",
+        "sprite": "../sprites/mewtwo.png",
         "pType1": "psychic",
         "maxHp": "214",
         "currHp": "214",
@@ -1095,7 +1095,7 @@
     {
         "_id": "mew",
         "name": "Mew",
-        "sprite": "../sprites/mew.jpg",
+        "sprite": "../sprites/mew.png",
         "pType1": "psychic",
         "maxHp": "225",
         "currHp": "225",
