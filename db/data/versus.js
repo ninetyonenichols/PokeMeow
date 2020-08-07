@@ -7,7 +7,7 @@
  *     does twice as much damage as usual if used against a water-type pokemon.
  */
 
-exports.versus = {
+exports = {
     "bug": { 
         "bug": 1, "dark": 1, "dragon": 1, "electric": 1, "fairy": 1, 
         "fighting": 0.5, "fire": 2, "flying": 2, "ghost": 1, "grass": 0.5, 
