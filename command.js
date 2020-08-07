@@ -151,7 +151,7 @@ exports.command = function Command(cmdStr, database) {
 
     this.execView = (callback) => {
         console.log(pokemon);
-        callback(null, {main: pokemon, encounter: null, battle: null});
+        callback(null, {main: this.pokemon, encounter: null, battle: null});
 
     }
 
@@ -176,7 +176,7 @@ exports.command = function Command(cmdStr, database) {
     }
 
     this.execRun = (callback) => {
-        callback(null, {main: null, encounter: 'RUN', battle: null});
+        callback(null, {main: 'RUN', encounter: null, battle: null});
 
     }
 }
