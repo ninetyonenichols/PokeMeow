@@ -4,8 +4,10 @@ Some of these files can be used to initialize a
 collection. For example, types.json contains all the info needed to rebuild
 the 'types' collection if it were ever cleared from the database.
 
-To import moves.json into the types collection, use the command below:
+To import moves.json into the moves collection, use the command below:
+mongoimport --db pokemeow --collection moves --file movesList.js --jsonArray
 
+To clear the moves collection first and then import, use:
 mongoimport --db pokemeow --collection moves --drop --file movesList.js --jsonArray
 
 

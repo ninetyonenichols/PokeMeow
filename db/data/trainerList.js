@@ -14,7 +14,7 @@
                 "currHp": "163",
                 "atk": "169",
                 "def": "130",
-                "moves": "['bugBuzz', 'sludgeWave']"
+                "moves": ["bugBuzz", "sludgeWave"]
             },
             {
                 "_id": "scyther",
@@ -26,7 +26,7 @@
                 "currHp": "172",
                 "atk": "218",
                 "def": "170",
-                "moves": "['bugBuzz', 'skyAttack']"
+                "moves": ["bugBuzz", "skyAttack"]
             },
             {
                 "_id": "pinsir",
@@ -37,7 +37,7 @@
                 "currHp": "163",
                 "atk": "238",
                 "def": "182",
-                "moves": "['bugBuzz', 'closeCombat']"
+                "moves": ["bugBuzz", "closeCombat"]
             }
         ]
     },
@@ -55,7 +55,7 @@
                 "currHp": "207",
                 "atk": "227",
                 "def": "166",
-                "moves": "['flamethrower', 'earthquake']"
+                "moves": ["flamethrower", "earthquake"]
             },
             {
                 "_id": "exeggutor",
@@ -67,7 +67,7 @@
                 "currHp": "215",
                 "atk": "233",
                 "def": "149",
-                "moves": "['solarBeam', 'psychic']"
+                "moves": ["solarBeam", "psychic"]
             },
             {
                 "_id": "blastoise",
@@ -78,7 +78,7 @@
                 "currHp": "188",
                 "atk": "171",
                 "def": "207",
-                "moves": "['hydroCannon', 'iceBeam']"
+                "moves": ["hydroCannon", "iceBeam"]
             }
         ] 
     },
@@ -97,7 +97,7 @@
                 "currHp": "216",
                 "atk": "177",
                 "def": "180",
-                "moves": "['psychic', 'hydroCannon']"
+                "moves": ["psychic", "hydroCannon"]
             },
             {
                 "_id": "vaporeon",
@@ -108,7 +108,7 @@
                 "currHp": "277",
                 "atk": "205",
                 "def": "161",
-                "moves": "['hydroCannon', 'hyperBeam']"
+                "moves": ["hydroCannon", "hyperBeam"]
             },
             {
                 "_id": "lapras",
@@ -120,7 +120,7 @@
                 "currHp": "277",
                 "atk": "165",
                 "def": "174",
-                "moves": "['iceBeam', 'hydroCannon']"
+                "moves": ["iceBeam", "hydroCannon"]
             }
         ] 
     },
@@ -138,7 +138,7 @@
                 "currHp": "163",
                 "atk": "150",
                 "def": "136",
-                "moves": "['hyperBeam', 'moonblast']"
+                "moves": ["hyperBeam", "moonblast"]
             },
             {
                 "_id": "rhydon",
@@ -150,7 +150,7 @@
                 "currHp": "233",
                 "atk": "222",
                 "def": "171",
-                "moves": "['earthquake', 'rockSlide']"
+                "moves": ["earthquake", "rockSlide"]
             },
             {
                 "_id": "nidoking",
@@ -162,7 +162,7 @@
                 "currHp": "191",
                 "atk": "204",
                 "def": "156",
-                "moves": "['earthquake', 'sludgeWave']"
+                "moves": ["earthquake", "sludgeWave"]
             }
         ] 
     },
@@ -181,7 +181,7 @@
                 "currHp": "216",
                 "atk": "237",
                 "def": "186",
-                "moves": "['hydroCannon', 'outrage']"
+                "moves": ["hydroCannon", "outrage"]
             },
             {
                 "_id": "charizard",
@@ -193,7 +193,7 @@
                 "currHp": "186",
                 "atk": "223",
                 "def": "173",
-                "moves": "['flamethrower', 'skyAttack']"
+                "moves": ["flamethrower", "skyAttack"]
             },
             {
                 "_id": "dragonite",
@@ -205,7 +205,7 @@
                 "currHp": "209",
                 "atk": "263",
                 "def": "198",
-                "moves": "['outrage', 'skyAttack']"
+                "moves": ["outrage", "skyAttack"]
             }
         ] 
     }

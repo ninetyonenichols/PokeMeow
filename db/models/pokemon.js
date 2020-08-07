@@ -44,7 +44,7 @@ module.exports = (mongoose) => {
 
     // Generates a new random pokemon
     PokemonSchema.statics.encounter = function(callback) {
-        this.count()
+        this.countDocuments()
             .exec((err, count) => { 
                 if (err) return callback(err); 
                 var rand = Math.floor(Math.random() * count); 
