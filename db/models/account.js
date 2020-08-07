@@ -8,6 +8,7 @@
 const crypto = require('crypto');
 
 module.exports = (mongoose) => {
+    const Trainer = require('./trainer.js')(mongoose);
     const Schema = mongoose.Schema;
 
     // User accounts
@@ -15,6 +16,7 @@ module.exports = (mongoose) => {
         username: { type: String, unique: true, required: true },
         passHash: { type: String, required: true },
         passSalt: { type: String, required: true },
+        trainer: { type: ObjectId, ref: 'Trainer' },
         dev: { type: Boolean, default: false }
     });
     const Account = mongoose.model('Account', AccountSchema);
@@ -41,23 +43,55 @@ module.exports = (mongoose) => {
                     if (err) throw err;
                     const key = derivedKey.toString('hex');
 
+                    const newTrainer = Trainer.create(user);
+
                     const newAccount = new Account({
                         username: user,
                         passHash: key,
-                        passSalt: salt
+                        passSalt: salt,
+                        trainer: newTrainer._id
                     });
 
-                    newAccount.save((err) => {
+                    newTrainer.save((err) => {
                         if (err) {
                             console.log('Error creating account: ' + err);
-                            //if username already exists: err.code == 11000
                             callback(false);
                         } else {
-                            console.log('USER CREATED:\n' + newAccount.username);
-                            callback(true);
+                            newAccount.save((err) => {
+                                if (err) {
+                                    console.log('Error creating account: ' + err);
+                                    //if username already exists: err.code == 11000
+                                    callback(false);
+                                } else {
+                                    console.log('USER CREATED:\n' + newAccount.username);
+                                    callback(true);
+                                }
+                            });
                         }
                     });
                 });
+            });
+        },
+
+        /*  Description: This function searches the database for an account
+         *      matching the given 'user' and returns the account's trainer.
+         *  Parameters:
+         *      user - the username
+         *      callback(boolean) - the callback function (basically used in
+         *          place of a 'return' statement)
+         */
+        getTrainer: function (user, callback) => {
+            Account.findOne({username: user})
+            .populate('trainer')
+            .exec((err, result) => {
+                if (err) {
+                    console.log('Error querying account: ' + err);
+                    callback(err, null);
+                } else if (result) {
+                    callback(null, result.trainer);
+                } else {
+                    callback(null, null);
+                }
             });
         },
 

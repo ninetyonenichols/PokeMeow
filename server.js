@@ -101,7 +101,7 @@ app.get('/logout', (req, res) => {
 // Handle a post request that contains a pokemeow command (req.body.command)
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body);
-    const cmd = new Command(req.body.command, database);
+    const cmd = new Command(req.body.command, req.session.user, database);
     cmd.parseMain();
     cmd.execute((err, output) => {
         if (err) console.log('ERROR: ' + err);
@@ -113,7 +113,7 @@ app.post('/command/', (req, res) => {
 // Handle a post request that contains a random encounter command
 app.post('/command/rand-enc/', (req, res) => {
     console.log('/command/rand-enc/: ' + req.body);
-    const cmd = new Command(req.body.command, database);
+    const cmd = new Command(req.body.command, req.session.user, database);
     cmd.parseEnc();
     cmd.execute((err, output) => {
         if (err) console.log('ERROR: ' + err);

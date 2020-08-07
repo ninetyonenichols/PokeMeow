@@ -40,9 +40,11 @@
  *      cmdStr - the command in string form
  *      database - the database that the command manipulates
  */
-exports.command = function Command(cmdStr, database) {
+exports.command = function Command(cmdStr, user, database) {
     this.db = database;
+    this.user = user;
     this.cmd = cmdStr.split(' ');
+    this.output = {main: null, encounter: null, battle: null};
     this.pokemon = null;
 
     //Execute the command's function (maybe just remove this?)
@@ -121,32 +123,37 @@ exports.command = function Command(cmdStr, database) {
     // Execute Helper Functions //
 
     this.invalidCommand = (callback) => {
-        callback('Invalid Command',{main: null, encounter: null, battle: null});
+        callback('Invalid Command', this.output);
     }
 
     this.execEncounter = (callback) => {
         //execute command
         //this.db.startEncounter((err, result) => {
             //success:
-            callback(null, {main: null, encounter: 'ENCOUNTER', battle: null});
+            this.output.encounter = 'ENCOUNTER';
+            callback(null, this.output);
             //error:
             //callback(err, {main: null, encounter: null, battle: null});
         //});
     }
 
     this.execParty = (callback) => {
-        //success:
-        if (true) {
-            callback(null, {main: 'PARTY', encounter: null, battle: null});
-
-        //error:
-        } else {
-            callback(err, {main: null, encounter: null, battle: null});
-        }
+        this.db.account.getTrainer(this.user, (err, trainer) => {
+            if (err) {
+                console.log('Error getting trainer: ' + err);
+                callback(err, this.output);
+            } else if (trainer) {
+                this.output.main = trainer.party;
+                callback(null, this.output);
+            } else {
+                callback('Could not find trainer', this.output);
+            }
+        });
     }
 
     this.execViewCaught = (callback) => {
-        callback(null, {main: 'CAUGHT', encounter: null, battle: null});
+        this.output.main = 'CAUGHT';
+        callback(null, this.output);
     }
 
     this.execView = (callback) => {
