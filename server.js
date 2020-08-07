@@ -11,6 +11,7 @@
 
 const express = require('express');
 const database = require('./db/db.js');
+const Command = require('./command.js').command;
 const session = require('express-session');
 
 // Set up the express server
@@ -100,79 +101,22 @@ app.get('/logout', (req, res) => {
 // Handle a post request that contains a pokemeow command (req.body.command)
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body);
-    const cmd = parseCommand(req.body.command);
-    res.json({main: cmd, encounter: null});
+    const cmd = new Command(req.body.command, database);
+    cmd.parse();
+    cmd.execute((err, output) => {
+        if (err) console.log('ERROR: ' + err);
+        res.json(output);
+    });
 });
-
-
-/*  Description: This function takes a string that contains a command, parses
- *      it, and returns an object representing the command. If the command is
- *      invalid, it returns null.
- *  Parameters:
- *      command - the user's command string
- */
-function parseCommand(command) {
-    command = command.split(' ');
-    switch (command[0]) {
-        case 'random-encounter':
-            return 'Random Encounter';
-            break;
-        case 'view-party':
-            return 'View Party';
-            break;
-        case 'view-pokemon':
-            return 'View Pokemon';
-            break;
-        case 'view':
-            if (command.length == 2) {
-                return 'View ' + command[1];
-                break;
-            }
-        case 'remove':
-            if (command.length == 2) {
-                return 'Remove ' + command[1] + ' from Party';
-                break;
-            }
-        case 'add':
-            if (command.length == 2) {
-                return 'Add ' + command[1] + ' to Party';
-                break;
-            }
-        case 'release':
-            if (command.length == 2) {
-                return 'Release ' + command[1];
-                break;
-            }
-        default:
-            return null;
-    }
-}
 
 
 // Handle a post request that contains a random encounter command
 app.post('/command/rand-enc/', (req, res) => {
     console.log('/command/rand-enc/: ' + req.body);
-    const cmd = parseRandEncCommand(req.body.command);
-    res.json({main: null, encounter: cmd});
+    const cmd = new Command(req.body.command, database);
+    cmd.parse();
+    cmd.execute((err, output) => {
+        if (err) console.log('ERROR: ' + err);
+        res.json(output);
+    });
 });
-
-
-/*  Description: This function takes a string that contains a command specific
- *      to a random encounter, parses it, and returns an object representing
- *      the command. If the command is invalid, it returns null.
- *  Parameters:
- *      command - the user's command string
- */
-function parseRandEncCommand(command) {
-    command = command.split(' ');
-    switch (command[0]) {
-        case 'throw-ball':
-            return 'Throw Ball';
-            break;
-        case 'run':
-            return 'Run Away';
-            break;
-        default:
-            return null;
-    }
-}
