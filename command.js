@@ -43,17 +43,68 @@
 exports.command = function Command(cmdStr, database) {
     this.db = database;
     this.cmd = cmdStr.split(' ');
-
-    //Parse the command and set execute to appropriate function
-    this.parse = function() {
-        this.execute = parseMainCmd(this.cmd, parseEncCmd);
-    }
+    this.pokemon = null;
 
     //Execute the command's function (maybe just remove this?)
     this.execute = function(callback) {
         callback('Command not parsed yet!',
-                 {main: null, encounter: null, battle: null});
+        {main: null, encounter: null, battle: null});
     };
+
+    //Parse the command and set execute to appropriate function
+    this.parseMain = function() {
+        switch (this.cmd[0]) {
+            case 'random-encounter':
+                this.execute = this.execEncounter;
+                break;
+            case 'view-party':
+                this.execute = this.execParty;
+                break;
+            case 'view-pokemon':
+                this.execute = this.execViewCaught;
+                break;
+            case 'view':
+                if (this.cmd.length == 2) {
+                    this.pokemon = this.cmd[1];
+                    this.execute = this.execView;
+                    break;
+                }
+            case 'remove':
+                if (this.cmd.length == 2) {
+                    this.pokemon = this.cmd[1];
+                    this.execute = this.execRemove;
+                    break;
+                }
+            case 'add':
+                if (this.cmd.length == 2) {
+                    this.pokemon = this.cmd[1];
+                    this.execute = this.execAdd;
+                    break;
+                }
+            case 'release':
+                if (this.cmd.length == 2) {
+                    this.pokemon = this.cmd[1];
+                    this.execute = this.execRelease;
+                    break;
+                }
+            default:
+                this.execute = this.invalidCommand;
+        }
+    }
+
+    //Parse the command and set execute to appropriate function
+    this.parseEnc = function() {
+        switch (this.cmd[0]) {
+            case 'throw-ball':
+                this.execute = this.execThrow;
+                break;
+            case 'run':
+                this.execute = this.execRun;
+                break;
+            default:
+                this.execute = this.invalidCommand;
+        }
+    }
 
     /* Use:
 
@@ -67,73 +118,13 @@ exports.command = function Command(cmdStr, database) {
     */
 
 
-    // Parser Helper Functions //
-
-    function parseMainCmd(cmd, next) {
-        switch (cmd[0]) {
-            case 'random-encounter':
-                return execEncounter;
-                break;
-            case 'view-party':
-                return execParty;
-                break;
-            case 'view-pokemon':
-                return execViewCaught;
-                break;
-            case 'view':
-                if (cmd.length == 2) {
-                    this.pokemon = cmd[1];
-                    return execView;
-                    break;
-                }
-            case 'remove':
-                if (cmd.length == 2) {
-                    this.pokemon = cmd[1];
-                    return execRemove;
-                    break;
-                }
-            case 'add':
-                if (cmd.length == 2) {
-                    this.pokemon = cmd[1];
-                    return execAdd;
-                    break;
-                }
-            case 'release':
-                if (cmd.length == 2) {
-                    this.pokemon = cmd[1];
-                    return execRelease;
-                    break;
-                }
-            default:
-                return next(cmd, parseBattleCmd);
-        }
-    }
-
-    function parseEncCmd(cmd, next) {
-        switch (cmd[0]) {
-            case 'throw-ball':
-                return execThrow;
-                break;
-            case 'run':
-                return execRun;
-                break;
-            default:
-                return next();
-        }
-    }
-
-    function parseBattleCmd(cmd, next) {
-        return invalidCommand;
-    }
-
-
     // Execute Helper Functions //
 
-    function invalidCommand(callback) {
+    this.invalidCommand = (callback) => {
         callback('Invalid Command',{main: null, encounter: null, battle: null});
     }
 
-    function execEncounter(callback) {
+    this.execEncounter = (callback) => {
         //execute command
         //this.db.startEncounter((err, result) => {
             //success:
@@ -143,7 +134,7 @@ exports.command = function Command(cmdStr, database) {
         //});
     }
 
-    function execParty(callback) {
+    this.execParty = (callback) => {
         //success:
         if (true) {
             callback(null, {main: 'PARTY', encounter: null, battle: null});
@@ -154,36 +145,37 @@ exports.command = function Command(cmdStr, database) {
         }
     }
 
-    function execViewCaught(callback) {
+    this.execViewCaught = (callback) => {
         callback(null, {main: 'CAUGHT', encounter: null, battle: null});
     }
 
-    function execView(callback) {
-        callback(null, {main: this.pokemon, encounter: null, battle: null});
+    this.execView = (callback) => {
+        console.log(pokemon);
+        callback(null, {main: pokemon, encounter: null, battle: null});
 
     }
 
-    function execRemove(callback) {
+    this.execRemove = (callback) => {
         callback(null, {main: 'REMOVE', encounter: null, battle: null});
 
     }
 
-    function execAdd(callback) {
+    this.execAdd = (callback) => {
         callback(null, {main: 'ADD', encounter: null, battle: null});
 
     }
 
-    function execRelease(callback) {
+    this.execRelease = (callback) => {
         callback(null, {main: 'RELEASE', encounter: null, battle: null});
 
     }
 
-    function execThrow(callback) {
+    this.execThrow = (callback) => {
         callback(null, {main: null, encounter: 'THROW', battle: null});
 
     }
 
-    function execRun(callback) {
+    this.execRun = (callback) => {
         callback(null, {main: null, encounter: 'RUN', battle: null});
 
     }

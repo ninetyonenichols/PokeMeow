@@ -102,7 +102,7 @@ app.get('/logout', (req, res) => {
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body);
     const cmd = new Command(req.body.command, database);
-    cmd.parse();
+    cmd.parseMain();
     cmd.execute((err, output) => {
         if (err) console.log('ERROR: ' + err);
         res.json(output);
@@ -114,7 +114,7 @@ app.post('/command/', (req, res) => {
 app.post('/command/rand-enc/', (req, res) => {
     console.log('/command/rand-enc/: ' + req.body);
     const cmd = new Command(req.body.command, database);
-    cmd.parse();
+    cmd.parseEnc();
     cmd.execute((err, output) => {
         if (err) console.log('ERROR: ' + err);
         res.json(output);
