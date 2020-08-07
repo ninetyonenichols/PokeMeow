@@ -100,7 +100,6 @@ app.get('/logout', (req, res) => {
 // Handle a post request that contains a pokemeow command (req.body.command)
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body);
-    console.log(req.body.command);
     const c = new Command(req.body.command, database);
     c.parse();
     c.execute((err, output) => {
@@ -153,7 +152,8 @@ function Command(cmdStr, database) {
     // Parser Helper Functions //
 
     function parseMainCmd(next) {
-        switch (this.cmd[0]) {
+        const c = this.cmd;
+        switch (c[0]) {
             case 'random-encounter':
                 return execEncounter;
                 break;
@@ -193,7 +193,8 @@ function Command(cmdStr, database) {
     }
 
     function parseEncCmd(next) {
-        switch (this.cmd[0]) {
+        const c = this.cmd;
+        switch (c[0]) {
             case 'throw-ball':
                 return execThrow;
                 break;
