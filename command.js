@@ -46,7 +46,7 @@ exports.command = function Command(cmdStr, database) {
 
     //Parse the command and set execute to appropriate function
     this.parse = function() {
-        this.execute = parseMainCmd(parseEncCmd);
+        this.execute = parseMainCmd(this.cmd, parseEncCmd);
     }
 
     //Execute the command's function (maybe just remove this?)
@@ -69,8 +69,8 @@ exports.command = function Command(cmdStr, database) {
 
     // Parser Helper Functions //
 
-    function parseMainCmd(next) {
-        switch (this.cmd[0]) {
+    function parseMainCmd(cmd, next) {
+        switch (cmd[0]) {
             case 'random-encounter':
                 return execEncounter;
                 break;
@@ -81,36 +81,36 @@ exports.command = function Command(cmdStr, database) {
                 return execViewCaught;
                 break;
             case 'view':
-                if (command.length == 2) {
-                    this.pokemon = command[1];
+                if (cmd.length == 2) {
+                    this.pokemon = cmd[1];
                     return execView;
                     break;
                 }
             case 'remove':
-                if (command.length == 2) {
-                    this.pokemon = command[1];
+                if (cmd.length == 2) {
+                    this.pokemon = cmd[1];
                     return execRemove;
                     break;
                 }
             case 'add':
-                if (command.length == 2) {
-                    this.pokemon = command[1];
+                if (cmd.length == 2) {
+                    this.pokemon = cmd[1];
                     return execAdd;
                     break;
                 }
             case 'release':
-                if (command.length == 2) {
-                    this.pokemon = command[1];
+                if (cmd.length == 2) {
+                    this.pokemon = cmd[1];
                     return execRelease;
                     break;
                 }
             default:
-                return next(parseBattleCmd);
+                return next(cmd, parseBattleCmd);
         }
     }
 
-    function parseEncCmd(next) {
-        switch (this.cmd[0]) {
+    function parseEncCmd(cmd, next) {
+        switch (cmd[0]) {
             case 'throw-ball':
                 return execThrow;
                 break;
@@ -122,28 +122,36 @@ exports.command = function Command(cmdStr, database) {
         }
     }
 
-    function parseBattleCmd(next) {
-        return null;
+    function parseBattleCmd(cmd, next) {
+        return invalidCommand;
     }
 
 
     // Execute Helper Functions //
 
+    function invalidCommand(callback) {
+        callback('Invalid Command',{main: null, encounter: null, battle: null});
+    }
+
     function execEncounter(callback) {
         //execute command
-        this.db.startEncounter((err, result) => {
+        //this.db.startEncounter((err, result) => {
             //success:
             callback(null, {main: null, encounter: 'ENCOUNTER', battle: null});
             //error:
-            callback(err, {main: null, encounter: null, battle: null});
-        });
+            //callback(err, {main: null, encounter: null, battle: null});
+        //});
     }
 
     function execParty(callback) {
         //success:
-        callback(null, {main: 'PARTY', encounter: null, battle: null});
+        if (true) {
+            callback(null, {main: 'PARTY', encounter: null, battle: null});
+
         //error:
-        callback(err, {main: null, encounter: null, battle: null});
+        } else {
+            callback(err, {main: null, encounter: null, battle: null});
+        }
     }
 
     function execViewCaught(callback) {
