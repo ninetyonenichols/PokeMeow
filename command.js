@@ -70,7 +70,7 @@ exports.command = function Command(cmdStr, database) {
     // Parser Helper Functions //
 
     function parseMainCmd(next) {
-        switch (command[0]) {
+        switch (this.cmd[0]) {
             case 'random-encounter':
                 return execEncounter;
                 break;
@@ -110,7 +110,7 @@ exports.command = function Command(cmdStr, database) {
     }
 
     function parseEncCmd(next) {
-        switch (command[0]) {
+        switch (this.cmd[0]) {
             case 'throw-ball':
                 return execThrow;
                 break;

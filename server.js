@@ -11,7 +11,6 @@
 
 const express = require('express');
 const database = require('./db/db.js');
-const Command = require('./command.js').command;
 const session = require('express-session');
 
 // Set up the express server
@@ -120,3 +119,144 @@ app.post('/command/rand-enc/', (req, res) => {
         res.json(output);
     });
 });
+
+function Command(cmdStr, database) {
+    this.db = database;
+    this.cmd = cmdStr.split(' ');
+
+    //Parse the command and set execute to appropriate function
+    this.parse = function() {
+        this.execute = parseMainCmd(parseEncCmd);
+    }
+
+    //Execute the command's function (maybe just remove this?)
+    this.execute = function(callback) {
+        callback('Command not parsed yet!',
+                 {main: null, encounter: null, battle: null});
+    };
+
+    /* Use:
+
+    const c = new Command(cmd, db);
+    c.parse();
+    c.execute((err, output) => {
+        if (err) console.log('Error: ' + err);
+        res.json(output);
+    });
+
+    */
+
+
+    // Parser Helper Functions //
+
+    function parseMainCmd(next) {
+        switch (this.cmd[0]) {
+            case 'random-encounter':
+                return execEncounter;
+                break;
+            case 'view-party':
+                return execParty;
+                break;
+            case 'view-pokemon':
+                return execViewCaught;
+                break;
+            case 'view':
+                if (command.length == 2) {
+                    this.pokemon = command[1];
+                    return execView;
+                    break;
+                }
+            case 'remove':
+                if (command.length == 2) {
+                    this.pokemon = command[1];
+                    return execRemove;
+                    break;
+                }
+            case 'add':
+                if (command.length == 2) {
+                    this.pokemon = command[1];
+                    return execAdd;
+                    break;
+                }
+            case 'release':
+                if (command.length == 2) {
+                    this.pokemon = command[1];
+                    return execRelease;
+                    break;
+                }
+            default:
+                return next(parseBattleCmd);
+        }
+    }
+
+    function parseEncCmd(next) {
+        switch (this.cmd[0]) {
+            case 'throw-ball':
+                return execThrow;
+                break;
+            case 'run':
+                return execRun;
+                break;
+            default:
+                return next();
+        }
+    }
+
+    function parseBattleCmd(next) {
+        return null;
+    }
+
+
+    // Execute Helper Functions //
+
+    function execEncounter(callback) {
+        //execute command
+        this.db.startEncounter((err, result) => {
+            //success:
+            callback(null, {main: null, encounter: 'ENCOUNTER', battle: null});
+            //error:
+            callback(err, {main: null, encounter: null, battle: null});
+        });
+    }
+
+    function execParty(callback) {
+        //success:
+        callback(null, {main: 'PARTY', encounter: null, battle: null});
+        //error:
+        callback(err, {main: null, encounter: null, battle: null});
+    }
+
+    function execViewCaught(callback) {
+        callback(null, {main: 'CAUGHT', encounter: null, battle: null});
+    }
+
+    function execView(callback) {
+        callback(null, {main: this.pokemon, encounter: null, battle: null});
+
+    }
+
+    function execRemove(callback) {
+        callback(null, {main: 'REMOVE', encounter: null, battle: null});
+
+    }
+
+    function execAdd(callback) {
+        callback(null, {main: 'ADD', encounter: null, battle: null});
+
+    }
+
+    function execRelease(callback) {
+        callback(null, {main: 'RELEASE', encounter: null, battle: null});
+
+    }
+
+    function execThrow(callback) {
+        callback(null, {main: null, encounter: 'THROW', battle: null});
+
+    }
+
+    function execRun(callback) {
+        callback(null, {main: null, encounter: 'RUN', battle: null});
+
+    }
+}
