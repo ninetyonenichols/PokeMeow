@@ -7,8 +7,7 @@
 
 const crypto = require('crypto');
 
-module.exports = (mongoose) => {
-    const Trainer = require('./trainer.js')(mongoose);
+module.exports = (Trainer, mongoose) => {
     const Schema = mongoose.Schema;
 
     // User accounts
@@ -16,7 +15,7 @@ module.exports = (mongoose) => {
         username: { type: String, unique: true, required: true },
         passHash: { type: String, required: true },
         passSalt: { type: String, required: true },
-        trainer: { type: ObjectId, ref: 'Trainer' },
+        trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },
         dev: { type: Boolean, default: false }
     });
     const Account = mongoose.model('Account', AccountSchema);
@@ -80,7 +79,7 @@ module.exports = (mongoose) => {
          *      callback(boolean) - the callback function (basically used in
          *          place of a 'return' statement)
          */
-        getTrainer: function (user, callback) => {
+        getTrainer: function (user, callback) {
             Account.findOne({username: user})
             .populate('trainer')
             .exec((err, result) => {

@@ -120,30 +120,41 @@ exports.command = function Command(cmdStr, user, database) {
     */
 
 
+    // Database Access Helper Functions //
+
+    this.getTrainer = function(callback) {
+        this.db.account.getTrainer(this.user, (err, trainer) => {
+            if (err) {
+                console.log('Error getting trainer: ' + err);
+                callback(null);
+            } else if (trainer) {
+                callback(trainer);
+            } else {
+                callback(null);
+            }
+        });
+    }
+
+
     // Execute Helper Functions //
 
+    // Represents an invalid command
     this.invalidCommand = (callback) => {
         callback('Invalid Command', this.output);
     }
 
-    this.execEncounter = (callback) => {
-        //execute command
-        //this.db.startEncounter((err, result) => {
-            //success:
-            this.output.encounter = 'ENCOUNTER';
-            callback(null, this.output);
-            //error:
-            //callback(err, {main: null, encounter: null, battle: null});
-        //});
-    }
-
+    // The 'view-party' command
     this.execParty = (callback) => {
         this.db.account.getTrainer(this.user, (err, trainer) => {
             if (err) {
                 console.log('Error getting trainer: ' + err);
                 callback(err, this.output);
             } else if (trainer) {
-                this.output.main = trainer.party;
+                if (trainer.party.length == 0) {
+                    this.output.main = 'No party pokemon';
+                } else {
+                    this.output.main = trainer.party;
+                }
                 callback(null, this.output);
             } else {
                 callback('Could not find trainer', this.output);
@@ -151,6 +162,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
+    // The 'view-pokemon' command
     this.execViewCaught = (callback) => {
         this.output.main = 'CAUGHT';
         callback(null, this.output);
@@ -176,13 +188,30 @@ exports.command = function Command(cmdStr, user, database) {
 
     }
 
-    this.execThrow = (callback) => {
-        callback(null, {main: null, encounter: 'THROW', battle: null});
-
+    // The 'random-encounter' command
+    this.execEncounter = (callback) => {
+        this.db.pokemon.encounter((poke) => {
+            //this.getTrainer
+            this.output.encounter = poke;
+            callback(null, this.output);
+        });
     }
 
-    this.execRun = (callback) => {
-        callback(null, {main: 'RUN', encounter: null, battle: null});
+    // The 'throw-ball' command
+    this.execThrow = (callback) => {
+        //access the pokemon in the encounter
+        //this.getTrainer((trainer) => {
 
+        //});
+        //determine if caught or not
+        //if caught add pokemon to trainer
+        this.output.encounter = 'THREW BALL';
+        callback(null, this.output);
+    }
+
+    // The 'run' command
+    this.execRun = (callback) => {
+        this.output.main = 'RAN AWAY';
+        callback(null, this.output);
     }
 }

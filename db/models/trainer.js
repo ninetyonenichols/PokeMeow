@@ -16,7 +16,8 @@ module.exports = (mongoose) => {
         photo: { type: String, default: '../avatars/default.jpg' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
-        battle: { type: ObjectId, ref: 'Battle' }
+        battle: { type: ObjectId, ref: 'Battle' },
+        encounter: { type: ObjectId, ref: 'Pokemon' }
     });
 
     // Creates a new trainer document
@@ -37,10 +38,10 @@ module.exports = (mongoose) => {
     // Removes a pokemon from this trainer's party
     TrainerSchema.methods.removeParty = function(pkmn) {
         for (i in this.party) {
-            if (this.party[i]._id == pkmn._id) { 
+            if (this.party[i]._id == pkmn._id) {
                 delete this.party[i];
             }
-        } 
+        }
     };
 
     // Sets a reference to the battle that this trainer is currently fighting
