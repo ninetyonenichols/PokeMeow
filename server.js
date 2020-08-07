@@ -100,6 +100,7 @@ app.get('/logout', (req, res) => {
 // Handle a post request that contains a pokemeow command (req.body.command)
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body);
+    console.log(req.body.command);
     const cmd = new Command(req.body.command, database);
     cmd.parse();
     cmd.execute((err, output) => {
