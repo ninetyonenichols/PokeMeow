@@ -16,6 +16,7 @@ module.exports = (mongoose) => {
         photo: { type: String, default: '../avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
+        active: PokemonSchema,
         battle: { type: ObjectId, ref: 'Battle' },
         encounter: PokemonSchema
     });
@@ -79,6 +80,15 @@ module.exports = (mongoose) => {
         var spaceAvail = this.party.length < MAX_PARTY_SIZE;
         if (spaceAvail) { this.addParty(pkmn); } 
     } 
+
+    // Sets this trainer's active pokemon
+    TrainerSchema.methods.setActive = function(pkmn) {
+        this.active = pkmn;
+    } 
+
+    // Sends out the next pokemon (intended for AI use)
+    TrainerSchema.methods.nextPkmn = function() {
+    }
 
     return mongoose.model('Trainer', TrainerSchema);
 };

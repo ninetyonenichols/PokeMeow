@@ -12,7 +12,12 @@ module.exports = (mongoose) => {
     const ObjectId = Schema.Types.ObjectId;
 
     const MoveSchema = new Schema({
-        name: { type: String, unique: true, required: true },
+        name: { type: String, unique: true, required: true, enum: [
+            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast', 
+            'closeCombat', 'flamethrower', 'skyAttack', 'shadowBall',
+            'solarBeam', 'earthquake', 'iceBeam', 'hyperBeam', 'sludgeWave',
+            'psychic', 'rockSlide', 'flashCannon', 'hydroCannon'
+        ]},
         pType: {
             type: String,
             enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
@@ -25,16 +30,20 @@ module.exports = (mongoose) => {
 
     // Calculates the damage done by this move from pkmn1 against pkmn2
     // Damage = Floor ((1/2)(movepower)(att/def)(STAB)(Effectiveness)) + 1
-    MoveSchema.methods.damage = function(attacker, defender) {
-        let mvDmg = this.baseDmg;
-        let atk = attacker.atk;
-        let def = defender.def;
-        let mvType = this.pType;
-        let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
-            stab_bonus : 1;
-        let effectiveness = vs[defender.pType1][mvType] * 
-            vs[defender.pType2][mvType];
-        return Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);  
+    MoveSchema.statics.damage = function(moveName, attacker, defender, callback) {
+        db.model('Move').findOne({ name: moveName })
+        .exec((err, move) => {
+            let mvDmg = move.baseDmg;
+            let atk = attacker.atk;
+            let def = defender.def;
+            let mvType = move.pType;
+            let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
+                stab_bonus : 1;
+            let effectiveness = vs[defender.pType1][mvType] * 
+                vs[defender.pType2][mvType];
+            let result = Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);  
+            callback(result);
+        })
     }
 
     //getMove: function(move, callback) {}

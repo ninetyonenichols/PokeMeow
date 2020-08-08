@@ -5,7 +5,6 @@
         "photo": "../avatars/bugCatcher.png",
         "party": [
             {
-                "_id": "beedrill",
                 "name": "Beedrill",
                 "sprite": "../sprites/beedrill.png",
                 "pType1": "bug",
@@ -17,7 +16,6 @@
                 "moves": ["bugBuzz", "sludgeWave"]
             },
             {
-                "_id": "scyther",
                 "name": "Scyther",
                 "sprite": "../sprites/scyther.png",
                 "pType1": "bug",
@@ -29,7 +27,6 @@
                 "moves": ["bugBuzz", "skyAttack"]
             },
             {
-                "_id": "pinsir",
                 "name": "Pinsir",
                 "sprite": "../sprites/pinsir.png",
                 "pType1": "bug",
@@ -47,7 +44,6 @@
         "photo": "../avatars/blue.png",
         "party": [
             {
-                "_id": "arcanine",
                 "name": "Arcanine",
                 "sprite": "../sprites/arcanine.png",
                 "pType1": "fire",
@@ -58,7 +54,6 @@
                 "moves": ["flamethrower", "earthquake"]
             },
             {
-                "_id": "exeggutor",
                 "name": "Exeggutor",
                 "sprite": "../sprites/exeggutor.png",
                 "pType1": "grass",
@@ -70,7 +65,6 @@
                 "moves": ["solarBeam", "psychic"]
             },
             {
-                "_id": "blastoise",
                 "name": "Blastoise",
                 "sprite": "../sprites/blastoise.png",
                 "pType1": "water",
@@ -88,7 +82,6 @@
         "photo": "../avatars/lorelei.png",
         "party": [
             {
-                "_id": "slowbro",
                 "name": "Slowbro",
                 "sprite": "../sprites/slowbro.png",
                 "pType1": "psychic",
@@ -100,7 +93,6 @@
                 "moves": ["psychic", "hydroCannon"]
             },
             {
-                "_id": "vaporeon",
                 "name": "Vaporeon",
                 "sprite": "../sprites/vaporeon.png",
                 "pType1": "water",
@@ -111,7 +103,6 @@
                 "moves": ["hydroCannon", "hyperBeam"]
             },
             {
-                "_id": "lapras",
                 "name": "Lapras",
                 "sprite": "../sprites/lapras.png",
                 "pType1": "ice",
@@ -130,7 +121,6 @@
         "photo": "../avatars/giovanni.png",
         "party": [
             {
-                "_id": "persian",
                 "name": "Persian",
                 "sprite": "../sprites/persian.png",
                 "pType1": "normal",
@@ -141,7 +131,6 @@
                 "moves": ["hyperBeam", "moonblast"]
             },
             {
-                "_id": "rhydon",
                 "name": "Rhydon",
                 "sprite": "../sprites/rhydon.png",
                 "pType1": "ground",
@@ -153,7 +142,6 @@
                 "moves": ["earthquake", "rockSlide"]
             },
             {
-                "_id": "nidoking",
                 "name": "Nidoking",
                 "sprite": "../sprites/nidoking.png",
                 "pType1": "ground",
@@ -172,7 +160,6 @@
         "photo": "../avatars/lance.png",
         "party": [
             {
-                "_id": "gyarados",
                 "name": "Gyarados",
                 "sprite": "../sprites/gyarados.png",
                 "pType1": "flying",
@@ -184,7 +171,6 @@
                 "moves": ["hydroCannon", "outrage"]
             },
             {
-                "_id": "charizard",
                 "name": "Charizard",
                 "sprite": "../sprites/charizard.png",
                 "pType1": "fire",
@@ -196,7 +182,6 @@
                 "moves": ["flamethrower", "skyAttack"]
             },
             {
-                "_id": "dragonite",
                 "name": "Dragonite",
                 "sprite": "../sprites/dragonite.png",
                 "pType1": "dragon",

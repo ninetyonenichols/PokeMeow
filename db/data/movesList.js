@@ -1,109 +1,91 @@
 [
     {
-        "_id": "bugBuzz",
-        "name": "Bug Buzz",
+        "name": "bugBuzz",
         "pType": "bug",
         "baseDmg": "10"
     },
     {
-        "_id": "darkPulse",
-        "name": "Dark Pulse",
+        "name": "darkPulse",
         "pType": "dark",
-        "baseDmg": "10",
+        "baseDmg": "10"
     },
     {
-        "_id": "outrage",
-        "name": "Outrage",
+        "name": "outrage",
         "pType": "dragon",
         "baseDmg": "10"
     },
     {
-        "_id": "thunderbold",
-        "name": "Thunderbolt",
+        "name": "thunderbolt",
         "pType": "electric",
         "baseDmg": "10"
     },
     {
-        "_id": "moonblast",
-        "name": "Moonblast",
+        "name": "moonblast",
         "pType": "fairy",
         "baseDmg": "10"
     },
     {
-        "_id": "closeCombat",
-        "name": "Close Combat",
+        "name": "closeCombat",
         "pType": "fighting",
         "baseDmg":"10"
     },
     {
-        "_id": "flamethrower",
-        "name": "Flamethrower",
+        "name": "flamethrower",
         "pType": "fire",
         "baseDmg":"10"
     },
     {
-        "_id": "skyAttack",
-        "name": "Sky Attack",
+        "name": "skyAttack",
         "pType": "flying",
         "baseDmg":"10"
     },
     {
-        "_id": "shadowBall",
-        "name": "Shadow Ball",
+        "name": "shadowBall",
         "pType": "ghost",
         "baseDmg":"10"
     },
     {
-        "_id": "solarBeam",
-        "name": "Solar Beam",
+        "name": "solarBeam",
         "pType": "grass",
         "baseDmg":"10"
     },
     {
-        "_id": "earthquake",
-        "name": "Earthquake",
+        "name": "earthquake",
         "pType": "ground",
         "baseDmg":"10"
     },
     {
-        "_id": "iceBeam",
-        "name": "Ice Beam",
+        "name": "iceBeam",
         "pType": "ice",
         "baseDmg":"10"
     },
     {
-        "_id": "hyperBeam",
-        "name": "Hyper Beam",
+        "name": "hyperBeam",
         "pType": "normal",
         "baseDmg":"10"
     },
     {
-        "_id": "sludgeWave",
-        "name": "Sludge Wave",
+        "name": "sludgeWave",
         "pType": "poison",
         "baseDmg":"10"
     },
     {
-        "_id": "psychic",
-        "name": "Psychic",
+        "name": "psychic",
         "pType": "psychic",
         "baseDmg":"10"
     },
     {
-        "_id": "rockSlide",
-        "name": "Rock Slide",
+        "name": "rockSlide",
         "pType": "rock",
         "baseDmg":"10"
     },
     {
-        "_id": "flashCannon",
-        "name": "Flash Cannon",
+        "name": "flashCannon",
         "pType": "steel",
         "baseDmg":"10"
     },
     {
-        "_id": "hydroCannon",
-        "name": "Hydro Cannon",
+        "name": "hydroCannon",
         "pType": "water",
         "baseDmg":"10"
     }

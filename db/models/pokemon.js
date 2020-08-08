@@ -28,7 +28,12 @@ module.exports = (mongoose) => {
         currHp: { type: Number, default: 100 },
         atk: { type: Number, default: 100 },
         def: { type: Number, default: 100 },
-        moves: [{ type: ObjectId, ref: 'Move' }],
+        moves: [{ type: String, enum: [
+            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast', 
+            'closeCombat', 'flamethrower', 'skyAttack', 'shadowBall',
+            'solarBeam', 'earthquake', 'iceBeam', 'hyperBeam', 'sludgeWave',
+            'psychic', 'rockSlide', 'flashCannon', 'hydroCannon'
+        ]}],
         catchRate: { type: Number, default: 0.6 },
         fleeRate: { type: Number, default: 0.1 },
     });
@@ -53,6 +58,13 @@ module.exports = (mongoose) => {
                     .lean()
                     .exec((err, pkmnObj) => {
                         delete pkmnObj['_id'];
+                        if (pkmnObj['moves'].length != 2) { return; }
+                        let mv1 = pkmnObj['moves'][0];
+                        console.log('mv1 ' + mv1);
+                        let mv2 = pkmnObj['moves'][1];
+                        console.log('mv2 ' +  typeof mv2);
+                        pkmnObj['moves'] = [mv1, mv2];
+                        console.log('mvs ' + pkmnObj.moves);
                         callback(new mongoose.model('Pokemon')(pkmnObj));
                     });
             });
