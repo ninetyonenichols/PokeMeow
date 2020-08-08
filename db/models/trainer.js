@@ -21,6 +21,16 @@ module.exports = (mongoose) => {
         encounter: PokemonSchema
     });
 
+    // Create a virtual property 'defeated' that shows whether this trainer 
+    // has lost the current battle (i.e. all their pokemon have fainted).
+    TrainerSchema.virtual('defeated').get(function() {
+        var defeated = true;
+        this.party.forEach(function(pkmn) {
+            if (!pkmn.fainted) { defeated = false; }
+        }) 
+        return defeated;
+    });
+
     // Creates a new trainer document
     TrainerSchema.statics.create = function(trainerName) {
         return new mongoose.model('Trainer')({ name: trainerName });

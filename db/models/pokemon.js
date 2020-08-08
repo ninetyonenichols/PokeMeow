@@ -38,14 +38,10 @@ module.exports = (mongoose) => {
         fleeRate: { type: Number, default: 0.1 },
     });
 
-    PokemonSchema.statics.create = function(pkmnId, callback) {
-        mongoose.model('Pokemon').find({ _id: pkmnId })
-            .lean()
-            .exec((err, pkmnObj) => {
-                delete pkmnObj['_id'];
-                callback(new mongoose.model('Pokemon')(pkmnObj));
-            })
-    }; 
+    // Create a virtual property 'fainted' that is determined by this.currHp
+    PokemonSchema.virtual('fainted').get(function() {
+        return this.currHp == 0;
+    });
 
     // Generates a new random pokemon
     PokemonSchema.statics.encounter = function(callback) {
@@ -60,11 +56,8 @@ module.exports = (mongoose) => {
                         delete pkmnObj['_id'];
                         if (pkmnObj['moves'].length != 2) { return; }
                         let mv1 = pkmnObj['moves'][0];
-                        console.log('mv1 ' + mv1);
                         let mv2 = pkmnObj['moves'][1];
-                        console.log('mv2 ' +  typeof mv2);
                         pkmnObj['moves'] = [mv1, mv2];
-                        console.log('mvs ' + pkmnObj.moves);
                         callback(new mongoose.model('Pokemon')(pkmnObj));
                     });
             });
