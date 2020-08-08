@@ -10,7 +10,7 @@ module.exports = (mongoose) => {
 
     const PokemonSchema = new Schema({
         name: { type: String, required: true },
-        sprite: { type: String, default: '../sprites/default.jpg' },
+        sprite: { type: String, default: '../../public_html/img/sprites/default.jpg' },
         pType1: {
             type: String,
             enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',

@@ -13,7 +13,7 @@ module.exports = (mongoose) => {
 
     const TrainerSchema = new Schema({
         name: { type: String, unique: true, required: true },
-        photo: { type: String, default: '../avatars/default.png' },
+        photo: { type: String, default: '../../public_html/img/avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
         active: PokemonSchema,
@@ -98,7 +98,16 @@ module.exports = (mongoose) => {
 
     // Sends out the next pokemon (intended for AI use)
     TrainerSchema.methods.nextPkmn = function() {
+        var idx = this.party.indexOf(this.active);
+        if (idx < 0 || idx >= MAX_PARTY_SIZE - 1) { return; }
+        this.active = this.party[idx + 1];
+        
     }
+
+    // Resets all this trainer's party-pokemon back to full health
+    TrainerSchema.methods.resetAll = function() {
+        this.party.forEach(function(pkmn) { pkmn.resetHp(); }); 
+    } 
 
     return mongoose.model('Trainer', TrainerSchema);
 };
