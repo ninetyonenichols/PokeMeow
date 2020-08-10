@@ -21,13 +21,13 @@ module.exports = (mongoose) => {
         encounter: PokemonSchema
     });
 
-    // Create a virtual property 'defeated' that shows whether this trainer 
+    // Create a virtual property 'defeated' that shows whether this trainer
     // has lost the current battle (i.e. all their pokemon have fainted).
     TrainerSchema.virtual('defeated').get(function() {
         var defeated = true;
         this.party.forEach(function(pkmn) {
             if (!pkmn.fainted) { defeated = false; }
-        }) 
+        })
         return defeated;
     });
 
@@ -35,7 +35,7 @@ module.exports = (mongoose) => {
     TrainerSchema.statics.create = function(trainerName) {
         var trainer = new mongoose.model('Trainer')({ name: trainerName });
         trainer.save();
-        return trainer; 
+        return trainer;
     };
 
     // Adds a pokemon to this trainer's collection
@@ -44,7 +44,7 @@ module.exports = (mongoose) => {
         this.pokemon.push(pkmn);
         this.save();
     };
-     
+
     // Releases a pokemon into the wild
     TrainerSchema.methods.release = function(pkmn) {
         if (!this.pokemon.includes(pkmn)) { return; }
@@ -56,12 +56,31 @@ module.exports = (mongoose) => {
                 return;
             }
         }
+        /*
+        for (let i = 0; i < this.pokemon.length; i++) {
+            if (this.pokemon[i].name == pkmn) {
+                this.pokemon.splice(i, 1);
+                this.save();
+                return true;
+            }
+        }
+
+        for (let i = 0; i < this.party.length; i++) {
+            if (this.party[i].name == pkmn) {
+                this.party.splice(i, 1);
+                this.save();
+                return true;
+            }
+        }
+
+        return false;
+        */
     }
 
     // Adds a pokemon to this trainer's party
     TrainerSchema.methods.addParty = function(pkmn) {
         var spaceAvail = this.party.length < MAX_PARTY_SIZE;
-        var ownsPkmn = this.pokemon.includes(pkmn); 
+        var ownsPkmn = this.pokemon.includes(pkmn);
         var unique = !this.party.includes(pkmn);
         if (spaceAvail && ownsPkmn && unique) {
             this.party.push(pkmn);
@@ -85,23 +104,23 @@ module.exports = (mongoose) => {
         this.battle = newBattle;
         this.save();
     };
-    
+
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
     TrainerSchema.methods.add = function() {
         var pkmn = this.encounter;
         this.addPokemon(pkmn);
         var spaceAvail = this.party.length < MAX_PARTY_SIZE;
-        if (spaceAvail) { 
+        if (spaceAvail) {
           this.addParty(pkmn);
           this.save();
-        } 
-    } 
+        }
+    }
 
     // Sets this trainer's active pokemon
     TrainerSchema.methods.setActive = function(pkmn) {
         this.active = pkmn;
         this.save();
-    } 
+    }
 
     // Sends out the next pokemon (intended for AI use)
     TrainerSchema.methods.nextPkmn = function() {
@@ -109,14 +128,14 @@ module.exports = (mongoose) => {
         if (idx < 0 || idx >= MAX_PARTY_SIZE - 1) { return; }
         this.active = this.party[idx + 1];
         this.save();
-        
+
     }
 
     // Resets all this trainer's party-pokemon back to full health
     TrainerSchema.methods.resetAll = function() {
-        this.party.forEach(function(pkmn) { pkmn.resetHp(); }); 
+        this.party.forEach(function(pkmn) { pkmn.resetHp(); });
         this.save();
-    } 
+    }
 
     return mongoose.model('Trainer', TrainerSchema);
 };

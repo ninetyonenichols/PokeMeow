@@ -46,6 +46,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.cmd = cmdStr.split(' ');
     this.output = {main: null, encounter: null, battle: null};
     this.pokemon = null;
+    this.move = null;
 
     //Execute the command's function (maybe just remove this?)
     this.execute = function(callback) {
@@ -53,7 +54,7 @@ exports.command = function Command(cmdStr, user, database) {
         {main: null, encounter: null, battle: null});
     };
 
-    //Parse the command and set execute to appropriate function
+    //Parse the main command and set execute to appropriate function
     this.parseMain = function() {
         switch (this.cmd[0]) {
             case 'random-encounter':
@@ -94,7 +95,7 @@ exports.command = function Command(cmdStr, user, database) {
         }
     }
 
-    //Parse the command and set execute to appropriate function
+    //Parse the encounter command and set execute to appropriate function
     this.parseEnc = function() {
         switch (this.cmd[0]) {
             case 'throw-ball':
@@ -108,20 +109,36 @@ exports.command = function Command(cmdStr, user, database) {
         }
     }
 
-    /* Use:
-
-    const c = new Command(cmd, db);
-    c.parse();
-    c.execute((err, output) => {
-        if (err) console.log('Error: ' + err);
-        res.json(output);
-    });
-
-    */
+    //Parse the battle command and set execute to appropriate function
+    this.parseBattle = function() {
+        switch (this.cmd[0]) {
+            case 'switch':
+                if (this.cmd.length == 2) {
+                    this.pokemon = this.cmd[1];
+                    this.execute = this.execSwitch;
+                    break;
+                }
+            case 'moves':
+                this.execute = this.execMoves;
+                break;
+            case 'use':
+                if (this.cmd.length == 2) {
+                    this.move = this.cmd[1];
+                    this.execute = this.execUse;
+                    break;
+                }
+            case 'run':
+                this.execute = this.execRun;
+                break;
+            default:
+                this.execute = this.invalidCommand;
+        }
+    }
 
 
     // Database Access Helper Functions //
 
+    // A helper function to somewhat simplify accessing the user's trainer
     this.getTrainer = function(callback) {
         this.db.account.getTrainer(this.user, (err, trainer) => {
             if (err) {
@@ -145,11 +162,8 @@ exports.command = function Command(cmdStr, user, database) {
 
     // The 'view-party' command
     this.execParty = (callback) => {
-        this.db.account.getTrainer(this.user, (err, trainer) => {
-            if (err) {
-                console.log('Error getting trainer: ' + err);
-                callback(err, this.output);
-            } else if (trainer) {
+        this.getTrainer((trainer) => {
+            if (trainer) {
                 if (trainer.party.length == 0) {
                     this.output.main = 'No party pokemon';
                 } else {
@@ -157,61 +171,213 @@ exports.command = function Command(cmdStr, user, database) {
                 }
                 callback(null, this.output);
             } else {
-                callback('Could not find trainer', this.output);
+                callback('Could not find trainer.', this.output);
             }
         });
     }
 
     // The 'view-pokemon' command
     this.execViewCaught = (callback) => {
-        this.output.main = 'CAUGHT';
-        callback(null, this.output);
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                if (trainer.party.length == 0) {
+                    this.output.main = 'No party pokemon';
+                } else {
+                    this.output.main = trainer.pokemon;
+                }
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
     }
 
+    // The 'view' command - displays info about a pokemon
     this.execView = (callback) => {
-        callback(null, {main: this.pokemon, encounter: null, battle: null});
-
+        this.db.pokemon.findOne({name: this.pokemon}, (err, result) => {
+            if (err) {
+                console.log('Error finding pokemon: ' + err);
+                callback(err, this.output);
+            } else if (result) {
+                this.output.main = result;
+                callback(null, this.output);
+            } else {
+                this.output.main = 'Could not find pokemon.';
+                callback(null, this.output);
+            }
+        });
     }
 
+    // The 'remove' command - removes a pokemon from the party
     this.execRemove = (callback) => {
-        callback(null, {main: 'REMOVE', encounter: null, battle: null});
+        this.getTrainer((trainer) => {
+            let error = null;
 
+            if (trainer) {
+                for (let i = 0; i < trainer.party.length; i++) {
+                    if (trainer.party[i].name == this.pokemon) {
+                        trainer.pokemon.push(trainer.party[i]);
+                        trainer.party.splice(i, 1);
+                        trainer.save();
+                        this.output.main = 'REMOVED FROM PARTY: '
+                                            + this.pokemon;
+                        break;
+                    }
+                }
+
+                if (!this.output.main) {
+                    this.output.main = 'Could not find pokemon';
+                }
+            } else {
+                error = 'Could not find trainer.';
+            }
+
+            callback(error, this.output);
+        });
     }
 
+    // The 'add' command - adds a pokemon to the party
     this.execAdd = (callback) => {
-        callback(null, {main: 'ADD', encounter: null, battle: null});
+        this.getTrainer((trainer) => {
+            let error = null;
 
+            if (trainer) {
+                for (let i = 0; i < trainer.pokemon.length; i++) {
+                    if (trainer.pokemon[i].name == this.pokemon) {
+                        if (trainer.party.length < 6) {
+                            trainer.party.push(trainer.pokemon[i]);
+                            trainer.pokemon.splice(i, 1);
+                            trainer.save();
+                            this.output.main = 'ADDED TO PARTY: '
+                                                + this.pokemon;
+                            break;
+                        } else {
+                            this.output.main = 'PARTY ALREADY FULL';
+                        }
+                    }
+                }
+
+                if (!this.output.main) {
+                    this.output.main = 'Could not find pokemon';
+                }
+            } else {
+                error = 'Could not find trainer.';
+            }
+
+            callback(error, this.output);
+        });
     }
 
+    // The 'release' command - release a pokemon back to the wild
     this.execRelease = (callback) => {
-        callback(null, {main: 'RELEASE', encounter: null, battle: null});
+        this.getTrainer((trainer) => {
+            let error = null;
 
+            if (trainer) {
+                /*
+                if (trainer.release(this.pokemon)) {
+                    this.output.main = 'RELEASED: ' + this.pokemon;
+                } else {
+                    this.output.main = 'Could not find pokemon';
+                }
+                */
+                for (let i = 0; i < trainer.pokemon.length; i++) {
+                    if (trainer.pokemon[i].name == this.pokemon) {
+                        trainer.pokemon.splice(i, 1);
+                        trainer.save();
+                        this.output.main = 'RELEASED: ' + this.pokemon;
+                        break;
+                    }
+                }
+
+                if (!this.output.main) {
+                    for (let i = 0; i < trainer.party.length; i++) {
+                        if (trainer.party[i].name == this.pokemon) {
+                            trainer.party.splice(i, 1);
+                            trainer.save();
+                            this.output.main = 'RELEASED: ' + this.pokemon;
+                            break;
+                        }
+                    }
+                }
+
+                if (!this.output.main) {
+                    this.output.main = 'Could not find pokemon';
+                }
+            } else {
+                error = 'Could not find trainer.';
+            }
+
+            callback(error, this.output);
+        });
     }
 
     // The 'random-encounter' command
     this.execEncounter = (callback) => {
         this.db.pokemon.encounter((poke) => {
-            //this.getTrainer
-            this.output.encounter = poke;
-            callback(null, this.output);
+            this.getTrainer((trainer) => {
+                if (trainer) {
+                    trainer.encounter = poke;
+                    this.output.encounter = poke;
+                    callback(null, this.output);
+                } else {
+                    callback('Could not find trainer.', this.output);
+                }
+            });
         });
     }
 
     // The 'throw-ball' command
     this.execThrow = (callback) => {
-        //access the pokemon in the encounter
-        //this.getTrainer((trainer) => {
+        //access the pokemon in the encounter (it is in trainer.encounter)
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                let error = null;
 
-        //});
-        //determine if caught or not
-        //if caught add pokemon to trainer
-        this.output.encounter = 'THREW BALL';
-        callback(null, this.output);
+                //determine if caught or not
+                switch (trainer.encounter.attemptCapture()) {
+                    case "caught":
+                        //caught, add pokemon to trainer
+                        trainer.add();
+                        this.output.main = 'CAUGHT: ' + trainer.encounter.name;
+                        break;
+                    case "missed":
+                        this.output.encounter = 'POKEBALL MISSED';
+                        break;
+                    case "ran":
+                        this.output.main = 'POKEMON ESCAPED';
+                        break;
+                    default:
+                        error = 'Problem catching pokemon';
+                }
+
+                callback(error, this.output);
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
     }
 
     // The 'run' command
     this.execRun = (callback) => {
-        this.output.main = 'RAN AWAY';
+        this.output.main = 'YOU RAN AWAY';
+        callback(null, this.output);
+    }
+
+    // The 'switch' command
+    this.execSwitch = (callback) => {
+        this.output.battle = 'YOU SWITCHED IN: ' + this.pokemon;
+        callback(null, this.output);
+    }
+
+    // The 'moves' command
+    this.execMoves = (callback) => {
+        this.output.battle = 'THESE ARE YOUR MOVES';
+        callback(null, this.output);
+    }
+
+    // The 'use' command
+    this.execUse = (callback) => {
+        this.output.battle = 'USED: ' + this.move;
         callback(null, this.output);
     }
 }
