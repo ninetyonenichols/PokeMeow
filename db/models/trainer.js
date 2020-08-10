@@ -33,13 +33,16 @@ module.exports = (mongoose) => {
 
     // Creates a new trainer document
     TrainerSchema.statics.create = function(trainerName) {
-        return new mongoose.model('Trainer')({ name: trainerName });
+        var trainer = new mongoose.model('Trainer')({ name: trainerName });
+        trainer.save();
+        return trainer; 
     };
 
     // Adds a pokemon to this trainer's collection
     TrainerSchema.methods.addPokemon = function(pkmn) {
         if (this.pokemon.includes(pkmn)) { return; }
         this.pokemon.push(pkmn);
+        this.save();
     };
      
     // Releases a pokemon into the wild
@@ -49,6 +52,7 @@ module.exports = (mongoose) => {
         for (i in this.pokemon) {
             if (this.pokemon[i]._id == pkmn._id) {
                 delete this.pokemon[i];
+                this.save();
                 return;
             }
         }
@@ -59,12 +63,9 @@ module.exports = (mongoose) => {
         var spaceAvail = this.party.length < MAX_PARTY_SIZE;
         var ownsPkmn = this.pokemon.includes(pkmn); 
         var unique = !this.party.includes(pkmn);
-        console.log('spaceAvail = ' + spaceAvail);
-        console.log('ownsPkmn = ' + ownsPkmn);
-        console.log('unique = ' + unique);
         if (spaceAvail && ownsPkmn && unique) {
             this.party.push(pkmn);
-            console.log('party inside brackets = ' + this.party);
+            this.save();
         }
     };
 
@@ -73,6 +74,7 @@ module.exports = (mongoose) => {
         for (i in this.party) {
             if (this.party[i]._id == pkmn._id) {
                 delete this.party[i];
+                this.save();
                 return;
             }
         }
@@ -81,6 +83,7 @@ module.exports = (mongoose) => {
     // Sets a reference to the battle that this trainer is currently fighting
     TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle;
+        this.save();
     };
     
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
@@ -88,12 +91,16 @@ module.exports = (mongoose) => {
         var pkmn = this.encounter;
         this.addPokemon(pkmn);
         var spaceAvail = this.party.length < MAX_PARTY_SIZE;
-        if (spaceAvail) { this.addParty(pkmn); } 
+        if (spaceAvail) { 
+          this.addParty(pkmn);
+          this.save();
+        } 
     } 
 
     // Sets this trainer's active pokemon
     TrainerSchema.methods.setActive = function(pkmn) {
         this.active = pkmn;
+        this.save();
     } 
 
     // Sends out the next pokemon (intended for AI use)
@@ -101,12 +108,14 @@ module.exports = (mongoose) => {
         var idx = this.party.indexOf(this.active);
         if (idx < 0 || idx >= MAX_PARTY_SIZE - 1) { return; }
         this.active = this.party[idx + 1];
+        this.save();
         
     }
 
     // Resets all this trainer's party-pokemon back to full health
     TrainerSchema.methods.resetAll = function() {
         this.party.forEach(function(pkmn) { pkmn.resetHp(); }); 
+        this.save();
     } 
 
     return mongoose.model('Trainer', TrainerSchema);

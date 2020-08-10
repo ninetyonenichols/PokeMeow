@@ -10,13 +10,14 @@ const Trainer = require('./trainer.js');
 
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
+    const ObjectId = Schema.Types.ObjectId;
 
     // User accounts
     const AccountSchema = new Schema({
         username: { type: String, unique: true, required: true },
         passHash: { type: String, required: true },
         passSalt: { type: String, required: true },
-        trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+        trainer: { type: ObjectId, ref: 'Trainer' },
         dev: { type: Boolean, default: false }
     });
     const Account = mongoose.model('Account', AccountSchema);
