@@ -5,8 +5,8 @@
  */
 
 //constants
-const serverURL = 'http://157.245.236.86';
-//const serverURL = 'http://64.227.49.233';
+//const serverURL = 'http://157.245.236.86';
+const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
 $(document).ready(() => {
@@ -72,14 +72,21 @@ function printOutput(output) {
 function printMain() {
     //$('#outputWindow').append('');  
     $('#outputWindow').empty();  
-    $('#outputWindow').append('Options<br>');  
-    $('#outputWindow').append('random-encounter - starts an encounter with a random pokemon<br>');  
-    $('#outputWindow').append('view-party - prints out a list of pokemon in your party<br>');  
-    $('#outputWindow').append('view-pokemon - prints out a list of the pokemon you\'ve caught<br>');  
-    $('#outputWindow').append('view name - prints out more information about pokemon \'name\'<br>');  
-    $('#outputWindow').append('remove name - removes pokemon \'name\' from your party<br>');  
-    $('#outputWindow').append('add name - adds pokemon \'name\' to your party<br>');  
-    $('#outputWindow').append('release name - releases the pokemon \'name\' back to the wild<br>');  
+    $('#outputWindow').append('<span class=\"cmd\">Options</span><br>');  
+    $('#outputWindow').append(`<span class=\"cmd\">random-encounter</span> - starts an encounter 
+        with a random pokemon<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">view-party</span> - prints out a list of pokemon
+        in your party<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">view-pokemon</span> - prints out a list of the
+        pokemon you\'ve caught<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">view name</span> - prints out more information
+        about pokemon \'name\'<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">remove name</span> - removes pokemon \'name\' 
+        from your party<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">add name</span> - adds pokemon \'name\' to your
+        party<br>`);  
+    $('#outputWindow').append(`<span class=\"cmd\">release name</span> - releases the pokemon 
+        \'name\' back to the wild<br>`);  
 }
 
 /* Description: This function prints out the info for one pokemon
@@ -95,7 +102,7 @@ function printPkmn(pkmn) {
         alt: `A picture of ${pkmn.name}.` }));
     $('#outputWindow').append('<br>');
     $('#outputWindow').append(`Type: ${pkmn.pType1}${type2}`);
-    $('#outputWindow').append('Options:<br>');
-    $('#outputWindow').append('\'throw-ball\': throw a PokeBall.<br>');
-    $('#outputWindow').append('\'run\': run away.<br>');
+    $('#outputWindow').append('<span class=\"cmd\">Options</span><br>');
+    $('#outputWindow').append('<span class=\"cmd\">throw-ball</span> - throw a PokeBall.<br>');
+    $('#outputWindow').append('<span class=\"cmd\">run</span> run away.<br>');
 }
