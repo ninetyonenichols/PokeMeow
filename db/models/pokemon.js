@@ -13,26 +13,26 @@ module.exports = (mongoose) => {
         sprite: { type: String, default: '../../public_html/img/sprites/default.jpg' },
         pType1: {
             type: String,
-            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-                'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
-                 'poison', 'psychic', 'rock', 'steel', 'water' ],
-            default: 'normal'
+            enum: [ 'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting',
+                'Fire', 'Flying', 'Ghost', 'Grass', 'Ground', 'Ice', 'Normal',
+                 'Poison', 'Psychic', 'Rock', 'Steel', 'Water' ],
+            default: 'Normal'
         },
         pType2: {
             type: String,
-            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-                'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
-                 'poison', 'psychic', 'rock', 'steel', 'water' ],
+            enum: [ 'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting',
+                'Fire', 'Flying', 'Ghost', 'Grass', 'Ground', 'Ice', 'Normal',
+                 'Poison', 'Psychic', 'Rock', 'Steel', 'Water' ],
         },
         maxHp: { type: Number, default: 100 },
         currHp: { type: Number, default: 100 },
         atk: { type: Number, default: 100 },
         def: { type: Number, default: 100 },
         moves: [{ type: String, enum: [
-            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast', 
-            'closeCombat', 'flamethrower', 'skyAttack', 'shadowBall',
-            'solarBeam', 'earthquake', 'iceBeam', 'hyperBeam', 'sludgeWave',
-            'psychic', 'rockSlide', 'flashCannon', 'hydroCannon'
+            'Bug Buzz', 'Dark Pulse', 'Outrage', 'Thunderbolt', 'Moonblast', 
+            'CloseCombat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
+            'Solar Beam', 'Earthquale', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
+            'Psychic', 'Rock Slide', 'Flash Cannon', 'Hydro Cannon'
         ]}],
         catchRate: { type: Number, default: 0.6 },
         fleeRate: { type: Number, default: 0.1 },

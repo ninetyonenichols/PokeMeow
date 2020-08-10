@@ -6,11 +6,11 @@
  */
 
 const crypto = require('crypto');
-const Trainer = require('./trainer.js');
 
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
+    const Trainer = mongoose.model('Trainer');
 
     // User accounts
     const AccountSchema = new Schema({

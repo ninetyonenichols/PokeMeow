@@ -6,8 +6,13 @@
 
 //constants
 const serverURL = 'http://157.245.236.86';
+//const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
+$(document).ready(() => {
+    printMain();
+    $('outputWindow').prepend('Welcome to PokeMeow!<br>');
+});
 
 // Submit the command when either the button is clicked or 'Enter' is pressed
 $('#commandBtn').click(() => { submitCommand(); });
@@ -16,7 +21,6 @@ $('#command').keypress(function (e) {
         submitCommand();
     }
 });
-
 
 /*  Description: This function submits the command string given by the user to
  *      the server, then it handles the response by calling 'printOutput'.
@@ -37,10 +41,10 @@ function submitCommand() {
         dataType: "json",
         success: (response) => {
             if (response.main) {
-                printOutput(response.main);
+                printMain();
                 modeURL = '/command/';
             } else if (response.encounter) {
-                printOutput(response.encounter);
+                printPkmn(response.encounter);
                 modeURL = '/command/rand-enc/';
             } else {
                 printOutput('Invalid Command');
@@ -54,10 +58,44 @@ function submitCommand() {
 
 
 /*  Description: This function formats and constructs the html to display the
- *      server's response to the page's 'outputSection'.
+ *      server's response to the page's '#outputSection'.
  *  Parameters:
  *      output - the object containing the server's output from the command
  */
 function printOutput(output) {
-    $('#outputSection').append(output + '<br>');
+    $('#outputWindow').append(JSON.stringify(output) + '<br>');
+}
+
+/* Description: This function prints out the options available to the player at
+ *     the main game-screen.
+ */
+function printMain() {
+    //$('#outputWindow').append('');  
+    $('#outputWindow').empty();  
+    $('#outputWindow').append('Options<br>');  
+    $('#outputWindow').append('random-encounter - starts an encounter with a random pokemon<br>');  
+    $('#outputWindow').append('view-party - prints out a list of pokemon in your party<br>');  
+    $('#outputWindow').append('view-pokemon - prints out a list of the pokemon you\'ve caught<br>');  
+    $('#outputWindow').append('view name - prints out more information about pokemon \'name\'<br>');  
+    $('#outputWindow').append('remove name - removes pokemon \'name\' from your party<br>');  
+    $('#outputWindow').append('add name - adds pokemon \'name\' to your party<br>');  
+    $('#outputWindow').append('release name - releases the pokemon \'name\' back to the wild<br>');  
+}
+
+/* Description: This function prints out the info for one pokemon
+ * Parameters: 
+ *     pkmn - the object containing the pokemon's info
+ */
+function printPkmn(pkmn) {
+    let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
+    $('#outputWindow').empty();
+    $('#outputWindow').append(`A wild ${pkmn.name} appeared!<br>`);
+    $('#outputWindow').append(`${pkmn.name}<br>`);
+    $('#outputWindow').append($('<img>', { src: pkmn.sprite, width: '100px',
+        alt: `A picture of ${pkmn.name}.` }));
+    $('#outputWindow').append('<br>');
+    $('#outputWindow').append(`Type: ${pkmn.pType1}${type2}`);
+    $('#outputWindow').append('Options:<br>');
+    $('#outputWindow').append('\'throw-ball\': throw a PokeBall.<br>');
+    $('#outputWindow').append('\'run\': run away.<br>');
 }

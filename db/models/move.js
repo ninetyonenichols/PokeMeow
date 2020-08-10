@@ -12,18 +12,18 @@ module.exports = (mongoose) => {
     const ObjectId = Schema.Types.ObjectId;
 
     const MoveSchema = new Schema({
-        name: { type: String, unique: true, required: true, enum: [
-            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast', 
-            'closeCombat', 'flamethrower', 'skyAttack', 'shadowBall',
-            'solarBeam', 'earthquake', 'iceBeam', 'hyperBeam', 'sludgeWave',
-            'psychic', 'rockSlide', 'flashCannon', 'hydroCannon'
-        ]},
+        name: [{ type: String, unique: true, required: true, enum: [
+            'Bug Buzz', 'Dark Pulse', 'Outrage', 'Thunderbolt', 'Moonblast', 
+            'CloseCombat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
+            'Solar Beam', 'Earthquale', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
+            'Psychic', 'Rock Slide', 'Flash Cannon', 'Hydro Cannon'
+        ]}],
         pType: {
             type: String,
-            enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-                'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
-                 'poison', 'psychic', 'rock', 'steel', 'water' ],
-            default: 'normal'
+            enum: [ 'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting',
+                'Fire', 'Flying', 'Ghost', 'Grass', 'Ground', 'Ice', 'Normal',
+                 'Poison', 'Psychic', 'Rock', 'Steel', 'Water' ],
+            default: 'Normal'
         },
         baseDmg: { type: Number, required: true }
     });

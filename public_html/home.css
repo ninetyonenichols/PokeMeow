@@ -5,6 +5,17 @@
         page, such as styling the game input and output sections.
 */
 
+* {
+    box-sizing: border-box;
+}
+
+label {
+    font-family: Courier, monospace;
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+}
+
 #gameSection {
     width: 100%;
     height: calc(100% - 130px);
@@ -13,6 +24,17 @@
 #outputSection {
     width: 100%;
     height: calc(100% - 160px);
+    padding: 20px;
+}
+
+#outputWindow {
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 40%;
+    height: 100%;
+    border: 5px solid gold;
+    text-align: center;
+    overflow: scroll;
 }
 
 #inputSection {
@@ -25,13 +47,6 @@
 #commandSection {
     margin: 0 auto;
     width: 750px;
-}
-
-label {
-    font-family: Courier, monospace;
-    font-size: 18px;
-    font-weight: bold;
-    color: blue;
 }
 
 #command {

@@ -13,7 +13,7 @@ module.exports = (mongoose) => {
 
     const TrainerSchema = new Schema({
         name: { type: String, unique: true, required: true },
-        photo: { type: String, default: '../../public_html/img/avatars/default.png' },
+        photo: { type: String, default: './img/avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
         active: PokemonSchema,
@@ -34,7 +34,6 @@ module.exports = (mongoose) => {
     // Creates a new trainer document
     TrainerSchema.statics.create = function(trainerName) {
         var trainer = new mongoose.model('Trainer')({ name: trainerName });
-        trainer.save();
         return trainer; 
     };
 
