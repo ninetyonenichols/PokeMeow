@@ -16,9 +16,21 @@ label {
     color: blue;
 }
 
+.standout {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+#msg, #entity {
+    width: 60%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    margin: 0 auto 15px auto;
+}
+
 #gameSection {
     width: 100%;
     height: calc(100% - 130px);
+    color: black;
 }
 
 #outputSection {
@@ -29,12 +41,13 @@ label {
 
 #outputWindow {
     margin: 0 auto;
-    padding: 10px 0;
+    padding: 10px;
     width: 40%;
     height: 100%;
     border: 5px solid gold;
     text-align: center;
     overflow: scroll;
+    background-size: cover;
 }
 
 #inputSection {

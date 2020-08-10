@@ -178,7 +178,7 @@
             },
             {
                 "name": "Dragonite",
-                "sprite": "./img/sprites/Dragonite.png",
+                "sprite": "./img/sprites/dragonite.png",
                 "pType1": "Dragon",
                 "pType2": "Flying",
                 "maxHp": "209",

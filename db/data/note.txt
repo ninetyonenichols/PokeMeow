@@ -9,6 +9,8 @@ mongoimport --db pokemeow --collection moves --file moveList.js --jsonArray
 
 To clear the moves collection first and then import, use:
 mongoimport --db pokemeow --collection moves --drop --file moveList.js --jsonArray
+mongoimport --db pokemeow --collection pokemon --drop --file pokemonList.js --jsonArray
+mongoimport --db pokemeow --collection trainer --drop --file trainerList.js --jsonArray
 
 
 
