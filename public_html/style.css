@@ -11,7 +11,17 @@ html, body {
     margin: 0;
     height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #ffccff;
+    background-color: #5B1D72;
+}
+
+header {
+    padding-left: 30px;
+    width: 100%;
+    height: 130px;
+    color: #99B3E6;
+    background-color: #315436;
+    box-sizing: border-box;
+    line-height: 130px;
 }
 
 nav {
@@ -24,7 +34,7 @@ a {
     line-height: 130px;
     font-size: 16px;
     text-decoration: none;
-    color: #1a66ff;
+    color: #99B3E6;
 }
 
 h1 {
@@ -72,16 +82,12 @@ input {
 .inputSection {
     margin-left: 30px;
     margin-bottom: 75px;
+    color: silver;
 }
 
-#top {
-    padding-left: 30px;
-    width: 100%;
-    height: 130px;
-    color: #1a66ff;
-    background-color: #ccffff;
-    box-sizing: border-box;
-    line-height: 130px;
+#mainContent {
+    color: silver;
+    overflow: scroll;
 }
 
 #pokeballHeader {
