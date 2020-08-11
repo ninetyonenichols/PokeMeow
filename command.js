@@ -167,7 +167,7 @@ exports.command = function Command(cmdStr, user, database) {
                     if (err) {
                         console.log('Error getting battle: ' + err);
                         callback(null);
-                    } else if (trainer) {
+                    } else if (battle) {
                         callback(battle);
                     } else {
                         callback(null);
@@ -365,20 +365,21 @@ exports.command = function Command(cmdStr, user, database) {
                             console.log('Error finding AI trainer: ' + err);
                             callback(err, this.output);
                         } else if (result) {
-                            battle = this.db.battle.create(trainer._id,
-                                result._id);
-                            trainer.setBattle(battle);
-                            result.setBattle(battle);
-                            battle
-                            .populate('trainer1')
-                            .populate('trainer2', (err, btl) => {
-                                if (err) {
-                                    console.log('Error populating battle: ' + err);
-                                    callback(err, this.output);
-                                } else {
-                                    this.output.battle = btl;
-                                    callback(null, this.output);
-                                }
+                            this.db.battle.create(trainer._id, result._id,
+                            (battle) => {
+                                trainer.setBattle(battle);
+                                result.setBattle(battle);
+                                battle
+                                .populate('trainer1')
+                                .populate('trainer2', (err, btl) => {
+                                    if (err) {
+                                        console.log('Error populating battle: ' + err);
+                                        callback(err, this.output);
+                                    } else {
+                                        this.output.battle = btl;
+                                        callback(null, this.output);
+                                    }
+                                });
                             });
                         } else {
                             callback('Could not find AI trainer', this.output);
