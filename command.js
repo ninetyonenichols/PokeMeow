@@ -264,10 +264,8 @@ exports.command = function Command(cmdStr, user, database) {
                 if (trainer.addParty(this.pokemon)) {
                     this.output.main = 'ADDED TO PARTY: '
                                         + this.pokemon;
-                } else if (trainer.party.length > 5) {
-                    this.output.main = 'PARTY ALREADY FULL';
                 } else {
-                    this.output.main = 'Could not find pokemon';
+                    this.output.main = 'Could not add pokemon';
                 }
             } else {
                 error = 'Could not find trainer.';
