@@ -11,32 +11,21 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
-const TrainerSchema = new Schema({
-    name: { type: String, unique: true, required: true },
-    photo: { type: String, default: '../../public_html/img/avatars/default.png' },
-    pokemon: [ PokemonSchema ],
-    party: [ PokemonSchema ],
-    active: Number,
-    battle: { type: ObjectId, ref: 'Battle' },
-    encounter: PokemonSchema
-});
-const Trainer = new mongoose.model('Trainer', TrainerSchema);
-
 const PokemonSchema = new Schema({
     name: { type: String, required: true },
     sprite: { type: String, default: '../../public_html/img/sprites/default.jpg' },
     pType1: {
         type: String,
         enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-            'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
-             'poison', 'psychic', 'rock', 'steel', 'water' ],
+        'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
+        'poison', 'psychic', 'rock', 'steel', 'water' ],
         default: 'normal'
     },
     pType2: {
         type: String,
         enum: [ 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting',
-            'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
-             'poison', 'psychic', 'rock', 'steel', 'water' ],
+        'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal',
+        'poison', 'psychic', 'rock', 'steel', 'water' ],
     },
     maxHp: { type: Number, default: 100 },
     currHp: { type: Number, default: 100 },
@@ -56,16 +45,29 @@ const Pokemon = new mongoose.model('Pokemon', PokemonSchema);
 // Generates a new random pokemon
 PokemonSchema.statics.newPokemon = function(n, callback) {
     this.findOne({name: n})
-        .lean()
-        .exec((err, pkmnObj) => {
-            delete pkmnObj['_id'];
-            if (pkmnObj['moves'].length != 2) { return; }
-            let mv1 = pkmnObj['moves'][0];
-            let mv2 = pkmnObj['moves'][1];
-            pkmnObj['moves'] = [mv1, mv2];
-            callback(new mongoose.model('Pokemon')(pkmnObj));
-        });
+    .lean()
+    .exec((err, pkmnObj) => {
+        delete pkmnObj['_id'];
+        if (pkmnObj['moves'].length != 2) { return; }
+        let mv1 = pkmnObj['moves'][0];
+        let mv2 = pkmnObj['moves'][1];
+        pkmnObj['moves'] = [mv1, mv2];
+        callback(new mongoose.model('Pokemon')(pkmnObj));
+    });
 };
+
+
+const TrainerSchema = new Schema({
+    name: { type: String, unique: true, required: true },
+    photo: { type: String, default: '../../public_html/img/avatars/default.png' },
+    pokemon: [ PokemonSchema ],
+    party: [ PokemonSchema ],
+    active: Number,
+    battle: { type: ObjectId, ref: 'Battle' },
+    encounter: PokemonSchema
+});
+const Trainer = new mongoose.model('Trainer', TrainerSchema);
+
 
 
 const trainersAI = [
