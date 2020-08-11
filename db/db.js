@@ -24,4 +24,4 @@ exports.move = require('./models/move.js')(mongoose);
 exports.pokemon = require('./models/pokemon.js')(mongoose);
 exports.trainer = require('./models/trainer.js')(mongoose);
 exports.vs = require('./data/versus.js').versus;
-exports.account = require('./models/account.js')(mongoose);
+exports.account = require('./models/account.js')(exports.trainer, mongoose);
