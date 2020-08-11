@@ -102,6 +102,7 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle._id;
         this.active = 0;
+        this.resetAll()
         this.save();
     };
 
@@ -140,7 +141,6 @@ module.exports = (mongoose) => {
     // Resets all this trainer's party-pokemon back to full health
     TrainerSchema.methods.resetAll = function() {
         this.party.forEach(function(pkmn) { pkmn.resetHp(); });
-        this.save();
     }
 
     return mongoose.model('Trainer', TrainerSchema);

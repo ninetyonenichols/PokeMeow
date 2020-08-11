@@ -17,8 +17,7 @@ module.exports = (mongoose) => {
 
     // Createes and returns a new battle document
     BattleSchema.statics.create = function(id1, id2) {
-        const btl = new mongoose.model('Battle')({ trainer1: id1,
-            trainer2: id2, currTurn: trainer1 });
+        const btl = new mongoose.model('Battle')({ trainer1: id1, trainer2: id2, currTurn: id1 });
         btl.save();
         return btl;
     }

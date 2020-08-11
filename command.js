@@ -149,7 +149,6 @@ exports.command = function Command(cmdStr, user, database) {
                 console.log('Error getting trainer: ' + err);
                 callback(null);
             } else if (trainer) {
-                console.log(trainer);
                 callback(trainer);
             } else {
                 callback(null);
@@ -169,7 +168,6 @@ exports.command = function Command(cmdStr, user, database) {
                         console.log('Error getting battle: ' + err);
                         callback(null);
                     } else if (trainer) {
-                        console.log(battle);
                         callback(battle);
                     } else {
                         callback(null);
@@ -373,7 +371,6 @@ exports.command = function Command(cmdStr, user, database) {
                                 result._id);
                             trainer.setBattle(battle);
                             result.setBattle(battle);
-                            result.resetAll();
                             battle
                             .populate('trainer1')
                             .populate('trainer2', (err, btl) => {
@@ -436,7 +433,7 @@ exports.command = function Command(cmdStr, user, database) {
         this.getBattle((battle) => {
             if (battle) {
                 //check if this.move is valid
-                
+                console.log(battle);
                 //use the move against opponent
                 //check if opponent fainted (switch or end battle)
                 //have opponent use move
