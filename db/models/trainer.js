@@ -27,7 +27,7 @@ module.exports = (mongoose) => {
         var defeated = true;
         this.party.forEach(function(pkmn) {
             if (!pkmn.fainted) { defeated = false; }
-        })
+        });
         return defeated;
     });
 
@@ -107,9 +107,13 @@ module.exports = (mongoose) => {
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
     TrainerSchema.methods.add = function() {
         const pkmn = this.encounter;
-        this.addPokemon(pkmn);
+        this.encounter = null;
         if (this.party.length < MAX_PARTY_SIZE) {
-            this.addParty(pkmn.name);
+            this.party.push(pkmn);
+            this.save();
+        } else {
+            this.pokemon.push(pkmn);
+            this.save();
         }
     }
 
@@ -117,6 +121,10 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.setActive = function(num) {
         this.active = num;
         this.save();
+    }
+
+    TrainerSchema.methods.getActive = function() {
+        return this.party[this.active];
     }
 
     TrainerSchema.methods.switchActive = function(name) {
@@ -133,9 +141,14 @@ module.exports = (mongoose) => {
     // Sends out the next pokemon (intended for AI use)
     TrainerSchema.methods.nextPkmn = function() {
         const idx = this.active;
-        if (idx < 0 || idx >= this.party.length - 1) { return; }
+        if (idx < 0 || idx >= this.party.length - 1) { return null; }
         this.active = idx + 1;
         this.save();
+        return this.party[this.active];
+    }
+
+    TrainerSchema.methods.subtractHp = function(dmg) {
+        this.party[this.active].subtractHp(dmg);
     }
 
     // Resets all this trainer's party-pokemon back to full health

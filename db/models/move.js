@@ -5,7 +5,7 @@
  */
 
 const vs = require('../data/versus.js');
-const stab_bonus = 1.2; 
+const stab_bonus = 1.2;
 
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
@@ -13,7 +13,7 @@ module.exports = (mongoose) => {
 
     const MoveSchema = new Schema({
         name: { type: String, unique: true, required: true, enum: [
-            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast', 
+            'bugBuzz', 'darkPulse', 'outrage', 'thunderbolt', 'moonblast',
             'closeCombat', 'flamethrower', 'skyAttack', 'shadowBall',
             'solarBeam', 'earthquake', 'iceBeam', 'hyperBeam', 'sludgeWave',
             'psychic', 'rockSlide', 'flashCannon', 'hydroCannon'
@@ -30,23 +30,27 @@ module.exports = (mongoose) => {
 
     // Calculates the damage done by this move from pkmn1 against pkmn2
     // Damage = Floor ((1/2)(movepower)(att/def)(STAB)(Effectiveness)) + 1
-    MoveSchema.statics.damage = function(moveName, attacker, defender, callback) {
+    MoveSchema.statics.damage = function(moveName, attacker, defender, cb) {
         db.model('Move').findOne({ name: moveName })
         .exec((err, move) => {
-            let mvDmg = move.baseDmg;
-            let atk = attacker.atk;
-            let def = defender.def;
-            let mvType = move.pType;
-            let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
+            if (move) {
+                let mvDmg = move.baseDmg;
+                let atk = attacker.atk;
+                let def = defender.def;
+                let mvType = move.pType;
+                let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
                 stab_bonus : 1;
-            let effectiveness = vs[defender.pType1][mvType] * 
+                let effectiveness = vs[defender.pType1][mvType] *
                 vs[defender.pType2][mvType];
-            let result = Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);  
-            callback(result);
-        })
+                let result = Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);
+                cb(result);
+            } else {
+                cb(null);
+            }
+        });
     }
 
     //getMove: function(move, callback) {}
-    
+
     return mongoose.model('Move', MoveSchema)
 };

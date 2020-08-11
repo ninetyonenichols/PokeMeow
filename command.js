@@ -396,6 +396,7 @@ exports.command = function Command(cmdStr, user, database) {
         this.getTrainer((trainer) => {
             if (trainer) {
                 if (trainer.switchActive(this.pokemon)) {
+                    //'return' (really we'll be using the callback) the battle
                     this.getBattle((battle) => {
                         if (battle) {
                             this.output.battle = battle;
@@ -430,13 +431,60 @@ exports.command = function Command(cmdStr, user, database) {
     this.execUse = (callback) => {
         this.getBattle((battle) => {
             if (battle) {
-                //check if this.move is valid
-                console.log(battle);
+                const userTrnr = battle.trainer1;
+                const aiTrnr = battle.trainer2;
+                let userPkmn = userTrnr.getActive();
+                let aiPkmn = aiTrnr.getActive();
+
                 //use the move against opponent
-                //check if opponent fainted (switch or end battle)
-                //have opponent use move
-                //check if we have fainted (switch or end battle)
-                this.output.battle = battle;
+                this.db.move.damage(this.move, userPkmn, aiPkmn, (dmg1) => {
+                    if (dmg1) {
+                        aiTrnr.subtractHp(dmg1);
+
+                        //check if opponent is defeated
+                        if (aiTrnr.defeated) {
+                            this.output.main = 'DEFEATED: ' + aiTrnr.name;
+                        } else {
+                            //check if opponent pokemon fainted
+                            if (aiPkmn.fainted) {
+                                aiPkmn = aiTrnr.nextPkmn();
+                            } else {
+                                aiTrnr.save();
+                            }
+
+                            //have opponent attack
+                            const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
+                            this.db.move.damage(m, aiPkmn, userPkmn, (dmg2) => {
+                                if (dmg2) {
+                                    userTrnr.subtractHp(dmg2);
+
+                                    //check if user is defeated
+                                    if (userTrnr.defeated) {
+                                        this.output.main = 'DEFEATED BY: ' + aiTrnr.name;
+                                    } else {
+                                        //check if user's pokemon fainted
+                                        if (userPkmn.fainted) {
+                                            userPkmn = userTrnr.nextPkmn();
+                                        } else {
+                                            userTrnr.save();
+                                        }
+
+                                        //update battle and save
+                                        battle.trainer1 = userTrnr;
+                                        battle.trainer2 = aiTrnr;
+                                        this.output.battle = battle;
+                                    }
+                                } else {
+                                    this.output.battle = 'Invalid move: ' + m;
+                                }
+                            });
+                        }
+                    } else {
+                        this.output.battle = 'Invalid move: ' + this.move;
+                        callback(null, this.output);
+                    }
+                });
+
                 callback(null, this.output);
             } else {
                 callback('Could not find battle.', this.output);
@@ -452,7 +500,9 @@ exports.command = function Command(cmdStr, user, database) {
     this.execBtlExit = (callback) => {
         this.getTrainer((trainer) => {
             if (trainer) {
-                trainer.resetAll();
+                this.db.battle.deleteOne({_id: trainer.battle}, (err, btl) => {
+                    if (err) console.log(err);
+                });
                 this.output.main = 'YOU RAN AWAY';
                 callback(null, this.output);
             } else {
