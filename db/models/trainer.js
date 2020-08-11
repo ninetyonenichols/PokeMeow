@@ -16,7 +16,7 @@ module.exports = (mongoose) => {
         photo: { type: String, default: '../../public_html/img/avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
-        active: PokemonSchema,
+        active: Number,
         battle: { type: ObjectId, ref: 'Battle' },
         encounter: PokemonSchema
     });
@@ -40,7 +40,7 @@ module.exports = (mongoose) => {
 
     // Adds a pokemon to this trainer's collection
     TrainerSchema.methods.addPokemon = function(pkmn) {
-        if (this.pokemon.includes(pkmn)) { return; }
+        //if (this.pokemon.includes(pkmn)) { return; }
         this.pokemon.push(pkmn);
         this.save();
     };
@@ -86,7 +86,7 @@ module.exports = (mongoose) => {
 
     // Removes a pokemon from this trainer's party
     TrainerSchema.methods.removeParty = function(pkmn) {
-        for (let i = 0; i < trainer.party.length; i++) {
+        for (let i = 0; i < this.party.length; i++) {
             if (this.party[i].name == pkmn) {
                 this.pokemon.push(this.party[i]);
                 this.party.splice(i, 1);
@@ -100,34 +100,41 @@ module.exports = (mongoose) => {
 
     // Sets a reference to the battle that this trainer is currently fighting
     TrainerSchema.methods.setBattle = function(newBattle) {
-        this.battle = newBattle;
+        this.battle = newBattle._id;
+        this.active = 0;
         this.save();
     };
 
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
     TrainerSchema.methods.add = function() {
-        var pkmn = this.encounter;
+        const pkmn = this.encounter;
         this.addPokemon(pkmn);
-        var spaceAvail = this.party.length < MAX_PARTY_SIZE;
-        if (spaceAvail) {
-          this.addParty(pkmn);
-          this.save();
-        }
+        this.addParty(pkmn.name);
     }
 
     // Sets this trainer's active pokemon
-    TrainerSchema.methods.setActive = function(pkmn) {
-        this.active = pkmn;
+    TrainerSchema.methods.setActive = function(num) {
+        this.active = num;
         this.save();
+    }
+
+    TrainerSchema.methods.switchActive = function(name) {
+        for (let i = 0; i < this.party.length; i++) {
+            if (this.party[i].name == name) {
+                this.setActive(i);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Sends out the next pokemon (intended for AI use)
     TrainerSchema.methods.nextPkmn = function() {
-        var idx = this.party.indexOf(this.active);
-        if (idx < 0 || idx >= MAX_PARTY_SIZE - 1) { return; }
-        this.active = this.party[idx + 1];
+        const idx = this.active;
+        if (idx < 0 || idx >= this.party.length - 1) { return; }
+        this.active = idx + 1;
         this.save();
-
     }
 
     // Resets all this trainer's party-pokemon back to full health

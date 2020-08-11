@@ -62,5 +62,5 @@ function submitCommand() {
  *      output - the object containing the server's output from the command
  */
 function printOutput(output) {
-    $('#outputSection').append(JSON.stringify(output) + '<br>');
+    $('#outputSection').append(JSON.stringify(output) + '<br><br>');
 }

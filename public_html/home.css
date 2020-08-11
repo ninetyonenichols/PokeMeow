@@ -13,6 +13,7 @@
 #outputSection {
     width: 100%;
     height: calc(100% - 160px);
+    overflow-y: auto;
 }
 
 #inputSection {

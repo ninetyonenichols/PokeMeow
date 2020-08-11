@@ -32,6 +32,7 @@
 // Related to the above, how will this object return some JSON representing the
 //      output of the command which the client will use to display that output?
 
+const trainerAIs = ['Bug Catcher', 'Blue', 'Lorelei', 'Giovanni', 'Lance'];
 
 /*  Description: This object constructor creates an object that represents a
  *      pokemeow command. During construction, it parses the command string and
@@ -59,6 +60,9 @@ exports.command = function Command(cmdStr, user, database) {
         switch (this.cmd[0]) {
             case 'random-encounter':
                 this.execute = this.execEncounter;
+                break;
+            case 'battle':
+                this.execute = this.execBattle;
                 break;
             case 'view-party':
                 this.execute = this.execParty;
@@ -128,7 +132,7 @@ exports.command = function Command(cmdStr, user, database) {
                     break;
                 }
             case 'run':
-                this.execute = this.execRun;
+                this.execute = this.execBtlExit;
                 break;
             default:
                 this.execute = this.invalidCommand;
@@ -147,6 +151,30 @@ exports.command = function Command(cmdStr, user, database) {
             } else if (trainer) {
                 console.log(trainer);
                 callback(trainer);
+            } else {
+                callback(null);
+            }
+        });
+    }
+
+    // A helper function to simplify getting the current battle
+    this.getBattle = function(callback) {
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                this.db.battle.findOne({trainer1: trainer._id})
+                .populate('trainer1')
+                .populate('trainer2')
+                .exec((err, battle) => {
+                    if (err) {
+                        console.log('Error getting battle: ' + err);
+                        callback(null);
+                    } else if (trainer) {
+                        console.log(battle);
+                        callback(battle);
+                    } else {
+                        callback(null);
+                    }
+                });
             } else {
                 callback(null);
             }
@@ -323,21 +351,118 @@ exports.command = function Command(cmdStr, user, database) {
         callback(null, this.output);
     }
 
+    // The 'battle' command
+    this.execBattle = (callback) => {
+        const i = Math.floor((Math.random() * 5));
+        let battle = null;
+
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                if (trainer.party.length == 0) {
+                    this.output.main = 'You have no pokemon in your party!';
+                    callback(null, this.output);
+                } else {
+                    //find the AI trainer
+                    this.db.trainer.findOne({name: trainerAIs[i]},
+                    (err,result) => {
+                        if (err) {
+                            console.log('Error finding AI trainer: ' + err);
+                            callback(err, this.output);
+                        } else if (result) {
+                            battle = this.db.battle.create(trainer._id,
+                                result._id);
+                            trainer.setBattle(battle);
+                            result.setBattle(battle);
+                            result.resetAll();
+                            battle
+                            .populate('trainer1')
+                            .populate('trainer2', (err, btl) => {
+                                if (err) {
+                                    console.log('Error populating battle: ' + err);
+                                    callback(err, this.output);
+                                } else {
+                                    this.output.battle = btl;
+                                    callback(null, this.output);
+                                }
+                            });
+                        } else {
+                            callback('Could not find AI trainer', this.output);
+                        }
+                    });
+                }
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
+    }
+
     // The 'switch' command
     this.execSwitch = (callback) => {
-        this.output.battle = 'YOU SWITCHED IN: ' + this.pokemon;
-        callback(null, this.output);
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                if (trainer.switchActive(this.pokemon)) {
+                    this.getBattle((battle) => {
+                        if (battle) {
+                            this.output.battle = battle;
+                            callback(null, this.output);
+                        } else {
+                            callback('Could not find battle.', this.output);
+                        }
+                    });
+                } else {
+                    this.output.battle = 'Could not find pokemon';
+                    callback(null, this.output);
+                }
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
     }
 
     // The 'moves' command
     this.execMoves = (callback) => {
-        this.output.battle = 'THESE ARE YOUR MOVES';
-        callback(null, this.output);
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                this.output.battle = trainer.party[trainer.active].moves;
+                callback(null, this.output);
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
     }
 
     // The 'use' command
     this.execUse = (callback) => {
-        this.output.battle = 'USED: ' + this.move;
-        callback(null, this.output);
+        this.getBattle((battle) => {
+            if (battle) {
+                //check if this.move is valid
+                
+                //use the move against opponent
+                //check if opponent fainted (switch or end battle)
+                //have opponent use move
+                //check if we have fainted (switch or end battle)
+                this.output.battle = battle;
+                callback(null, this.output);
+            } else {
+                callback('Could not find battle.', this.output);
+            }
+        });
+    }
+
+    this.helperUse = function(battle, isAI, moveIdx) {
+
+    }
+
+    // The 'run' battle command
+    this.execBtlExit = (callback) => {
+        this.getTrainer((trainer) => {
+            if (trainer) {
+                trainer.resetAll();
+                this.output.main = 'YOU RAN AWAY';
+                callback(null, this.output);
+            } else {
+                callback('Could not find trainer.', this.output);
+            }
+        });
     }
 }
