@@ -145,6 +145,7 @@ exports.command = function Command(cmdStr, user, database) {
                 console.log('Error getting trainer: ' + err);
                 callback(null);
             } else if (trainer) {
+                console.log(trainer);
                 callback(trainer);
             } else {
                 callback(null);
@@ -180,11 +181,12 @@ exports.command = function Command(cmdStr, user, database) {
     this.execViewCaught = (callback) => {
         this.getTrainer((trainer) => {
             if (trainer) {
-                if (trainer.party.length == 0) {
-                    this.output.main = 'No party pokemon';
+                if (trainer.pokemon.length == 0) {
+                    this.output.main = 'No caught pokemon';
                 } else {
                     this.output.main = trainer.pokemon;
                 }
+                callback(null, this.output);
             } else {
                 callback('Could not find trainer.', this.output);
             }
@@ -213,18 +215,10 @@ exports.command = function Command(cmdStr, user, database) {
             let error = null;
 
             if (trainer) {
-                for (let i = 0; i < trainer.party.length; i++) {
-                    if (trainer.party[i].name == this.pokemon) {
-                        trainer.pokemon.push(trainer.party[i]);
-                        trainer.party.splice(i, 1);
-                        trainer.save();
-                        this.output.main = 'REMOVED FROM PARTY: '
-                                            + this.pokemon;
-                        break;
-                    }
-                }
-
-                if (!this.output.main) {
+                if (trainer.removeParty(this.pokemon)) {
+                    this.output.main = 'REMOVED FROM PARTY: '
+                                        + this.pokemon;
+                } else {
                     this.output.main = 'Could not find pokemon';
                 }
             } else {
@@ -241,22 +235,12 @@ exports.command = function Command(cmdStr, user, database) {
             let error = null;
 
             if (trainer) {
-                for (let i = 0; i < trainer.pokemon.length; i++) {
-                    if (trainer.pokemon[i].name == this.pokemon) {
-                        if (trainer.party.length < 6) {
-                            trainer.party.push(trainer.pokemon[i]);
-                            trainer.pokemon.splice(i, 1);
-                            trainer.save();
-                            this.output.main = 'ADDED TO PARTY: '
-                                                + this.pokemon;
-                            break;
-                        } else {
-                            this.output.main = 'PARTY ALREADY FULL';
-                        }
-                    }
-                }
-
-                if (!this.output.main) {
+                if (trainer.addParty(this.pokemon)) {
+                    this.output.main = 'ADDED TO PARTY: '
+                                        + this.pokemon;
+                } else if (trainer.party.length > 5) {
+                    this.output.main = 'PARTY ALREADY FULL';
+                } else {
                     this.output.main = 'Could not find pokemon';
                 }
             } else {
@@ -273,34 +257,9 @@ exports.command = function Command(cmdStr, user, database) {
             let error = null;
 
             if (trainer) {
-                /*
                 if (trainer.release(this.pokemon)) {
                     this.output.main = 'RELEASED: ' + this.pokemon;
                 } else {
-                    this.output.main = 'Could not find pokemon';
-                }
-                */
-                for (let i = 0; i < trainer.pokemon.length; i++) {
-                    if (trainer.pokemon[i].name == this.pokemon) {
-                        trainer.pokemon.splice(i, 1);
-                        trainer.save();
-                        this.output.main = 'RELEASED: ' + this.pokemon;
-                        break;
-                    }
-                }
-
-                if (!this.output.main) {
-                    for (let i = 0; i < trainer.party.length; i++) {
-                        if (trainer.party[i].name == this.pokemon) {
-                            trainer.party.splice(i, 1);
-                            trainer.save();
-                            this.output.main = 'RELEASED: ' + this.pokemon;
-                            break;
-                        }
-                    }
-                }
-
-                if (!this.output.main) {
                     this.output.main = 'Could not find pokemon';
                 }
             } else {
@@ -317,6 +276,7 @@ exports.command = function Command(cmdStr, user, database) {
             this.getTrainer((trainer) => {
                 if (trainer) {
                     trainer.encounter = poke;
+                    trainer.save();
                     this.output.encounter = poke;
                     callback(null, this.output);
                 } else {

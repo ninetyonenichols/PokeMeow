@@ -42,6 +42,9 @@ function submitCommand() {
             } else if (response.encounter) {
                 printOutput(response.encounter);
                 modeURL = '/command/rand-enc/';
+            } else if (response.battle) {
+                printOutput(response.battle);
+                modeURL = '/command/battle/';
             } else {
                 printOutput('Invalid Command');
             }
@@ -59,5 +62,5 @@ function submitCommand() {
  *      output - the object containing the server's output from the command
  */
 function printOutput(output) {
-    $('#outputSection').append(output + '<br>');
+    $('#outputSection').append(JSON.stringify(output) + '<br>');
 }

@@ -47,16 +47,6 @@ module.exports = (mongoose) => {
 
     // Releases a pokemon into the wild
     TrainerSchema.methods.release = function(pkmn) {
-        if (!this.pokemon.includes(pkmn)) { return; }
-        if (this.party.includes(pkmn)) { this.removeParty(pkmn); }
-        for (i in this.pokemon) {
-            if (this.pokemon[i]._id == pkmn._id) {
-                delete this.pokemon[i];
-                this.save();
-                return;
-            }
-        }
-        /*
         for (let i = 0; i < this.pokemon.length; i++) {
             if (this.pokemon[i].name == pkmn) {
                 this.pokemon.splice(i, 1);
@@ -74,29 +64,38 @@ module.exports = (mongoose) => {
         }
 
         return false;
-        */
     }
 
     // Adds a pokemon to this trainer's party
     TrainerSchema.methods.addParty = function(pkmn) {
-        var spaceAvail = this.party.length < MAX_PARTY_SIZE;
-        var ownsPkmn = this.pokemon.includes(pkmn);
-        var unique = !this.party.includes(pkmn);
-        if (spaceAvail && ownsPkmn && unique) {
-            this.party.push(pkmn);
-            this.save();
+        for (let i = 0; i < this.pokemon.length; i++) {
+            if (this.pokemon[i].name == pkmn) {
+                if (this.party.length < MAX_PARTY_SIZE) {
+                    this.party.push(this.pokemon[i]);
+                    this.pokemon.splice(i, 1);
+                    this.save();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
+
+        return false;
     };
 
     // Removes a pokemon from this trainer's party
     TrainerSchema.methods.removeParty = function(pkmn) {
-        for (i in this.party) {
-            if (this.party[i]._id == pkmn._id) {
-                delete this.party[i];
+        for (let i = 0; i < trainer.party.length; i++) {
+            if (this.party[i].name == pkmn) {
+                this.pokemon.push(this.party[i]);
+                this.party.splice(i, 1);
                 this.save();
-                return;
+                return true;
             }
         }
+
+        return false;
     };
 
     // Sets a reference to the battle that this trainer is currently fighting
