@@ -42,20 +42,6 @@ const PokemonSchema = new Schema({
 });
 const Pokemon = new mongoose.model('Pokemon', PokemonSchema);
 
-// Generates a new random pokemon
-PokemonSchema.statics.newPokemon = function(n, callback) {
-    this.findOne({name: n})
-    .lean()
-    .exec((err, pkmnObj) => {
-        delete pkmnObj['_id'];
-        if (pkmnObj['moves'].length != 2) { return; }
-        let mv1 = pkmnObj['moves'][0];
-        let mv2 = pkmnObj['moves'][1];
-        pkmnObj['moves'] = [mv1, mv2];
-        callback(new mongoose.model('Pokemon')(pkmnObj));
-    });
-};
-
 
 const TrainerSchema = new Schema({
     name: { type: String, unique: true, required: true },
@@ -101,8 +87,15 @@ const trainersAI = [
 for (let t of trainersAI) {
     let newTrainer = new Trainer({name: t.name, photo: t.photo});
     for (let p of t.party) {
-        Pokemon.newPokemon(p, (poke) => {
-            newTrainer.party.push(poke);
+        Pokemon.findOne({name: p})
+        .lean()
+        .exec((err, pkmnObj) => {
+            delete pkmnObj['_id'];
+            if (pkmnObj['moves'].length != 2) { return; }
+            let mv1 = pkmnObj['moves'][0];
+            let mv2 = pkmnObj['moves'][1];
+            pkmnObj['moves'] = [mv1, mv2];
+            newTrainer.party.push(new Pokemon(pkmnObj));
             newTrainer.save();
         });
     }
