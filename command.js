@@ -444,6 +444,7 @@ exports.command = function Command(cmdStr, user, database) {
                         //check if opponent is defeated
                         if (aiTrnr.defeated) {
                             this.output.main = 'DEFEATED: ' + aiTrnr.name;
+                            callback(null, this.output);
                         } else {
                             //check if opponent pokemon fainted
                             if (aiPkmn.fainted) {
@@ -474,8 +475,10 @@ exports.command = function Command(cmdStr, user, database) {
                                         battle.trainer2 = aiTrnr;
                                         this.output.battle = battle;
                                     }
+                                    callback(null, this.output);
                                 } else {
                                     this.output.battle = 'Invalid move: ' + m;
+                                    callback(null, this.output);
                                 }
                             });
                         }
@@ -484,8 +487,6 @@ exports.command = function Command(cmdStr, user, database) {
                         callback(null, this.output);
                     }
                 });
-
-                callback(null, this.output);
             } else {
                 callback('Could not find battle.', this.output);
             }
