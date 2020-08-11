@@ -160,7 +160,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.getBattle = function(callback) {
         this.getTrainer((trainer) => {
             if (trainer) {
-                this.db.battle.findOne({trainer1: trainer._id})
+                this.db.battle.findOne({_id: trainer.battle})
                 .populate('trainer1')
                 .populate('trainer2')
                 .exec((err, battle) => {
@@ -367,18 +367,20 @@ exports.command = function Command(cmdStr, user, database) {
                         } else if (result) {
                             this.db.battle.create(trainer._id, result._id,
                             (battle) => {
-                                trainer.setBattle(battle);
-                                result.setBattle(battle);
-                                battle
-                                .populate('trainer1')
-                                .populate('trainer2', (err, btl) => {
-                                    if (err) {
-                                        console.log('Error populating battle: ' + err);
-                                        callback(err, this.output);
-                                    } else {
-                                        this.output.battle = btl;
-                                        callback(null, this.output);
-                                    }
+                                trainer.setBattle(battle, () => {
+                                    result.setBattle(battle, () => {
+                                        battle
+                                        .populate('trainer1')
+                                        .populate('trainer2', (err, btl) => {
+                                            if (err) {
+                                                console.log('Error populating battle: ' + err);
+                                                callback(err, this.output);
+                                            } else {
+                                                this.output.battle = btl;
+                                                callback(null, this.output);
+                                            }
+                                        });
+                                    });
                                 });
                             });
                         } else {

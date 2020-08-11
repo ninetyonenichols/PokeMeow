@@ -97,11 +97,11 @@ module.exports = (mongoose) => {
     };
 
     // Sets a reference to the battle that this trainer is currently fighting
-    TrainerSchema.methods.setBattle = function(newBattle) {
+    TrainerSchema.methods.setBattle = function(newBattle, cb) {
         this.battle = newBattle._id;
         this.active = 0;
         this.resetAll();
-        this.save();
+        this.save((err) => { cb(); });
     };
 
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
