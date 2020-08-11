@@ -46,7 +46,7 @@ function submitCommand() {
                 printPkmn(response.encounter);
                 modeURL = '/command/rand-enc/';
             } else {
-                printOutput('Invalid Command');
+                printMsg('Invalid Command');
             }
         }
     });
@@ -56,13 +56,13 @@ function submitCommand() {
 }
 
 
-/*  Description: This function formats and constructs the html to display the
- *      server's response to the page's '#entity'.
+/*  Description: This function puts a message in the message box 
  *  Parameters:
- *      output - the object containing the server's output from the command
+ *      msg - the message to be displayed
  */
-function printOutput(output) {
-    $('#entity').append(JSON.stringify(output) + '<br>');
+function printMsg(msg) {
+    $('#msg').empty();
+    $('#msg').append(msg);
 }
 
 /* Description: clears the output window
@@ -106,7 +106,7 @@ function printPkmn(pkmn) {
     $('#outputWindow').css("background-image", `url(${bgUrl})`);
     $('#msg').text(`A wild ${pkmn.name} appeared!`);
     $('#entity').append(`${pkmn.name}<br>`);
-    $('#entity').append($('<img>', { src: pkmn.sprite, width: '100px',
+    $('#entity').append($('<img>', { src: pkmn.sprite, width: '160px',
         alt: `A picture of ${pkmn.name}.` }));
     $('#entity').append('<br>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';

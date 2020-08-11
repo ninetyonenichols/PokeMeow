@@ -64,8 +64,8 @@
         "fleeRate": "0.1"
     },
     {
-        "name": "Pigeot",
-        "sprite": "./img/sprites/pigeot.png",
+        "name": "Pidgeot",
+        "sprite": "./img/sprites/pidgeot.png",
         "pType1": "Flying",
         "pType2": "Normal",
         "maxHp": "195",

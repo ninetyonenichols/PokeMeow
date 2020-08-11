@@ -17,11 +17,15 @@ html, body {
 header {
     padding-left: 30px;
     width: 100%;
-    height: 130px;
+    height: 195px;
     color: #99B3E6;
     background-color: #315436;
     box-sizing: border-box;
     line-height: 130px;
+}
+
+header > * {
+    margin-top: 70px;
 }
 
 nav {
@@ -32,7 +36,7 @@ nav {
 a {
     margin: 0 10px;
     line-height: 130px;
-    font-size: 16px;
+    font-size: 24px;
     text-decoration: none;
     color: #99B3E6;
 }
@@ -40,6 +44,7 @@ a {
 h1 {
     display: inline-block;
     margin: 0 10px;
+    font-size: 3em;
 }
 
 h2 {
@@ -59,11 +64,11 @@ li {
 
 label {
     display: inline-block;
-    width: 100px;
+    width: 150px;
 }
 
 input {
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .explanation {
@@ -87,13 +92,14 @@ input {
 
 #mainContent {
     color: silver;
+    font-size: 1.5em;
     overflow: scroll;
 }
 
 #pokeballHeader {
     position: relative;
     top: 14px;
-    width: 50px;
+    height: 75px;
 }
 
 #issueMsg {

@@ -11,33 +11,44 @@
 
 label {
     font-family: Courier, monospace;
-    font-size: 18px;
+    font-size: 27px;
     font-weight: bold;
     color: #99B3E6;
 }
 
 #msg, #entity {
-    width: 60%;
+    padding: 15px;
+    font-family: Courier;
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    margin: 0 auto 15px auto;
+}
+
+#msg {
+    margin: 15px auto 23px auto;
+    width: 75%;
+    font-size: 28px;
+}
+
+#entity {
+    margin: 0 auto 23px auto;
+    width: 45%;
+    font-size: 25px
 }
 
 #gameSection {
     width: 100%;
-    height: calc(100% - 130px);
+    height: calc(100% - 195px);
     color: black;
 }
 
 #outputSection {
     width: 100%;
-    height: calc(100% - 160px);
+    height: calc(100% - 220px);
     padding: 20px;
 }
 
 #outputWindow {
     margin: 0 auto;
-    padding: 10px;
+    padding: 20px;
     width: 40%;
     height: 100%;
     border: 5px solid darkgoldenrod;
@@ -49,7 +60,7 @@ label {
 #inputSection {
     padding-top: 60px;
     width: 100%;
-    height: 160px;
+    height: 220px;
     background-color: #8F2432;
 }
 
@@ -60,11 +71,11 @@ label {
 
 #command {
     margin-right: 25px;
-    width: 500px;
+    width: 470px;
     font-family: Courier, monospace;
-    font-size: 18px;
+    font-size: 27px;
 }
 
 #commandBtn {
-    font-size: 18px;
+    font-size: 27px;
 }
