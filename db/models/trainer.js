@@ -34,7 +34,6 @@ module.exports = (mongoose) => {
     // Creates a new trainer document
     TrainerSchema.statics.create = function(trainerName) {
         var trainer = new mongoose.model('Trainer')({ name: trainerName });
-        trainer.save();
         return trainer;
     };
 
@@ -102,7 +101,7 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle._id;
         this.active = 0;
-        this.resetAll()
+        this.resetAll();
         this.save();
     };
 
