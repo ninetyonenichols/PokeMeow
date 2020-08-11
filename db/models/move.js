@@ -31,17 +31,24 @@ module.exports = (mongoose) => {
     // Calculates the damage done by this move from pkmn1 against pkmn2
     // Damage = Floor ((1/2)(movepower)(att/def)(STAB)(Effectiveness)) + 1
     MoveSchema.statics.damage = function(moveName, attacker, defender, cb) {
-        db.model('Move').findOne({ name: moveName })
+        this.findOne({ name: moveName })
         .exec((err, move) => {
             if (move) {
                 let mvDmg = move.baseDmg;
                 let atk = attacker.atk;
                 let def = defender.def;
                 let mvType = move.pType;
-                let stab = (mvType == attacker.pType1 || mvType == attacker.pType2) ?
-                stab_bonus : 1;
-                let effectiveness = vs[defender.pType1][mvType] *
-                vs[defender.pType2][mvType];
+
+                let stab = (mvType == attacker.pType1) ? stab_bonus : 1;
+                if (attacker.pType2) {
+                    stab = (mvType == attacker.pType2) ? stab_bonus : stab;
+                }
+
+                let effectiveness = vs[defender.pType1][mvType];
+                if (defender.pType2) {
+                    effectiveness = effectiveness * vs[defender.pType2][mvType];
+                }
+
                 let result = Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);
                 cb(result);
             } else {
