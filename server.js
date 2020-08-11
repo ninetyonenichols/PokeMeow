@@ -31,7 +31,8 @@ function authenticate(req, res, next) {
         console.log(req.session.user);
         next();
     } else {
-        res.send('NOT ALLOWED');
+        //res.send('NOT ALLOWED');
+        res.redirect('/');
     }
 }
 
@@ -120,3 +121,7 @@ app.post('/command/rand-enc/', (req, res) => {
         res.json(output);
     });
 });
+
+// Redirects invalid requests to Game page (home.html).
+// If user is not logged in, they are then redirected to login page.
+app.all('*', (req, res) => { res.redirect('/home.html'); });

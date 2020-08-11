@@ -675,8 +675,8 @@
         "fleeRate": "0.1"
     },
     {
-        "name": "Kangaskan",
-        "sprite": "./img/sprites/kangaskan.png",
+        "name": "Kangaskhan",
+        "sprite": "./img/sprites/kangaskhan.png",
         "pType1": "Normal",
         "maxHp": "233",
         "currHp": "233",
