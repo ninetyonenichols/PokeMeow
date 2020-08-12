@@ -30,9 +30,9 @@ label {
 .outputWindow:after {
   content: "";
   display: block;
-  height: 50px;
+  height: 20px;
   width: 100%;
-} 
+}
 
 /* Note: this block was taken from StackOverflow, since I did not know how
  * to flip an image horizontally.
@@ -124,7 +124,7 @@ label {
 
 #commandSection {
     margin: 0 auto;
-    width: 750px;
+    width: 770px;
 }
 
 #command {
