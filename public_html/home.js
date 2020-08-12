@@ -51,8 +51,9 @@ function submitCommand() {
                 modeURL = '/command/rand-enc/';
             } else if (res.battle) {
                 chwin('bw');
-                if (isStr(res.battle)) { msg.text(res.battle); }
-                else { printBattle(res.battle); }
+                console.log(res.battle);
+                if (res.battle.battleData) { printBattle(res.battle.battleData); }
+                msg.text(res.battle.message); 
                 modeURL = '/command/battle/';
             } else {
                 msg.text('Invalid Command');
@@ -158,7 +159,7 @@ function printEncounter(pkmn) {
 
 /* Description: Prints the current state of the battle
  */
-function printBattle(output) {
+function printBattle(battleData) {
     // Clearing previous content
     outs.empty();
     bAreaL.empty();
@@ -166,9 +167,9 @@ function printBattle(output) {
 
     outs.append(bw);
 
-    const user = output.trainer1;
+    const user = battleData.trainer1;
     const userPkmn = user.party[user.active];
-    const ai = output.trainer2;
+    const ai = battleData.trainer2;
     const aiPkmn = ai.party[ai.active];
     
     // Player data

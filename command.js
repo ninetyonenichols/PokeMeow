@@ -386,7 +386,7 @@ exports.command = function Command(cmdStr, user, database) {
                     battle.trainer1 = trainer;
                     battle.trainer2 = ai;
 
-                    output.battle = battle;
+                    output.battle = {message: `${ai.name} wants to battle!`, battleData: battle};
                     callback(null, output);
                 });
             } else {
@@ -416,7 +416,7 @@ exports.command = function Command(cmdStr, user, database) {
                     });
                 });
             } else {
-                this.output.battle = 'Could not find pokemon.';
+                this.output.battle = {message:'Could not find pokemon.', battleData: battle};
                 callback(null, this.output);
             }
         });
@@ -443,7 +443,7 @@ exports.command = function Command(cmdStr, user, database) {
                     userTrnrTurn(battle, damage, this.db, this.output,
                                  callback);
                 } else {
-                    this.output.battle = 'Invalid move: ' + this.move;
+                    this.output.battle = {message:`Invalid move: ${this.move}`, battleData: null};
                     callback(null, this.output);
                 }
             });
@@ -518,11 +518,11 @@ exports.command = function Command(cmdStr, user, database) {
                 //update battle and send
                 battle.trainer1 = userTrnr;
                 battle.trainer2 = aiTrnr;
-                output.battle = {message: msg, battle: battle};
+                output.battle = {message: msg, battleData: battle};
                 return output;
             }
         } else {
-            output.battle = 'Invalid move: ' + m;
+            output.battle = {message: `Invalid move: ${m}`, battleData: battle}
             return output;
         }
     }
