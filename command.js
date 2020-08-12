@@ -439,7 +439,7 @@ exports.command = function Command(cmdStr, user, database) {
 
             //use the move against opponent
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
-                if (damage) {
+                if (damage != null) {
                     userTrnrTurn(battle, damage, this.db, this.output,
                                  callback);
                 } else {
@@ -458,7 +458,7 @@ exports.command = function Command(cmdStr, user, database) {
         let aiPkmn = aiTrnr.getActive();
 
         aiTrnr.subtractHp(damage);
-        let msg = userPkmn.name + 'dealt: ' + damage + '\n';
+        let msg = `${userPkmn.name} dealt: ${damage}\n`;
 
         //check if opponent is defeated
         if (aiTrnr.defeated) {
@@ -467,10 +467,10 @@ exports.command = function Command(cmdStr, user, database) {
         } else {
             //check if opponent pokemon fainted
             if (aiPkmn.fainted) {
-                msg += aiPkmn.name + ' fainted!' + '\n';
+                msg += `${aiPkmn.name} fainted!\n`;
                 //send out next pokemon
                 aiPkmn = aiTrnr.nextPkmn();
-                msg += 'They sent out: ' + userPkmn.name;
+                msg += `They sent out: ${userPkmn.name}`;
 
                 //update battle and send
                 battle.trainer2 = aiTrnr;
@@ -482,7 +482,7 @@ exports.command = function Command(cmdStr, user, database) {
                 //have opponent attack
                 const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
                 DB.move.damage(m, aiPkmn, userPkmn, (damage2) => {
-                    output = aiTrnrTurn(battle, damage2, msg, output);
+                    output = aiTrnrTurn(battle, m, damage2, msg, output);
                     callback(null, output);
                 });
             }
@@ -490,15 +490,15 @@ exports.command = function Command(cmdStr, user, database) {
     }
 
     // Helper function to 'this.execUse' that handles the ai attacking the user
-    function aiTrnrTurn(battle, damage, msg, output) {
+    function aiTrnrTurn(battle, move, damage, msg, output) {
         const userTrnr = battle.trainer1;
         const aiTrnr = battle.trainer2;
         let userPkmn = userTrnr.getActive();
         let aiPkmn = aiTrnr.getActive();
 
-        if (damage) {
+        if (damage != null) {
             userTrnr.subtractHp(damage);
-            msg += aiPkmn.name + 'dealt: ' + damage + '\n';
+            msg += `${aiPkmn.name} dealt: ${damage}\n`;
 
             //check if user is defeated
             if (userTrnr.defeated) {
@@ -507,10 +507,10 @@ exports.command = function Command(cmdStr, user, database) {
             } else {
                 //check if user's pokemon fainted
                 if (userPkmn.fainted) {
-                    msg += userPkmn.name + ' fainted!' + '\n';
+                    msg += `${userPkmn.name} fainted!\n`;
                     //send out next pokemon
                     userPkmn = userTrnr.nextPkmn();
-                    msg += 'You sent out: ' + userPkmn.name;
+                    msg += `You sent out: ${userPkmn.name}`;
                 } else {
                     userTrnr.save();
                 }
@@ -522,7 +522,7 @@ exports.command = function Command(cmdStr, user, database) {
                 return output;
             }
         } else {
-            output.battle = {message: `Invalid move: ${m}`, battleData: battle}
+            output.battle = {message: `Invalid move: ${move}`, battleData: battle}
             return output;
         }
     }
