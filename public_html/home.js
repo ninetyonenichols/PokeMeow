@@ -186,29 +186,27 @@ function printBattle(battleData) {
 
     // Player data
     bAreaL.append(`${user.name}<br>`);
-    bAreaL.append($('<img>', { src: user.photo, width: '160px',
-        alt: `${user.avatar}` }));
-        //alt: `A picture of ${user.name}.` }));
+    bAreaL.append($('<img>', { src: user.photo, width: '80px',
+        alt: `A picture of ${user.name}` }));
+    bAreaL.append($('<img>', { src: userPkmn.sprite, width: '80px',
+        alt: `A picture of ${userPkmn.name}.`, class: 'img-hor' }));
     bAreaL.append(`<br>`);
     bAreaL.append(`${userPkmn.name}<br>`);
-    bAreaL.append($('<img>', { src: userPkmn.sprite, width: '160px',
-        alt: `A picture of ${userPkmn.name}.` }));
+    bAreaL.append(`HP: ${userPkmn.currHp}/${userPkmn.maxHp}<br>`);
     bAreaL.append(`<br>`);
-    bAreaL.append(`${userPkmn.currHp}/${userPkmn.maxHp}<br>`);
     bAreaL.append(`Moves:<br>`);
     bAreaL.append(`${userPkmn.moves[0]}<br>`);
     bAreaL.append(`${userPkmn.moves[1]}<br>`);
 
     // AI data
     bAreaR.append(`${ai.name}<br>`);
-    bAreaR.append($('<img>', { src: ai.photo, width: '160px',
+    bAreaR.append($('<img>', { src: aiPkmn.sprite, width: '80px',
+        alt: `A picture of ${aiPkmn.name}.` }));
+    bAreaR.append($('<img>', { src: ai.photo, width: '80px',
         alt: `A picture of ${ai.name}.` }));
     bAreaR.append(`<br>`);
     bAreaR.append(`${aiPkmn.name}<br>`);
-    bAreaR.append($('<img>', { src: aiPkmn.sprite, width: '160px',
-        alt: `A picture of ${aiPkmn.name}.` }));
-    bAreaR.append(`<br>`);
-    bAreaR.append(`${aiPkmn.currHp}/${aiPkmn.maxHp}<br>`);
+    bAreaR.append(`HP: ${aiPkmn.currHp}/${aiPkmn.maxHp}<br>`);
 }
 
 /* Description: This funciton prints out an array of pokemon
