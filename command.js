@@ -200,7 +200,7 @@ exports.command = function Command(cmdStr, user, database) {
                 if (trainer.party.length == 0) {
                     this.output.main = 'No party pokemon';
                 } else {
-                    this.output.main = trainer.party;
+                    this.output.main = {party: trainer.party, collection: null};
                 }
                 callback(null, this.output);
             } else {
@@ -216,7 +216,7 @@ exports.command = function Command(cmdStr, user, database) {
                 if (trainer.pokemon.length == 0) {
                     this.output.main = 'No caught pokemon';
                 } else {
-                    this.output.main = trainer.pokemon;
+                    this.output.main = {party:null, collection:trainer.pokemon};
                 }
                 callback(null, this.output);
             } else {

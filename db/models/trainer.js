@@ -111,7 +111,6 @@ module.exports = (mongoose) => {
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
     TrainerSchema.methods.add = function() {
         const pkmn = this.encounter;
-        this.encounter = null;
         if (this.party.length < MAX_PARTY_SIZE) {
             this.party.push(pkmn);
             this.save();
