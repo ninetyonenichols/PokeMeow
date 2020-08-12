@@ -102,7 +102,10 @@ module.exports = (mongoose) => {
         this.battle = newBattle._id;
         this.active = 0;
         this.resetAll();
-        this.save((err) => { cb(); });
+        this.save((err) => {
+            if (err) console.log(err);
+            cb();
+        });
     };
 
     // Adds a pokemon to trainer's party or collection, whichever is appropriate

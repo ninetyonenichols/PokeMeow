@@ -160,10 +160,12 @@ exports.command = function Command(cmdStr, user, database) {
     this.getBattle = function(callback) {
         this.getTrainer((trainer) => {
             if (trainer) {
-                this.db.battle.findOne({_id: trainer.battle})
+                this.db.battle.findById(trainer.battle)
                 .populate('trainer1')
                 .populate('trainer2')
                 .exec((err, battle) => {
+                    console.log('getBattle Error: ' + err);
+                    console.log('getBattle Battle: ' + battle);
                     if (err) {
                         console.log('Error getting battle: ' + err);
                         callback(null);
@@ -473,7 +475,7 @@ exports.command = function Command(cmdStr, user, database) {
                                             userTrnr.save();
                                         }
 
-                                        //update battle and save
+                                        //update battle and send
                                         battle.trainer1 = userTrnr;
                                         battle.trainer2 = aiTrnr;
                                         this.output.battle = battle;

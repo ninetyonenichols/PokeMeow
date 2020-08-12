@@ -124,13 +124,13 @@ function printOutput(output) {
         const aiPoke = ai.party[ai.active];
 
         $('#entity').text(ai.name
-            + '\n'
+            + '<br>'
             + aiPoke.name + ' ' + aiPoke.currHp + '/' + aiPoke.maxHp
-            + '\n\n\n\n\n'
+            + '<br><br>'
             + user.name
-            + '\n'
+            + '<br>'
             + userPoke.name + ' ' + userPoke.currHp + '/' + userPoke.maxHp
-            + '\nMoves: ' + userPoke.moves[0] + ', ' + userPoke.moves[1]);
+            + '<br>Moves: ' + userPoke.moves[0] + ', ' + userPoke.moves[1]);
 
     } else {
         $('#entity').text(output);
