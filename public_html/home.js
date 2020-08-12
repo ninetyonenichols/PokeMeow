@@ -123,10 +123,12 @@ function isStr(x) {
 function printMain() {
     // Clearing previous content
     outs.empty();
+    mw.empty();
     mArea.empty();
 
     // Adding content to DOM elements
-    msg.text('Options');
+    msg.text('Welcome to PokeMeow!');
+    /*msg.text('Options');
     mArea.append(`random-encounter - starts an encounter
         with a random pokemon<br>`);
     mArea.append(`view-party - prints out a list of pokemon
@@ -141,6 +143,7 @@ function printMain() {
         party<br>`);
     mArea.append(`release name - releases the pokemon
         \'name\' back to the wild<br>`);
+    */ 
 
     // Adding DOM elements to page
     mw.prepend(msg);

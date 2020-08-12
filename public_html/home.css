@@ -56,6 +56,10 @@ label {
     font-family: Courier;
 }
 
+#ew, #mw, #bw {
+    background-position: center;
+}
+
 #ew {
     background-image: url('./img/bg/kanto.png');
 }
