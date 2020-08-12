@@ -5,8 +5,8 @@
  */
 
 //constants
-const serverURL = 'http://157.245.236.86';
-//const serverURL = 'http://64.227.49.233';
+//const serverURL = 'http://157.245.236.86';
+const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
 createWindows();
@@ -37,15 +37,21 @@ function submitCommand() {
         data: JSON.stringify({command: commandStr}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: (response) => {
-            if (response.main) {
-                printMain();
+        success: (res) => {
+            if (res.main) {
+                chwin('mw');
+                if (isStr(res.main)) { msg.text(res.main); }
+                else { printPkmnArray(res.main); }
                 modeURL = '/command/';
-            } else if (response.encounter) {
-                printEncounter(response.encounter);
+            } else if (res.encounter) {
+                chwin('ew');
+                if (isStr(res.encounter)) { msg.text(res.encounter); }
+                else { printEncounter(res.encounter); }
                 modeURL = '/command/rand-enc/';
-            } else if (response.battle) {
-                printBattle(response.battle);
+            } else if (res.battle) {
+                chwin('bw');
+                if (isStr(res.battle)) { msg.text(res.battle); }
+                else { printBattle(res.battle); }
                 modeURL = '/command/battle/';
             } else {
                 msg.text('Invalid Command');
@@ -81,6 +87,23 @@ function createWindows() {
     bw.append(bAreaR);
 }
 
+/* Changes the outputWindow
+ */
+function chwin(winName) {
+    let win = eval(winName); 
+    outs.empty();
+    win.prepend(msg);
+    outs.append(win);
+}
+
+/* Checks if an object is a string
+ * DISCLAIMER: this function is from stack overflow.
+ * I would rewrite it, but it is only one line, and I am not sure what can be rewritten.
+ */
+function isStr(x) {
+  return Object.prototype.toString.call(x) === "[object String]"
+}
+
 /* Description: This function prints out the options available to the player at
  *     the main game-screen.
  */
@@ -111,13 +134,31 @@ function printMain() {
     outs.append(mw); 
 }
 
+/* Description: This funciton prints out an array of pokemon
+ */
+function printPkmnArray(rMain) {
+    var pkmnArray; 
+    var party = rMain.party;
+    var col = rMain.collection;
+    if (party) {
+        msg.text('Party');
+        pkmnArray = party;
+    } else if (col) {
+        msg.text('Collection');
+        pkmnArray = col;
+    }
+
+    for (i in pkmnArray) {
+        printPkmn(pkmnArray[i]);
+    }
+}
+
 /* Description: This function prints out the info for one pokemon
  * Parameters:
  *     pkmn - the object containing the pokemon's info
  */
 function printEncounter(pkmn) {
     // Clearing previous content
-    outs.empty();
     eArea.empty();
 
     // Adding content to DOM elements
@@ -131,7 +172,6 @@ function printEncounter(pkmn) {
     
     // Appending DOM elements to page
     ew.prepend(msg);
-    outs.append(ew);
 }
 
 function printBattle(output) {
@@ -159,4 +199,33 @@ function printBattle(output) {
     } else {
         bArea.text(output);
     }
+}
+
+/* Description: prints one pokemon owned by the player
+ * Parameters: none.
+ */
+function printPkmn(pkmn) {
+    var pkmnContainer = $('<div></div>');
+    // lbox contains pkmn sprite + name
+    var lbox = $('<div style="float:left; width:33%;"></div>');
+    lbox.append(`${pkmn.name}<br>`);
+    lbox.append($('<img>', { src: pkmn.sprite, width: '160px',
+        alt: `A picture of ${pkmn.name}.` }));
+    // cbox contains pkmn stats + typing 
+    var cbox = $('<div style="float:left; width:26%;"></div>');
+    let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
+    cbox.append(`Type: ${pkmn.pType1}${type2}<br>`);
+    cbox.append(`Atk: ${pkmn.atk}<br>`);
+    cbox.append(`Def: ${pkmn.def}<br>`);
+    cbox.append(`HP: ${pkmn.maxHp}<br>`);
+    var rbox = $('<div style="float:left; width:41%;"></div>');
+    rbox.append(`Moves:<br>`);
+    rbox.append(`${pkmn.moves[0]}<br>`);
+    rbox.append(`${pkmn.moves[1]}<br>`);
+    // Adding everything to DOM
+    pkmnContainer.attr('class', 'pkmnContainer');
+    pkmnContainer.append(lbox);
+    pkmnContainer.append(cbox);
+    pkmnContainer.append(rbox);
+    mw.append(pkmnContainer);
 }
