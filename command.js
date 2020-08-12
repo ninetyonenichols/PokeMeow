@@ -496,7 +496,7 @@ exports.command = function Command(cmdStr, user, database) {
 
             //update battle and send
             battle.trainer2 = aiTrnr;
-            output.battle = {message: msg, battle: battle};
+            output.battle = {message: msg, battleData: battle};
             callback(null, output);
 
         //if not, have opponent attack the user
