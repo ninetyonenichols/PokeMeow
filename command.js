@@ -506,9 +506,6 @@ exports.command = function Command(cmdStr, user, database) {
     this.execBtlExit = (callback) => {
         this.getTrainer((trainer) => {
             if (trainer) {
-                this.db.battle.deleteOne({_id: trainer.battle}, (err, btl) => {
-                    if (err) console.log(err);
-                });
                 this.output.main = 'YOU RAN AWAY';
                 callback(null, this.output);
             } else {

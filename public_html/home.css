@@ -53,7 +53,7 @@ label {
     height: 100%;
     border: 5px solid darkgoldenrod;
     text-align: center;
-    overflow: scroll;
+    overflow: auto;
     background-size: cover;
 }
 

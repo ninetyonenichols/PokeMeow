@@ -93,7 +93,7 @@ input {
 #mainContent {
     color: silver;
     font-size: 1.5em;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #pokeballHeader {
@@ -105,4 +105,3 @@ input {
 #issueMsg {
     color: red;
 }
-

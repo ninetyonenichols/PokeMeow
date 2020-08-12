@@ -123,7 +123,7 @@ function printOutput(output) {
         const ai = output.trainer2;
         const aiPoke = ai.party[ai.active];
 
-        $('#entity').text(ai.name
+        $('#entity').html(ai.name
             + '<br>'
             + aiPoke.name + ' ' + aiPoke.currHp + '/' + aiPoke.maxHp
             + '<br><br>'
