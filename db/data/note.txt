@@ -1,6 +1,6 @@
 This directory will contain raw-data files.
 
-Some of these files can be used to initialize a 
+Some of these files can be used to initialize a
 collection. For example, types.json contains all the info needed to rebuild
 the 'types' collection if it were ever cleared from the database.
 
@@ -10,7 +10,7 @@ mongoimport --db pokemeow --collection moves --file moveList.js --jsonArray
 To clear the moves collection first and then import, use:
 mongoimport --db pokemeow --collection moves --drop --file moveList.js --jsonArray
 mongoimport --db pokemeow --collection pokemon --drop --file pokemonList.js --jsonArray
-mongoimport --db pokemeow --collection trainer --drop --file trainerList.js --jsonArray
+mongoimport --db pokemeow --collection trainers --drop --file trainerList.js --jsonArray
 
 
 
@@ -42,7 +42,7 @@ TrainerSchema:
 
     {
         "_id": "",
-        "name": "", 
+        "name": "",
         "photo": "../avatars/.jpg",
         "party": [
             {
@@ -54,5 +54,5 @@ TrainerSchema:
             {
 
             }
-        ] 
+        ]
     }
