@@ -130,7 +130,7 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.switchActive = function(name) {
         for (let i = 0; i < this.party.length; i++) {
             const poke = this.party[i];
-            if (poke.name == name && !poke.fainted) {
+            if (poke.name == name && !(poke.fainted)) {
                 this.setActive(i);
                 return true;
             }
@@ -144,7 +144,7 @@ module.exports = (mongoose) => {
         for (let i = 0; i < this.party.length; i++) {
             const poke = this.party[this.active];
 
-            if (!poke.fainted) {
+            if (!(poke.fainted)) {
                 this.active = i;
                 this.save();
                 return poke;
