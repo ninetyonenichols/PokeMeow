@@ -49,16 +49,16 @@ exports.command = function Command(cmdStr, user, database) {
     // calling that 'main') and set execute to the appropriate function
     this.parseMain = function() {
         switch (this.cmd[0]) {
-            case 'random-encounter':
+            case 'p':
                 this.execute = this.execEncounter;
                 break;
             case 'battle':
                 this.execute = this.execBattle;
                 break;
-            case 'view-party':
+            case 'party':
                 this.execute = this.execParty;
                 break;
-            case 'view-pokemon':
+            case 'storage':
                 this.execute = this.execViewCaught;
                 break;
             case 'view':
@@ -95,7 +95,7 @@ exports.command = function Command(cmdStr, user, database) {
     // to the appropriate function
     this.parseEnc = function() {
         switch (this.cmd[0]) {
-            case 'throw-ball':
+            case 'pb':
                 this.execute = this.execThrow;
                 break;
             case 'run':
@@ -209,7 +209,7 @@ exports.command = function Command(cmdStr, user, database) {
         callback('Invalid Command', this.output);
     }
 
-    // The 'view-party' command - returns the user's party pokemon
+    // The 'party' command - returns the user's party pokemon
     this.execParty = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.party.length == 0) {
@@ -223,7 +223,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'view-pokemon' command - returns the user's other pokemon
+    // The 'storage' command - returns the user's other pokemon
     this.execViewCaught = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.pokemon.length == 0) {
@@ -295,7 +295,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'random-encounter' command - starts a random encounter
+    // The 'p' command - starts a random encounter with a Pokemon
     this.execEncounter = (callback) => {
         //get a random pokemon from the database
         this.db.pokemon.encounter((poke) => {
@@ -311,7 +311,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'throw-ball' command - attempt to catch an encountered pokemon
+    // The 'pb' command - throws a PokeBall (in attempt to capture Pokemon).
     this.execThrow = (callback) => {
         //access the pokemon in the encounter (it is in trainer.encounter)
         this.getTrainer(callback, (trainer) => {

@@ -61,7 +61,6 @@ function submitCommand() {
                 modeURL = '/command/rand-enc/';
             } else if (res.battle) {
                 chwin('bw');
-                console.log(res.battle);
                 if (res.battle.battleData) { printBattle(res.battle.battleData); }
                 msg.text(res.battle.message);
                 modeURL = '/command/battle/';
@@ -161,7 +160,7 @@ function printEncounter(pkmn) {
     // Adding content to DOM elements
     msg.text(`A wild ${pkmn.name} appeared!`);
     eArea.append(`${pkmn.name}<br>`);
-    eArea.append($('<img>', { src: pkmn.sprite, width: '160px',
+    eArea.append($('<img>', { src: pkmn.sprite, width: '200px',
         alt: `A picture of ${pkmn.name}.` }));
     eArea.append('<br>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
@@ -237,7 +236,7 @@ function printPkmnArray(rMain) {
         msg.text('Party');
         pkmnArray = party;
     } else if (col) {
-        msg.text('Collection');
+        msg.text('Storage');
         pkmnArray = col;
     }
 
