@@ -213,7 +213,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execParty = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.party.length == 0) {
-                this.output.main = 'No party pokemon';
+                this.output.main = 'No Pokemon in party.';
 
             } else {
                 this.output.main = {party: trainer.party, collection: null};
@@ -227,7 +227,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execViewCaught = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.pokemon.length == 0) {
-                this.output.main = 'No caught pokemon';
+                this.output.main = 'No Pokemon in storage.';
 
             } else {
                 this.output.main = {party:null, collection:trainer.pokemon};
@@ -259,8 +259,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRemove = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.removeParty(this.pokemon)) {
-                this.output.main = 'REMOVED FROM PARTY: '
-                + this.pokemon;
+                this.output.main = `Removed ${this.pokemon} from party.`;
 
             } else {
                 this.output.main = 'Could not find pokemon';
@@ -274,9 +273,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execAdd = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.addParty(this.pokemon)) {
-                this.output.main = 'ADDED TO PARTY: '
-                + this.pokemon;
-
+                this.output.main =`Added ${this.pokemon} to party.`;
             } else {
                 this.output.main = 'Could not add pokemon';
             }
@@ -289,8 +286,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRelease = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.release(this.pokemon)) {
-                this.output.main = 'RELEASED: ' + this.pokemon;
-
+                this.output.main = `Released ${this.pokemon}.`;
             } else {
                 this.output.main = 'Could not find pokemon';
             }
@@ -327,17 +323,17 @@ exports.command = function Command(cmdStr, user, database) {
                     //caught, add pokemon to trainer
                     trainer.add();
                     //set output to 'main' to return to the 'Main' scope
-                    this.output.main = 'CAUGHT: ' + trainer.encounter.name;
+                    this.output.main = `${trainer.encounter.name} was caught!`;
                     break;
 
                 case "missed":
                     //pokeball missed, continue encounter
-                    this.output.encounter = 'POKEBALL MISSED';
+                    this.output.encounter = 'The Pokemon broke free!';
                     break;
 
                 case "ran":
                     //pokemon ran away, so end encounter
-                    this.output.main = 'POKEMON ESCAPED';
+                    this.output.main = `${trainer.encounter.name} fled.`;
                     break;
 
                 default:
@@ -350,7 +346,7 @@ exports.command = function Command(cmdStr, user, database) {
 
     // The 'run' command - run from an encountered pokemon
     this.execRun = (callback) => {
-        this.output.main = 'YOU RAN AWAY';
+        this.output.main = 'Got away successfully!';
         callback(null, this.output);
     }
 
@@ -454,12 +450,13 @@ exports.command = function Command(cmdStr, user, database) {
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
                 if (damage != null) {
                     aiTrnr.subtractHp(damage);
-                    let msg = `${userPkmn.name} dealt: ${damage}\n`;
+                    let msg = userPkmn.name + " used " + this.move + "!\n";
+                    //let msg = `${userPkmn.name} dealt: ${damage} dmg` + '\n';
 
                     //if opponent is defeated end the battle
                     if (aiTrnr.defeated) {
-                        this.output.main = 'DEFEATED: ' + aiTrnr.name;
-                        callback(null, output);
+                        this.output.main = `You defeaded ${aiTrnr.name}!`;
+                        callback(null, this.output);
                     } else {
                         battle.trainer2 = aiTrnr;
                         checkAI(battle, this.db, msg, this.output, callback);
@@ -492,7 +489,7 @@ exports.command = function Command(cmdStr, user, database) {
             msg += `${aiPkmn.name} fainted!\n`;
             //send out next pokemon
             aiPkmn = aiTrnr.nextPkmn();
-            msg += `They sent out: ${aiPkmn.name}`;
+            msg += `${aiTrnr.name} send ${aiPkmn.name}`;
 
             //update battle and send
             battle.trainer2 = aiTrnr;
@@ -530,11 +527,12 @@ exports.command = function Command(cmdStr, user, database) {
 
         if (damage != null) {
             userTrnr.subtractHp(damage);
-            msg += `${aiPkmn.name} dealt: ${damage}\n`;
+            //msg += `${aiPkmn.name} dealt: ${damage}\n`;
+            msg += `Enemy ${aiPkmn.name} used ${move}!\n`;
 
             //if user is defeated end the battle
             if (userTrnr.defeated) {
-                output.main = 'DEFEATED BY: ' + aiTrnr.name;
+                output.main =`You were defeaded by ${aiTrnr.name}.`;
                 return output;
             } else {
                 //check if user's pokemon fainted
@@ -561,7 +559,7 @@ exports.command = function Command(cmdStr, user, database) {
     // The 'run' battle command - used to exit from a battle
     this.execBtlExit = (callback) => {
         this.getTrainer(callback, (trainer) => {
-            this.output.main = 'YOU RAN AWAY';
+            this.output.main = `Withdrew from battle.`;
             callback(null, this.output);
         });
     }
