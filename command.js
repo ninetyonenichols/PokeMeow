@@ -318,17 +318,17 @@ exports.command = function Command(cmdStr, user, database) {
                 this.output.main = 'You have no pokemon in your party!';
                 callback(null, this.output);
             } else {
-                setupBattle(this.output, trainer, callback);
+                setupBattle(trainer, this.output, this.db.trainer, callback);
             }
         });
     }
 
     // Helper function for 'this.execBattle'
-    function setupBattle(output, trainer, callback) {
+    function setupBattle(trainer, output, trainerDB, callback) {
         const i = Math.floor((Math.random() * 5));
 
         //find the AI trainer
-        this.db.trainer.findOne({name: trainerAIs[i]}, (err, ai) => {
+        trainerDB.findOne({name: trainerAIs[i]}, (err, ai) => {
             if (err) {
                 console.log('Error finding AI trainer: ' + err);
                 callback(err, this.output);
