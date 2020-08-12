@@ -318,22 +318,22 @@ exports.command = function Command(cmdStr, user, database) {
                 this.output.main = 'You have no pokemon in your party!';
                 callback(null, this.output);
             } else {
-                setupBattle(trainer, this.output, this.db.trainer, callback);
+                setupBattle(trainer, this.output, this.db, callback);
             }
         });
     }
 
     // Helper function for 'this.execBattle'
-    function setupBattle(trainer, output, trainerDB, callback) {
+    function setupBattle(trainer, output, DB, callback) {
         const i = Math.floor((Math.random() * 5));
 
         //find the AI trainer
-        trainerDB.findOne({name: trainerAIs[i]}, (err, ai) => {
+        DB.trainer.findOne({name: trainerAIs[i]}, (err, ai) => {
             if (err) {
                 console.log('Error finding AI trainer: ' + err);
                 callback(err, this.output);
             } else if (ai) {
-                this.db.battle.create(trainer._id, ai._id, (battle) => {
+                DB.battle.create(trainer._id, ai._id, (battle) => {
                     trainer.setBattle(battle);
                     ai.setBattle(battle);
 
@@ -363,8 +363,8 @@ exports.command = function Command(cmdStr, user, database) {
 
                     //have opponent attack
                     const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
-                    this.db.move.damage(m, aiPkmn, userPkmn, (dmg2) => {
-                        this.output = aiTrnrTurn(battle, dmg2);
+                    this.db.move.damage(m, aiPkmn, userPkmn, (damage) => {
+                        this.output = aiTrnrTurn(battle, damage, this.output);
                         callback(null, this.output);
                     });
                 });
@@ -392,7 +392,8 @@ exports.command = function Command(cmdStr, user, database) {
             //use the move against opponent
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
                 if (damage) {
-                    userTrnrTurn(battle, damage, this.output, callback);
+                    userTrnrTurn(battle, damage, this.db, this.output,
+                                 callback);
                 } else {
                     this.output.battle = 'Invalid move: ' + this.move;
                     callback(null, this.output);
@@ -402,7 +403,7 @@ exports.command = function Command(cmdStr, user, database) {
     }
 
     // Helper function to 'this.execUse' that handles attacking the opponent
-    function userTrnrTurn(battle, damage, output, callback) {
+    function userTrnrTurn(battle, damage, DB, output, callback) {
         const userTrnr = battle.trainer1;
         const aiTrnr = battle.trainer2;
         let userPkmn = userTrnr.getActive();
@@ -417,6 +418,7 @@ exports.command = function Command(cmdStr, user, database) {
         } else {
             //check if opponent pokemon fainted
             if (aiPkmn.fainted) {
+                //send out next pokemon
                 aiPkmn = aiTrnr.nextPkmn();
 
                 //update battle and send
@@ -428,7 +430,7 @@ exports.command = function Command(cmdStr, user, database) {
 
                 //have opponent attack
                 const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
-                this.db.move.damage(m, aiPkmn, userPkmn, (damage2) => {
+                DB.move.damage(m, aiPkmn, userPkmn, (damage2) => {
                     output = aiTrnrTurn(battle, damage2, output);
                     callback(null, output);
                 });
@@ -452,6 +454,7 @@ exports.command = function Command(cmdStr, user, database) {
             } else {
                 //check if user's pokemon fainted
                 if (userPkmn.fainted) {
+                    //send out next pokemon
                     userPkmn = userTrnr.nextPkmn();
                 } else {
                     userTrnr.save();
