@@ -141,8 +141,9 @@ module.exports = (mongoose) => {
 
     // Sends out the next pokemon (tries to use only non-fainted pokemon first)
     TrainerSchema.methods.nextPkmn = function() {
+        let poke;
         for (let i = 0; i < this.party.length; i++) {
-            const poke = this.party[this.active];
+            poke = this.party[i];
 
             if (!(poke.fainted)) {
                 this.active = i;

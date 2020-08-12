@@ -386,63 +386,14 @@ exports.command = function Command(cmdStr, user, database) {
     // The 'use' command
     this.execUse = (callback) => {
         this.getBattle(callback, (battle) => {
-            const userTrnr = battle.trainer1;
-            const aiTrnr = battle.trainer2;
             const userPkmn = battle.trainer1.getActive();
             const aiPkmn = battle.trainer2.getActive();
 
             //use the move against opponent
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
                 if (damage) {
-                    aiTrnr.subtractHp(damage);
-
-                    //check if opponent is defeated
-                    if (aiTrnr.defeated) {
-                        this.output.main = 'DEFEATED: ' + aiTrnr.name;
-                        callback(null, this.output);
-                    } else {
-                        //check if opponent pokemon fainted
-                        if (aiPkmn.fainted) {
-                            //send out next pokemon
-                            aiPkmn = aiTrnr.nextPkmn();
-
-                            //update battle and send
-                            battle.trainer2 = aiTrnr;
-                            this.output.battle = battle;
-                            callback(null, this.output);
-                        } else {
-                            aiTrnr.save();
-
-                            //have opponent attack
-                            const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
-                            DB.move.damage(m, aiPkmn, userPkmn, (damage2) => {
-                                if (damage2) {
-                                    userTrnr.subtractHp(damage2);
-
-                                    //check if user is defeated
-                                    if (userTrnr.defeated) {
-                                        this.output.main = 'DEFEATED BY: ' + aiTrnr.name;
-                                    } else {
-                                        //check if user's pokemon fainted
-                                        if (userPkmn.fainted) {
-                                            //send out next pokemon
-                                            userPkmn = userTrnr.nextPkmn();
-                                        } else {
-                                            userTrnr.save();
-                                        }
-
-                                        //update battle and send
-                                        battle.trainer1 = userTrnr;
-                                        battle.trainer2 = aiTrnr;
-                                        this.output.battle = battle;
-                                    }
-                                } else {
-                                    this.output.battle = 'Invalid move: ' + m;
-                                }
-                                callback(null, this.output);
-                            });
-                        }
-                    }
+                    userTrnrTurn(battle, damage, this.db, this.output,
+                                 callback);
                 } else {
                     this.output.battle = 'Invalid move: ' + this.move;
                     callback(null, this.output);
