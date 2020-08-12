@@ -7,7 +7,7 @@
 
 const crypto = require('crypto');
 
-module.exports = (Trainer, mongoose) => {
+module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
     const Trainer = mongoose.model('Trainer');
