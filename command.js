@@ -455,7 +455,7 @@ exports.command = function Command(cmdStr, user, database) {
 
                     //if opponent is defeated end the battle
                     if (aiTrnr.defeated) {
-                        this.output.main = `You defeaded ${aiTrnr.name}!`;
+                        this.output.main = `You defeated ${aiTrnr.name}!`;
                         callback(null, this.output);
                     } else {
                         battle.trainer2 = aiTrnr;
