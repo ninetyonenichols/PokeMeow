@@ -126,8 +126,12 @@ exports.command = function Command(cmdStr, user, database) {
                 this.execute = this.execMoves;
                 break;
             case 'use':
-                if (this.cmd.length == 2) {
+                if (this.cmd.length > 1) {
                     this.move = this.cmd[1];
+                    //if the move is a two-word move, add the second word
+                    if (this.cmd.length > 2) {
+                        this.move += ' ' + this.cmd[2];
+                    }
                     this.execute = this.execUse;
                     break;
                 }
