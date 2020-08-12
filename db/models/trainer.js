@@ -98,14 +98,11 @@ module.exports = (mongoose) => {
     };
 
     // Sets a reference to the battle that this trainer is currently fighting
-    TrainerSchema.methods.setBattle = function(newBattle, cb) {
+    TrainerSchema.methods.setBattle = function(newBattle) {
         this.battle = newBattle._id;
         this.active = 0;
         this.resetAll();
-        this.save((err) => {
-            if (err) console.log(err);
-            cb();
-        });
+        this.save();
     };
 
     // Adds a pokemon to trainer's party or collection, whichever is appropriate
@@ -132,7 +129,8 @@ module.exports = (mongoose) => {
 
     TrainerSchema.methods.switchActive = function(name) {
         for (let i = 0; i < this.party.length; i++) {
-            if (this.party[i].name == name) {
+            const poke = this.party[i];
+            if (poke.name == name && poke.currHp != 0) {
                 this.setActive(i);
                 return true;
             }
