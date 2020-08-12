@@ -21,8 +21,10 @@ module.exports = (mongoose) => {
         encounter: PokemonSchema
     });
 
-    // Create a virtual property 'defeated' that shows whether this trainer
-    // has lost the current battle (i.e. all their pokemon have fainted).
+    /*  Description: A virtual 'get' property that returns true if all pokemon
+     *      in the trainer's party have 0 currHp, and false otherwise.
+     *  Parameters: none.
+     */
     TrainerSchema.virtual('defeated').get(function() {
         var defeated = true;
         this.party.forEach(function(pkmn) {
@@ -31,7 +33,11 @@ module.exports = (mongoose) => {
         return defeated;
     });
 
-    // Creates a new trainer document
+    /*  Description: Create a new Trainer document with name = 'trainerName'
+     *      and return it.
+     *  Parameters:
+     *      trainerName - the name of the trainer
+     */
     TrainerSchema.statics.create = function(trainerName) {
         var trainer = new mongoose.model('Trainer')({ name: trainerName });
         return trainer;

@@ -38,7 +38,10 @@ module.exports = (mongoose) => {
         fleeRate: { type: Number, default: 0.1 },
     });
 
-    // Create a virtual property 'fainted' that is determined by this.currHp
+    /*  Description: A virtual 'get' property that returns true if the pokemon
+     *      has 0 currHp, and false otherwise.
+     *  Parameters: none.
+     */
     PokemonSchema.virtual('fainted').get(function() {
         return this.currHp == 0;
     });
