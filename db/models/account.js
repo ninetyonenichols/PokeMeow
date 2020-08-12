@@ -2,7 +2,8 @@
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
  * Description: This file handles access to the 'accounts' collection. It
- *      exports three functions: 'create', 'userExists', and 'authenticate'.
+ *      exports three functions: 'create', 'userExists', 'getTrainer', and
+ *      'authenticate'. It uses the 'crypto' module to encrypt the passwords.
  */
 
 const crypto = require('crypto');

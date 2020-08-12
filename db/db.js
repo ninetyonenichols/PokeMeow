@@ -2,8 +2,8 @@
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
  * Description: This file acts as a controller for the whole database. There
- * 	will be many separate scripts that control small portions of the database,
- * 	and this script will make calls to all of them as needed.
+ *      will be many separate scripts that control small portions of the
+ *      database, and this script will make calls to all of them as needed.
  */
 
 // setting up connection to database

@@ -484,15 +484,15 @@ exports.command = function Command(cmdStr, user, database) {
      */
     function checkAI(battle, DB, msg, output, callback) {
         const aiTrnr = battle.trainer2;
-        const aiPkmn = aiTrnr.getActive();
+        let aiPkmn = aiTrnr.getActive();
         const userPkmn = battle.trainer1.getActive();
 
         //check if opponent pokemon fainted
         if (aiPkmn.fainted) {
             msg += `${aiPkmn.name} fainted!\n`;
             //send out next pokemon
-            aiTrnr.nextPkmn();
-            msg += `They sent out: ${userPkmn.name}`;
+            aiPkmn = aiTrnr.nextPkmn();
+            msg += `They sent out: ${aiPkmn.name}`;
 
             //update battle and send
             battle.trainer2 = aiTrnr;
@@ -525,7 +525,7 @@ exports.command = function Command(cmdStr, user, database) {
     function aiTrnrTurn(battle, move, damage, msg, output) {
         const userTrnr = battle.trainer1;
         const aiTrnr = battle.trainer2;
-        const userPkmn = userTrnr.getActive();
+        let userPkmn = userTrnr.getActive();
         const aiPkmn = aiTrnr.getActive();
 
         if (damage != null) {
@@ -541,7 +541,7 @@ exports.command = function Command(cmdStr, user, database) {
                 if (userPkmn.fainted) {
                     msg += `${userPkmn.name} fainted!\n`;
                     //send out next pokemon
-                    userTrnr.nextPkmn();
+                    userPkmn = userTrnr.nextPkmn();
                     msg += `You sent out: ${userPkmn.name}`;
                 } else {
                     userTrnr.save();
