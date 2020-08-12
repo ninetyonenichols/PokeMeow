@@ -16,8 +16,8 @@ module.exports = (mongoose) => {
         photo: { type: String, default: './img/avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
-        active: Number,
-        battle: { type: ObjectId, ref: 'Battle' },
+        active: { type: Number, default: 0 },
+        battle: { type: ObjectId, ref: 'Battle', default: null },
         encounter: PokemonSchema
     });
 
