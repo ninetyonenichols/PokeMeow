@@ -445,7 +445,7 @@ exports.command = function Command(cmdStr, user, database) {
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
                 if (damage != null) {
                     aiTrnr.subtractHp(damage);
-                    let msg = userPkmn.name + " used " + this.move + "!\n";
+                    let msg = `${userPkmn.name} used ${this.move}!\n`;
                     //let msg = `${userPkmn.name} dealt: ${damage} dmg` + '\n';
 
                     //if opponent is defeated end the battle
