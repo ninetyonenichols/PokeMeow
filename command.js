@@ -3,10 +3,10 @@
  * Class: CSc 337 Summer 2020
  * Description: This file is for handling the game commands that are submitted
  *      to the server by the user. It consists of a Command object that can be
- *      used to parse the command and generate a JSON object for use by the
- *      client that represents the command's output.
+ *      used to parse the command and then execute the command. The execution of the command generates a string or JSON object that represents the command's output for use by the client. The purpose of the Command object is to keep these actions from cluttering up server.js and
  *
- * Use: const cmd = new Command(req.body.command, req.session.user, database);
+ * Use in server.js:
+ *      const cmd = new Command(req.body.command, req.session.user, database);
  *      cmd.parse[Main | Enc | Battle](); <-parse a main, enc, or battle command
  *      cmd.execute((err, output) => {
  *          if (err) console.log('ERROR: ' + err);
@@ -14,55 +14,39 @@
  *      });
  */
 
-
-//NOTES:
-// PURPOSE: To separate the command parsing etc from server.js (which should
-//      only have to worry about recieving/sending information). server.js is
-//      also kind of acting as a controller (as in it has control/logic
-//      elements to it like (as of writing this) determining what each command
-//      is or how to respond to it). For good separation of responsibilities,
-//      server.js should only be concerned with sending/recieving information,
-//      not with what to do with that information. Having this separation is
-//      good for readability b/c it 1. separates/distributes the logic, and 2.
-//      shortens the length of the file.
-// Necessary functionality: parse command, then return object for client's use
-// Do i want to use a protoype to construct it from?
-//      ->maybe then i can include only the relevant properties? (this may make
-//        it easier for server.js to decide how to change the database, b/c
-//        there won't be a need to check each property (example: check if it is
-//        an add or remove command, etc.). Maybe server.js will have to do that
-//        regardless tho?)
-// Should i also include the database? As in, after parsing the command this
-//      object will also execute the command on the database. Or should the
-//      execution be left up to server.js? What is the proper separation of
-//      code/responsibilites here?
-// Related to the above, how will this object return some JSON representing the
-//      output of the command which the client will use to display that output?
-
+// A list of the preset trainers (used for trainer battles)
 const trainerAIs = ['Bug Catcher', 'Blue', 'Lorelei', 'Giovanni', 'Lance'];
 
 /*  Description: This object constructor creates an object that represents a
- *      pokemeow command. During construction, it parses the command string and
- *      sets the appropriate properties (based on what the command was).
+ *      pokemeow command.
  *  Parameters:
  *      cmdStr - the command in string form
+ *      user - the name of the user to run the commands for
  *      database - the database that the command manipulates
  */
 exports.command = function Command(cmdStr, user, database) {
     this.db = database;
     this.user = user;
     this.cmd = cmdStr.split(' ');
+
+    // This is the object that is populated with command output and ultimately
+    // sent back to the client. Depending on which properties are populated,
+    // the command scope can change (discussed more below).
     this.output = {main: null, encounter: null, battle: null};
+
+    // These are set later on during parsing/execution
     this.pokemon = null;
     this.move = null;
 
-    //Execute the command's function (maybe just remove this?)
+    // This is set to the appropriate execution function during parsing.
+    // Currently it has a placeholder function.
     this.execute = function(callback) {
         callback('Command not parsed yet!',
         {main: null, encounter: null, battle: null});
     };
 
-    //Parse the main command and set execute to appropriate function
+    // Parse the commands that are valid at the top-most scope (here I'm
+    // calling that 'main') and set execute to the appropriate function
     this.parseMain = function() {
         switch (this.cmd[0]) {
             case 'random-encounter':
@@ -106,7 +90,9 @@ exports.command = function Command(cmdStr, user, database) {
         }
     }
 
-    //Parse the encounter command and set execute to appropriate function
+    // Parse the commands that are valid withing the 'encounter' scope (these
+    // are the only valid commands when in a pokemon encounter) and set execute
+    // to the appropriate function
     this.parseEnc = function() {
         switch (this.cmd[0]) {
             case 'throw-ball':
@@ -120,7 +106,8 @@ exports.command = function Command(cmdStr, user, database) {
         }
     }
 
-    //Parse the battle command and set execute to appropriate function
+    // Parse the commands that are valid within a 'battle' scope and set
+    // execute to the appropriate function.
     this.parseBattle = function() {
         switch (this.cmd[0]) {
             case 'switch':
@@ -153,33 +140,57 @@ exports.command = function Command(cmdStr, user, database) {
 
     // Database Access Helper Functions //
 
-    // A helper function to somewhat simplify accessing the user's trainer
+    /*  Description: A helper function to simplify getting the user's trainer
+     *      object. If the trainer is found, it passes it along using the
+     *      callback function 'cb'. If there's an error, it calls the callback
+     *      (which should be a .execute function's callback) with an error.
+     *  Parameters:
+     *      callback - the callback function used by the .execute functions
+     *      cb - this function's callback that returns the trainer to the caller
+     */
     this.getTrainer = function(callback, cb) {
         this.db.account.getTrainer(this.user, (err, trainer) => {
             if (err) {
                 console.log('Error getting trainer: ' + err);
+                //did not find trainer, use 'callback' with an error msg
                 callback('Could not find trainer.', this.output);
             } else if (trainer) {
+                //found a trainer, call 'cb'
                 cb(trainer);
             } else {
+                //did not find trainer, use 'callback' with an error msg
                 callback('Could not find trainer.', this.output);
             }
         });
     }
 
-    // A helper function to simplify getting the current battle
+    /*  Description: A helper function to simplify getting the current battle.
+     *      If it finds a battle, it populates the battle with the trainers'
+     *      information before passing the battle along. If there's an error,
+     *      it calls the callback (which should be a .execute function's
+     *      callback) with an error.
+     *  Parameters:
+     *      callback - the callback function used by the .execute functions
+     *      cb - this function's callback that returns the battle to the caller
+     */
     this.getBattle = function(callback, cb) {
+        //get the trainer
         this.getTrainer(callback, (trainer) => {
+
+            //find the trainer's battle
             this.db.battle.findById(trainer.battle)
             .populate('trainer1')
             .populate('trainer2')
             .exec((err, battle) => {
                 if (err) {
                     console.log('Error getting battle: ' + err);
+                    //did not find battle, use 'callback' with an error msg
                     callback('Could not find battle.', this.output);
                 } else if (battle) {
+                    //found a battle, call 'cb'
                     cb(battle);
                 } else {
+                    //did not find battle, use 'callback' with an error msg
                     callback('Could not find battle.', this.output);
                 }
             });
@@ -187,33 +198,41 @@ exports.command = function Command(cmdStr, user, database) {
     }
 
 
-    // Execute Helper Functions //
+    // Execution Functions //
+
+    // All execution functions have a callback parameter that is executed when
+    // they complete their task. It is passed in by server.js and is expected
+    // to take err and output parameters: callback(err, output).
 
     // Represents an invalid command
     this.invalidCommand = (callback) => {
         callback('Invalid Command', this.output);
     }
 
-    // The 'view-party' command
+    // The 'view-party' command - returns the user's party pokemon
     this.execParty = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.party.length == 0) {
                 this.output.main = 'No party pokemon';
+
             } else {
                 this.output.main = {party: trainer.party, collection: null};
             }
+
             callback(null, this.output);
         });
     }
 
-    // The 'view-pokemon' command
+    // The 'view-pokemon' command - returns the user's other pokemon
     this.execViewCaught = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.pokemon.length == 0) {
                 this.output.main = 'No caught pokemon';
+
             } else {
                 this.output.main = {party:null, collection:trainer.pokemon};
             }
+
             callback(null, this.output);
         });
     }
@@ -224,9 +243,11 @@ exports.command = function Command(cmdStr, user, database) {
             if (err) {
                 console.log('Error finding pokemon: ' + err);
                 callback(err, this.output);
+
             } else if (result) {
                 this.output.main = result;
                 callback(null, this.output);
+
             } else {
                 this.output.main = 'Could not find pokemon.';
                 callback(null, this.output);
@@ -240,9 +261,11 @@ exports.command = function Command(cmdStr, user, database) {
             if (trainer.removeParty(this.pokemon)) {
                 this.output.main = 'REMOVED FROM PARTY: '
                 + this.pokemon;
+
             } else {
                 this.output.main = 'Could not find pokemon';
             }
+
             callback(null, this.output);
         });
     }
@@ -253,9 +276,11 @@ exports.command = function Command(cmdStr, user, database) {
             if (trainer.addParty(this.pokemon)) {
                 this.output.main = 'ADDED TO PARTY: '
                 + this.pokemon;
+
             } else {
                 this.output.main = 'Could not add pokemon';
             }
+
             callback(null, this.output);
         });
     }
@@ -265,27 +290,32 @@ exports.command = function Command(cmdStr, user, database) {
         this.getTrainer(callback, (trainer) => {
             if (trainer.release(this.pokemon)) {
                 this.output.main = 'RELEASED: ' + this.pokemon;
+
             } else {
                 this.output.main = 'Could not find pokemon';
             }
+
             callback(null, this.output);
         });
     }
 
-    // The 'random-encounter' command
+    // The 'random-encounter' command - starts a random encounter
     this.execEncounter = (callback) => {
+        //get a random pokemon from the database
         this.db.pokemon.encounter((poke) => {
             this.getTrainer(callback, (trainer) => {
+                //have trainer save the pokemon in its 'encounter' property
                 trainer.encounter = poke;
                 trainer.save();
-                this.output.encounter = poke;
 
+                //return the pokemon
+                this.output.encounter = poke;
                 callback(null, this.output);
             });
         });
     }
 
-    // The 'throw-ball' command
+    // The 'throw-ball' command - attempt to catch an encountered pokemon
     this.execThrow = (callback) => {
         //access the pokemon in the encounter (it is in trainer.encounter)
         this.getTrainer(callback, (trainer) => {
@@ -296,14 +326,20 @@ exports.command = function Command(cmdStr, user, database) {
                 case "caught":
                     //caught, add pokemon to trainer
                     trainer.add();
+                    //set output to 'main' to return to the 'Main' scope
                     this.output.main = 'CAUGHT: ' + trainer.encounter.name;
                     break;
+
                 case "missed":
+                    //pokeball missed, continue encounter
                     this.output.encounter = 'POKEBALL MISSED';
                     break;
+
                 case "ran":
+                    //pokemon ran away, so end encounter
                     this.output.main = 'POKEMON ESCAPED';
                     break;
+
                 default:
                     error = 'Problem catching pokemon';
             }
@@ -312,19 +348,22 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'run' command
+    // The 'run' command - run from an encountered pokemon
     this.execRun = (callback) => {
         this.output.main = 'YOU RAN AWAY';
         callback(null, this.output);
     }
 
-    // The 'battle' command
+    // The 'battle' command - start a battle with a random ai trainer
     this.execBattle = (callback) => {
         this.getTrainer(callback, (trainer) => {
+            //can't battle if there are no pokemon in the party
             if (trainer.party.length == 0) {
                 this.output.main = 'You have no pokemon in your party!';
                 callback(null, this.output);
+
             } else {
+                //call helper function
                 setupBattle(trainer, this.output, this.db, callback);
             }
         });
@@ -356,7 +395,8 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'switch' command
+    // The 'switch' command - switch out the current pokemon with another in
+    // the party. The opponent still gets to attack after you switch pokemon.
     this.execSwitch = (callback) => {
         this.getTrainer(callback, (trainer) => {
             //if the given pokemon name is valid (exists and isn't fainted)
@@ -371,7 +411,7 @@ exports.command = function Command(cmdStr, user, database) {
                     //have opponent attack
                     const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
                     this.db.move.damage(m, aiPkmn, userPkmn, (damage) => {
-                        this.output = aiTrnrTurn(battle, damage, this.output);
+                        this.output = aiTrnrTurn(battle, damage, '',  this.output);
                         callback(null, this.output);
                     });
                 });
@@ -382,7 +422,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'moves' command
+    // The 'moves' command - returns a list of the current pokemon's moves
     this.execMoves = (callback) => {
         this.getTrainer(callback, (trainer) => {
             this.output.battle = trainer.party[trainer.active].moves;
@@ -390,7 +430,8 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'use' command
+    // The 'use' command - uses a move to attack the opponent, then the
+    // opponent attacks the user's pokemon
     this.execUse = (callback) => {
         this.getBattle(callback, (battle) => {
             const userPkmn = battle.trainer1.getActive();
@@ -417,6 +458,7 @@ exports.command = function Command(cmdStr, user, database) {
         let aiPkmn = aiTrnr.getActive();
 
         aiTrnr.subtractHp(damage);
+        let msg = userPkmn.name + 'dealt: ' + damage + '\n';
 
         //check if opponent is defeated
         if (aiTrnr.defeated) {
@@ -425,12 +467,14 @@ exports.command = function Command(cmdStr, user, database) {
         } else {
             //check if opponent pokemon fainted
             if (aiPkmn.fainted) {
+                msg += aiPkmn.name + ' fainted!' + '\n';
                 //send out next pokemon
                 aiPkmn = aiTrnr.nextPkmn();
+                msg += 'They sent out: ' + userPkmn.name;
 
                 //update battle and send
                 battle.trainer2 = aiTrnr;
-                output.battle = battle;
+                output.battle = {message: msg, battle: battle};
                 callback(null, output);
             } else {
                 aiTrnr.save();
@@ -438,7 +482,7 @@ exports.command = function Command(cmdStr, user, database) {
                 //have opponent attack
                 const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
                 DB.move.damage(m, aiPkmn, userPkmn, (damage2) => {
-                    output = aiTrnrTurn(battle, damage2, output);
+                    output = aiTrnrTurn(battle, damage2, msg, output);
                     callback(null, output);
                 });
             }
@@ -446,7 +490,7 @@ exports.command = function Command(cmdStr, user, database) {
     }
 
     // Helper function to 'this.execUse' that handles the ai attacking the user
-    function aiTrnrTurn(battle, damage, output) {
+    function aiTrnrTurn(battle, damage, msg, output) {
         const userTrnr = battle.trainer1;
         const aiTrnr = battle.trainer2;
         let userPkmn = userTrnr.getActive();
@@ -454,6 +498,7 @@ exports.command = function Command(cmdStr, user, database) {
 
         if (damage) {
             userTrnr.subtractHp(damage);
+            msg += aiPkmn.name + 'dealt: ' + damage + '\n';
 
             //check if user is defeated
             if (userTrnr.defeated) {
@@ -462,8 +507,10 @@ exports.command = function Command(cmdStr, user, database) {
             } else {
                 //check if user's pokemon fainted
                 if (userPkmn.fainted) {
+                    msg += userPkmn.name + ' fainted!' + '\n';
                     //send out next pokemon
                     userPkmn = userTrnr.nextPkmn();
+                    msg += 'You sent out: ' + userPkmn.name;
                 } else {
                     userTrnr.save();
                 }
@@ -471,7 +518,7 @@ exports.command = function Command(cmdStr, user, database) {
                 //update battle and send
                 battle.trainer1 = userTrnr;
                 battle.trainer2 = aiTrnr;
-                output.battle = battle;
+                output.battle = {message: msg, battle: battle};
                 return output;
             }
         } else {
@@ -480,7 +527,7 @@ exports.command = function Command(cmdStr, user, database) {
         }
     }
 
-    // The 'run' battle command
+    // The 'run' battle command - used to exit from a battle
     this.execBtlExit = (callback) => {
         this.getTrainer(callback, (trainer) => {
             this.output.main = 'YOU RAN AWAY';
