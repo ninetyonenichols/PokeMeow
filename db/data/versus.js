@@ -7,7 +7,7 @@
  *     does twIce as much damage as usual if used against a Water-type pokemon.
  */
 
-exports = {
+module.exports = {
     "Bug": {
         "Bug": 1, "Dark": 1, "Dragon": 1, "Electric": 1, "Fairy": 1,
         "Fighting": 0.5, "Fire": 2, "Flying": 2, "Ghost": 1, "Grass": 0.5,

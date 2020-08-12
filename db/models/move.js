@@ -14,8 +14,8 @@ module.exports = (mongoose) => {
     const MoveSchema = new Schema({
         name: [{ type: String, unique: true, required: true, enum: [
             'Bug Buzz', 'Dark Pulse', 'Outrage', 'Thunderbolt', 'Moonblast',
-            'CloseCombat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
-            'Solar Beam', 'Earthquale', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
+            'Close Combat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
+            'Solar Beam', 'Earthquake', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
             'Psychic', 'Rock Slide', 'Flash Cannon', 'Hydro Cannon'
         ]}],
         pType: {
