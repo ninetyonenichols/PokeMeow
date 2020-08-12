@@ -27,6 +27,28 @@ label {
     background-size: cover;
 }
 
+.outputWindow:after {
+  content: "";
+  display: block;
+  height: 50px;
+  width: 100%;
+} 
+
+/* Note: this block was taken from StackOverflow, since I did not know how
+ * to flip an image horizontally.
+ */
+.img-hor {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+
+.xArea {
+}
+
 .pkmnContainer {
     width: 100%;
     height: 238px;
@@ -49,7 +71,7 @@ label {
     background-image: url('./img/bg/stadium.png');
 }
 
-#msg, #encounter, .xArea {
+#msg, .xArea {
     padding: 15px;
     font-family: Courier;
     background-color: rgba(255, 255, 255, 0.8);
