@@ -189,21 +189,21 @@ function printBattle(battleData) {
     const aiPkmn = ai.party[ai.active];
 
     // Player data
-    bAreaL.append(`${user.name}<br>`);
+    bAreaL.append(`<b>${user.name}</b><br>`);
     bAreaL.append($('<img>', { src: user.photo, width: '80px',
         alt: `A picture of ${user.name}` }));
     bAreaL.append($('<img>', { src: userPkmn.sprite, width: '80px',
         alt: `A picture of ${userPkmn.name}.`, class: 'img-hor' }));
     bAreaL.append(`<br>`);
-    bAreaL.append(`${userPkmn.name}<br>`);
+    bAreaL.append(`<b>${userPkmn.name}</b><br>`);
     bAreaL.append(`HP: ${userPkmn.currHp}/${userPkmn.maxHp}<br>`);
     bAreaL.append(`<br>`);
-    bAreaL.append(`Moves:<br>`);
+    bAreaL.append(`<u>Moves:</u><br>`);
     bAreaL.append(`${userPkmn.moves[0]}<br>`);
     bAreaL.append(`${userPkmn.moves[1]}<br>`);
     bAreaL.append(`<br>`);
 
-    bAreaL.append(`Party:<br>`);
+    bAreaL.append(`<u>Party:</u><br>`);
     for (i in user.party) {
         if (i != user.active) { 
             bAreaL.append(`${user.party[i].name}<br>`); 
@@ -211,13 +211,13 @@ function printBattle(battleData) {
     }
 
     // AI data
-    bAreaR.append(`${ai.name}<br>`);
+    bAreaR.append(`<b>${ai.name}</b><br>`);
     bAreaR.append($('<img>', { src: aiPkmn.sprite, width: '80px',
         alt: `A picture of ${aiPkmn.name}.` }));
     bAreaR.append($('<img>', { src: ai.photo, width: '80px',
         alt: `A picture of ${ai.name}.` }));
     bAreaR.append(`<br>`);
-    bAreaR.append(`${aiPkmn.name}<br>`);
+    bAreaR.append(`<b>${aiPkmn.name}</b><br>`);
     bAreaR.append(`HP: ${aiPkmn.currHp}/${aiPkmn.maxHp}<br>`);
 }
 
