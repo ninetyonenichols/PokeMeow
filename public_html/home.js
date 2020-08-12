@@ -156,6 +156,8 @@ function printEncounter(pkmn) {
     ew.prepend(msg);
 }
 
+/* Description: Prints the current state of the battle
+ */
 function printBattle(output) {
     // Clearing previous content
     outs.empty();
@@ -165,28 +167,35 @@ function printBattle(output) {
     outs.append(bw);
 
     const user = output.trainer1;
-    const userPoke = user.party[user.active];
+    const userPkmn = user.party[user.active];
     const ai = output.trainer2;
-    const aiPoke = ai.party[ai.active];
+    const aiPkmn = ai.party[ai.active];
     
+    // Player data
     bAreaL.append(`${user.name}<br>`);
-    bAreaL.append(`${userPoke.name}<br>`);
-    bAreaL.append(`${userPoke.currHp}/${userPoke.maxHp}<br>`);
+    bAreaL.append($('<img>', { src: user.photo, width: '160px',
+        alt: `${user.avatar}` }));
+        //alt: `A picture of ${user.name}.` }));
+    bAreaL.append(`<br>`);
+    bAreaL.append(`${userPkmn.name}<br>`);
+    bAreaL.append($('<img>', { src: userPkmn.sprite, width: '160px',
+        alt: `A picture of ${userPkmn.name}.` }));
+    bAreaL.append(`<br>`);
+    bAreaL.append(`${userPkmn.currHp}/${userPkmn.maxHp}<br>`);
+    bAreaL.append(`Moves:<br>`);
+    bAreaL.append(`${userPkmn.moves[0]}<br>`);
+    bAreaL.append(`${userPkmn.moves[1]}<br>`);
 
+    // AI data
     bAreaR.append(`${ai.name}<br>`);
-    bAreaR.append(`${aiPoke.name}<br>`);
-    bAreaR.append(`${aiPoke.currHp}/${aiPoke.maxHp}<br>`);
-
-       /* 
-        bAreaL.html(ai.name
-            + '<br>'
-            + aiPoke.name + ' ' + aiPoke.currHp + '/' + aiPoke.maxHp
-            + '<br><br>'
-            + user.name
-            + '<br>'
-            + userPoke.name + ' ' + userPoke.currHp + '/' + userPoke.maxHp
-            + '<br>Moves: ' + userPoke.moves[0] + ', ' + userPoke.moves[1]);
-        */
+    bAreaR.append($('<img>', { src: ai.photo, width: '160px',
+        alt: `A picture of ${ai.name}.` }));
+    bAreaR.append(`<br>`);
+    bAreaR.append(`${aiPkmn.name}<br>`);
+    bAreaR.append($('<img>', { src: aiPkmn.sprite, width: '160px',
+        alt: `A picture of ${aiPkmn.name}.` }));
+    bAreaR.append(`<br>`);
+    bAreaR.append(`${aiPkmn.currHp}/${aiPkmn.maxHp}<br>`);
 }
 
 /* Description: This funciton prints out an array of pokemon

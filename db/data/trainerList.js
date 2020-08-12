@@ -1,7 +1,7 @@
 [
     {
         "name": "Bug Catcher",
-        "photo": "./img/avatars/BugCatcher.png",
+        "photo": "./img/avatars/bugCatcher.png",
         "party": [
             {
                 "name": "Beedrill",
