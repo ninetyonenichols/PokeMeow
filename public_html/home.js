@@ -115,3 +115,24 @@ function printPkmn(pkmn) {
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
     $('#entity').append(`Type: ${pkmn.pType1}${type2}`);
 }
+
+function printOutput(output) {
+    if (output.trainer1) {
+        const user = output.trainer1;
+        const userPoke = user.party[user.active];
+        const ai = output.trainer2;
+        const aiPoke = ai.party[ai.active];
+
+        $('#entity').text(ai.name
+            + '\n'
+            + aiPoke.name + ' ' + aiPoke.currHp + '/' + aiPoke.maxHp
+            + '\n\n\n\n\n'
+            + user.name
+            + '\n'
+            + userPoke.name + ' ' + userPoke.currHp + '/' + userPoke.maxHp
+            + '\nMoves: ' + userPoke.moves[0] + ', ' + userPoke.moves[1]);
+
+    } else {
+        $('#entity').text(output);
+    }
+}
