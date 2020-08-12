@@ -5,14 +5,6 @@
         help.html page, such as styling the game command explanations.
 */
 
-.explanation {
-    margin: 30px auto;
-    padding: 20px;
-    width: 1000px;
-    border: 2px solid #ff3333;
-    border-radius: 10px;
-}
-
 ul {
     margin: 10px 30px 30px;
     list-style: circle;
@@ -20,9 +12,4 @@ ul {
 
 li {
     margin-bottom: 10px;
-}
-
-.cmd {
-    font-family: Courier, monospace;
-    font-weight: bold;
 }

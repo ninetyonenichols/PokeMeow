@@ -2,6 +2,8 @@
 db/test.js
 db/data/test.js
 
+package.json
+
 # Logs
 logs
 *.log

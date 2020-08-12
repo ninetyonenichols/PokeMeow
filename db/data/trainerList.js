@@ -1,196 +1,191 @@
 [
     {
-        "_id": "bugCatcher",
         "name": "Bug Catcher",
-        "photo": "../../public_html/img/avatars/bugCatcher.png",
+        "photo": "./img/avatars/BugCatcher.png",
         "party": [
             {
                 "name": "Beedrill",
-                "sprite": "../../public_html/img/sprites/beedrill.png",
-                "pType1": "bug",
-                "pType2": "poison",
+                "sprite": "./img/sprites/beedrill.png",
+                "pType1": "Bug",
+                "pType2": "Poison",
                 "maxHp": "163",
                 "currHp": "163",
                 "atk": "169",
                 "def": "130",
-                "moves": ["bugBuzz", "sludgeWave"]
+                "moves": ["Bug Buzz", "Sludge Wave"]
             },
             {
                 "name": "Scyther",
-                "sprite": "../../public_html/img/sprites/scyther.png",
-                "pType1": "bug",
-                "pType2": "flying",
+                "sprite": "./img/sprites/scyther.png",
+                "pType1": "Bug",
+                "pType2": "Flying",
                 "maxHp": "172",
                 "currHp": "172",
                 "atk": "218",
                 "def": "170",
-                "moves": ["bugBuzz", "skyAttack"]
+                "moves": ["Bug Buzz", "Sky Attack"]
             },
             {
                 "name": "Pinsir",
-                "sprite": "../../public_html/img/sprites/pinsir.png",
-                "pType1": "bug",
+                "sprite": "./img/sprites/pinsir.png",
+                "pType1": "Bug",
                 "maxHp": "163",
                 "currHp": "163",
                 "atk": "238",
                 "def": "182",
-                "moves": ["bugBuzz", "closeCombat"]
+                "moves": ["Bug Buzz", "Close Combat"]
             }
         ]
     },
     {
-        "_id": "blue",
         "name": "Blue",
-        "photo": "../../public_html/img/avatars/blue.png",
+        "photo": "./img/avatars/blue.png",
         "party": [
             {
                 "name": "Arcanine",
-                "sprite": "../../public_html/img/sprites/arcanine.png",
-                "pType1": "fire",
+                "sprite": "./img/sprites/arcanine.png",
+                "pType1": "Fire",
                 "maxHp": "207",
                 "currHp": "207",
                 "atk": "227",
                 "def": "166",
-                "moves": ["flamethrower", "earthquake"]
+                "moves": ["Flamethrower", "Earthquake"]
             },
             {
                 "name": "Exeggutor",
-                "sprite": "../../public_html/img/sprites/exeggutor.png",
-                "pType1": "grass",
-                "pType2": "psychic",
+                "sprite": "./img/sprites/exeggutor.png",
+                "pType1": "Grass",
+                "pType2": "Psychic",
                 "maxHp": "216",
                 "currHp": "215",
                 "atk": "233",
                 "def": "149",
-                "moves": ["solarBeam", "psychic"]
+                "moves": ["Solar Beam", "Psychic"]
             },
             {
                 "name": "Blastoise",
-                "sprite": "../../public_html/img/sprites/blastoise.png",
-                "pType1": "water",
+                "sprite": "./img/sprites/blastoise.png",
+                "pType1": "Water",
                 "maxHp": "188",
                 "currHp": "188",
                 "atk": "171",
                 "def": "207",
-                "moves": ["hydroCannon", "iceBeam"]
+                "moves": ["Hydro Cannon", "Ice Beam"]
             }
         ]
     },
     {
-        "_id": "lorelei",
         "name": "Lorelei",
-        "photo": "../../public_html/img/avatars/lorelei.png",
+        "photo": "./img/avatars/lorelei.png",
         "party": [
             {
                 "name": "Slowbro",
-                "sprite": "../../public_html/img/sprites/slowbro.png",
-                "pType1": "psychic",
-                "pType2": "water",
+                "sprite": "./img/sprites/slowbro.png",
+                "pType1": "Psychic",
+                "pType2": "Water",
                 "maxHp": "216",
                 "currHp": "216",
                 "atk": "177",
                 "def": "180",
-                "moves": ["psychic", "hydroCannon"]
+                "moves": ["Psychic", "Hydro Cannon"]
             },
             {
                 "name": "Vaporeon",
-                "sprite": "../../public_html/img/sprites/vaporeon.png",
-                "pType1": "water",
+                "sprite": "./img/sprites/vaporeon.png",
+                "pType1": "Water",
                 "maxHp": "277",
                 "currHp": "277",
                 "atk": "205",
                 "def": "161",
-                "moves": ["hydroCannon", "hyperBeam"]
+                "moves": ["Hydro Cannon", "Hyper Beam"]
             },
             {
                 "name": "Lapras",
-                "sprite": "../../public_html/img/sprites/lapras.png",
-                "pType1": "ice",
-                "pType2": "water",
+                "sprite": "./img/sprites/lapras.png",
+                "pType1": "Ice",
+                "pType2": "Water",
                 "maxHp": "277",
                 "currHp": "277",
                 "atk": "165",
                 "def": "174",
-                "moves": ["iceBeam", "hydroCannon"]
+                "moves": ["Ice Beam", "Hydro Cannon"]
             }
         ]
     },
     {
-        "_id": "giovanni",
         "name": "Giovanni",
-        "photo": "../../public_html/img/avatars/giovanni.png",
+        "photo": "./img/avatars/giovanni.png",
         "party": [
             {
                 "name": "Persian",
-                "sprite": "../../public_html/img/sprites/persian.png",
-                "pType1": "normal",
+                "sprite": "./img/sprites/persian.png",
+                "pType1": "Normal",
                 "maxHp": "163",
                 "currHp": "163",
                 "atk": "150",
                 "def": "136",
-                "moves": ["hyperBeam", "moonblast"]
+                "moves": ["Hyper Beam", "Moonblast"]
             },
             {
                 "name": "Rhydon",
-                "sprite": "../../public_html/img/sprites/rhydon.png",
-                "pType1": "ground",
-                "pType2": "rock",
+                "sprite": "./img/sprites/rhydon.png",
+                "pType1": "Ground",
+                "pType2": "Rock",
                 "maxHp": "233",
                 "currHp": "233",
                 "atk": "222",
                 "def": "171",
-                "moves": ["earthquake", "rockSlide"]
+                "moves": ["Earthquake", "Rock Slide"]
             },
             {
                 "name": "Nidoking",
-                "sprite": "../../public_html/img/sprites/nidoking.png",
-                "pType1": "ground",
-                "pType2": "poison",
+                "sprite": "./img/sprites/nidoking.png",
+                "pType1": "Ground",
+                "pType2": "Poison",
                 "maxHp": "191",
                 "currHp": "191",
                 "atk": "204",
                 "def": "156",
-                "moves": ["earthquake", "sludgeWave"]
+                "moves": ["Earthquake", "Sludge Wave"]
             }
         ]
     },
     {
-        "_id": "lance",
         "name": "Lance",
-        "photo": "../../public_html/img/avatars/lance.png",
+        "photo": "./img/avatars/lance.png",
         "party": [
             {
                 "name": "Gyarados",
-                "sprite": "../../public_html/img/sprites/gyarados.png",
-                "pType1": "flying",
-                "pType2": "water",
+                "sprite": "./img/sprites/gyarados.png",
+                "pType1": "Flying",
+                "pType2": "Water",
                 "maxHp": "216",
                 "currHp": "216",
                 "atk": "237",
                 "def": "186",
-                "moves": ["hydroCannon", "outrage"]
+                "moves": ["Hydro Cannon", "Outrage"]
             },
             {
                 "name": "Charizard",
-                "sprite": "../../public_html/img/sprites/charizard.png",
-                "pType1": "fire",
-                "pType2": "flying",
+                "sprite": "./img/sprites/charizard.png",
+                "pType1": "Fire",
+                "pType2": "Flying",
                 "maxHp": "186",
                 "currHp": "186",
                 "atk": "223",
                 "def": "173",
-                "moves": ["flamethrower", "skyAttack"]
+                "moves": ["Flamethrower", "Sky Attack"]
             },
             {
                 "name": "Dragonite",
-                "sprite": "../../public_html/img/sprites/dragonite.png",
-                "pType1": "dragon",
-                "pType2": "flying",
+                "sprite": "./img/sprites/dragonite.png",
+                "pType1": "Dragon",
+                "pType2": "Flying",
                 "maxHp": "209",
                 "currHp": "209",
                 "atk": "263",
                 "def": "198",
-                "moves": ["outrage", "skyAttack"]
+                "moves": ["Outrage", "Sky Attack"]
             }
         ]
     }

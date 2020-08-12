@@ -11,23 +11,21 @@ html, body {
     margin: 0;
     height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #ffccff;
+    background-color: #5B1D72;
 }
 
-#top {
+header {
     padding-left: 30px;
     width: 100%;
-    height: 130px;
-    color: #1a66ff;
-    background-color: #ccffff;
+    height: 195px;
+    color: #99B3E6;
+    background-color: #315436;
     box-sizing: border-box;
     line-height: 130px;
 }
 
-#pokeballHeader {
-    position: relative;
-    top: 14px;
-    width: 50px;
+header > * {
+    margin-top: 70px;
 }
 
 nav {
@@ -38,24 +36,20 @@ nav {
 a {
     margin: 0 10px;
     line-height: 130px;
-    font-size: 16px;
+    font-size: 24px;
     text-decoration: none;
-    color: #1a66ff;
+    color: #99B3E6;
 }
 
 h1 {
     display: inline-block;
     margin: 0 10px;
+    font-size: 3em;
 }
 
 h2 {
     margin: 0;
     line-height: 100px;
-}
-
-.inputSection {
-    margin-left: 30px;
-    margin-bottom: 75px;
 }
 
 ul {
@@ -70,13 +64,45 @@ li {
 
 label {
     display: inline-block;
-    width: 100px;
+    width: 150px;
 }
 
 input {
-    font-size: 16px;
+    font-size: 24px;
+}
+
+.explanation {
+    margin: 30px auto;
+    padding: 20px;
+    width: 1000px;
+    border: 2px solid darkgoldenrod;
+    border-radius: 10px;
+}
+
+.cmd {
+    font-family: Courier, monospace;
+    font-weight: bold;
+}
+
+.inputSection {
+    margin-left: 30px;
+    margin-bottom: 75px;
+    color: silver;
+}
+
+#mainContent {
+    color: silver;
+    font-size: 1.5em;
+    overflow: scroll;
+}
+
+#pokeballHeader {
+    position: relative;
+    top: 14px;
+    height: 75px;
 }
 
 #issueMsg {
     color: red;
 }
+

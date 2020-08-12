@@ -14,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <div id="top">
+        <header>
             <img id="pokeballHeader" src="./img/pokeball.png"
             alt="image of a pokeball">
             <h1>PokeMeow</h1>
@@ -22,52 +22,45 @@
                 <a href="./home.html">Gamepage</a>
                 <a href="./help.html">About</a>
             </nav>
-        </div>
-
-        <div id="userLogin" class="inputSection">
-            <h2>Account Login</h2>
-
-            <ul>
-                <li>
-                    <label for="username">Username: </label>
-                    <input type="text" id="username" class="loginInput"
-                           name="username" value="">
-                </li>
-
-                <li>
-                    <label for="pass">Password: </label>
-                    <input type="password" id="pass" class="loginInput"
-                           name="pass" value="">
-                </li>
-
-                <li>
-                    <input type="button" id="loginBtn" value="Login">
-                </li>
-            </ul>
-
-            <span id="issueMsg" hidden>Issue logging in with that info.</span>
-        </div>
-
-        <div id="userCreate" class="inputSection">
-            <h2>Create Account</h2>
-
-            <ul>
-                <li>
-                    <label for="newUsername">Username: </label>
-                    <input type="text" id="newUsername" class="createInput"
-                           name="newUsername" value="">
-                </li>
-
-                <li>
-                    <label for="newPass">Password: </label>
-                    <input type="password" id="newPass" class="createInput"
-                           name="newPass" value="">
-                </li>
-
-                <li>
-                    <input type="button" id="createBtn" value="Create">
-                </li>
-            </ul>
+        </header>
+        <div id="mainContent">
+            <div id="userLogin" class="inputSection">
+                <h2>Account Login</h2>
+                <ul>
+                    <li>
+                        <label for="username">Username: </label>
+                        <input type="text" id="username" class="loginInput"
+                               name="username" value="">
+                    </li>
+                    <li>
+                        <label for="pass">Password: </label>
+                        <input type="password" id="pass" class="loginInput"
+                               name="pass" value="">
+                    </li>
+                    <li>
+                        <input type="button" id="loginBtn" value="Login">
+                    </li>
+                </ul>
+                <span id="issueMsg" hidden>Issue logging in with that info.</span>
+            </div>
+            <div id="userCreate" class="inputSection">
+                <h2>Create Account</h2>
+                <ul>
+                    <li>
+                        <label for="newUsername">Username: </label>
+                        <input type="text" id="newUsername" class="createInput"
+                               name="newUsername" value="">
+                    </li>
+                    <li>
+                        <label for="newPass">Password: </label>
+                        <input type="password" id="newPass" class="createInput"
+                               name="newPass" value="">
+                    </li>
+                    <li>
+                        <input type="button" id="createBtn" value="Create">
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <script src="./login.js"></script>
