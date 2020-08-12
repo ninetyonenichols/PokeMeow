@@ -106,6 +106,7 @@ function chwin(winName) {
     outs.empty();
     win.prepend(msg);
     outs.append(win);
+    msg.css("font-size", "28px");
 }
 
 /* Checks if an object is a string
@@ -178,6 +179,7 @@ function printBattle(battleData) {
     bAreaR.empty();
 
     outs.append(bw);
+    msg.css("font-size", "23px");
 
     const user = battleData.trainer1;
     const userPkmn = user.party[user.active];
@@ -197,6 +199,14 @@ function printBattle(battleData) {
     bAreaL.append(`Moves:<br>`);
     bAreaL.append(`${userPkmn.moves[0]}<br>`);
     bAreaL.append(`${userPkmn.moves[1]}<br>`);
+    bAreaL.append(`<br>`);
+
+    bAreaL.append(`Party:<br>`);
+    for (i in user.party) {
+        if (i != user.active) { 
+            bAreaL.append(`${user.party[i].name}<br>`); 
+        }
+    }
 
     // AI data
     bAreaR.append(`${ai.name}<br>`);
