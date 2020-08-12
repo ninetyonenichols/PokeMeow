@@ -39,6 +39,7 @@ function submitCommand() {
         dataType: "json",
         success: (res) => {
             if (res.main) {
+                mw.empty();
                 chwin('mw');
                 if (isStr(res.main)) { msg.text(res.main); }
                 else { printPkmnArray(res.main); }
@@ -101,7 +102,7 @@ function chwin(winName) {
  * I would rewrite it, but it is only one line, and I am not sure what can be rewritten.
  */
 function isStr(x) {
-  return Object.prototype.toString.call(x) === "[object String]"
+  return Object.prototype.toString.call(x) === "[object String]";
 }
 
 /* Description: This function prints out the options available to the player at
@@ -134,25 +135,6 @@ function printMain() {
     outs.append(mw); 
 }
 
-/* Description: This funciton prints out an array of pokemon
- */
-function printPkmnArray(rMain) {
-    var pkmnArray; 
-    var party = rMain.party;
-    var col = rMain.collection;
-    if (party) {
-        msg.text('Party');
-        pkmnArray = party;
-    } else if (col) {
-        msg.text('Collection');
-        pkmnArray = col;
-    }
-
-    for (i in pkmnArray) {
-        printPkmn(pkmnArray[i]);
-    }
-}
-
 /* Description: This function prints out the info for one pokemon
  * Parameters:
  *     pkmn - the object containing the pokemon's info
@@ -181,13 +163,22 @@ function printBattle(output) {
     bAreaR.empty();
 
     outs.append(bw);
-    if (output.trainer1) {
-        const user = output.trainer1;
-        const userPoke = user.party[user.active];
-        const ai = output.trainer2;
-        const aiPoke = ai.party[ai.active];
 
-        eArea.html(ai.name
+    const user = output.trainer1;
+    const userPoke = user.party[user.active];
+    const ai = output.trainer2;
+    const aiPoke = ai.party[ai.active];
+    
+    bAreaL.append(`${user.name}<br>`);
+    bAreaL.append(`${userPoke.name}<br>`);
+    bAreaL.append(`${userPoke.currHp}/${userPoke.maxHp}<br>`);
+
+    bAreaR.append(`${ai.name}<br>`);
+    bAreaR.append(`${aiPoke.name}<br>`);
+    bAreaR.append(`${aiPoke.currHp}/${aiPoke.maxHp}<br>`);
+
+       /* 
+        bAreaL.html(ai.name
             + '<br>'
             + aiPoke.name + ' ' + aiPoke.currHp + '/' + aiPoke.maxHp
             + '<br><br>'
@@ -195,9 +186,28 @@ function printBattle(output) {
             + '<br>'
             + userPoke.name + ' ' + userPoke.currHp + '/' + userPoke.maxHp
             + '<br>Moves: ' + userPoke.moves[0] + ', ' + userPoke.moves[1]);
+        */
+}
 
-    } else {
-        bArea.text(output);
+/* Description: This funciton prints out an array of pokemon
+ */
+function printPkmnArray(rMain) {
+    mw.empty();
+    mw.prepend(msg);
+
+    var pkmnArray; 
+    var party = rMain.party;
+    var col = rMain.collection;
+    if (party) {
+        msg.text('Party');
+        pkmnArray = party;
+    } else if (col) {
+        msg.text('Collection');
+        pkmnArray = col;
+    }
+
+    for (i in pkmnArray) {
+        printPkmn(pkmnArray[i]);
     }
 }
 
