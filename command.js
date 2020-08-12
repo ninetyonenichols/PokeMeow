@@ -5,6 +5,13 @@
  *      to the server by the user. It consists of a Command object that can be
  *      used to parse the command and generate a JSON object for use by the
  *      client that represents the command's output.
+ *
+ * Use: const cmd = new Command(req.body.command, req.session.user, database);
+ *      cmd.parse[Main | Enc | Battle](); <-parse a main, enc, or battle command
+ *      cmd.execute((err, output) => {
+ *          if (err) console.log('ERROR: ' + err);
+ *          res.json(output);
+ *      });
  */
 
 
