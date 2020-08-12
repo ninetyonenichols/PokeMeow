@@ -16,7 +16,30 @@ label {
     color: #99B3E6;
 }
 
-#msg, #entity {
+.outputWindow {
+    margin: 0 auto;
+    padding: 20px;
+    width: 40%;
+    height: 100%;
+    border: 5px solid darkgoldenrod;
+    text-align: center;
+    overflow: auto;
+    background-size: cover;
+}
+
+#ew {
+    background-image: url('./img/bg/kanto.png');
+}
+
+#mw {
+    background-image: url('./img/bg/city.png');
+}
+
+#bw {
+    background-image: url('./img/bg/stadium.png');
+}
+
+#msg, #encounter, .xArea {
     padding: 15px;
     font-family: Courier;
     background-color: rgba(255, 255, 255, 0.8);
@@ -28,7 +51,7 @@ label {
     font-size: 28px;
 }
 
-#entity {
+#eArea, #mArea {
     margin: 0 auto 23px auto;
     width: 45%;
     font-size: 25px
@@ -44,17 +67,6 @@ label {
     width: 100%;
     height: calc(100% - 220px);
     padding: 20px;
-}
-
-#outputWindow {
-    margin: 0 auto;
-    padding: 20px;
-    width: 40%;
-    height: 100%;
-    border: 5px solid darkgoldenrod;
-    text-align: center;
-    overflow: auto;
-    background-size: cover;
 }
 
 #inputSection {
