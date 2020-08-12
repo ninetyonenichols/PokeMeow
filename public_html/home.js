@@ -39,6 +39,7 @@ function submitCommand() {
         dataType: "json",
         success: (res) => {
             if (res.main) {
+                mw.empty();
                 chwin('mw');
                 if (isStr(res.main)) { msg.text(res.main); }
                 else { printPkmnArray(res.main); }
@@ -134,25 +135,6 @@ function printMain() {
     outs.append(mw); 
 }
 
-/* Description: This funciton prints out an array of pokemon
- */
-function printPkmnArray(rMain) {
-    var pkmnArray; 
-    var party = rMain.party;
-    var col = rMain.collection;
-    if (party) {
-        msg.text('Party');
-        pkmnArray = party;
-    } else if (col) {
-        msg.text('Collection');
-        pkmnArray = col;
-    }
-
-    for (i in pkmnArray) {
-        printPkmn(pkmnArray[i]);
-    }
-}
-
 /* Description: This function prints out the info for one pokemon
  * Parameters:
  *     pkmn - the object containing the pokemon's info
@@ -198,6 +180,28 @@ function printBattle(output) {
 
     } else {
         bArea.text(output);
+    }
+}
+
+/* Description: This funciton prints out an array of pokemon
+ */
+function printPkmnArray(rMain) {
+    mw.empty();
+    mw.prepend(msg);
+
+    var pkmnArray; 
+    var party = rMain.party;
+    var col = rMain.collection;
+    if (party) {
+        msg.text('Party');
+        pkmnArray = party;
+    } else if (col) {
+        msg.text('Collection');
+        pkmnArray = col;
+    }
+
+    for (i in pkmnArray) {
+        printPkmn(pkmnArray[i]);
     }
 }
 
