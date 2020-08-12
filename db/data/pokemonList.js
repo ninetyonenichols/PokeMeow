@@ -440,7 +440,7 @@
     },
     {
         "name": "Farfetch'd",
-        "sprite": "./img/sprites/farfechd.png",
+        "sprite": "./img/sprites/farfetchd.png",
         "pType1": "Flying",
         "pType2": "Normal",
         "maxHp": "141",

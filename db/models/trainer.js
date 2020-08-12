@@ -39,7 +39,6 @@ module.exports = (mongoose) => {
 
     // Adds a pokemon to this trainer's collection
     TrainerSchema.methods.addPokemon = function(pkmn) {
-        //if (this.pokemon.includes(pkmn)) { return; }
         this.pokemon.push(pkmn);
         this.save();
     };
