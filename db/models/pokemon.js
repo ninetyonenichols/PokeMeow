@@ -29,9 +29,9 @@ module.exports = (mongoose) => {
         atk: { type: Number, default: 100 },
         def: { type: Number, default: 100 },
         moves: [{ type: String, enum: [
-            'Bug Buzz', 'Dark Pulse', 'Outrage', 'Thunderbolt', 'Moonblast', 
-            'CloseCombat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
-            'Solar Beam', 'Earthquale', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
+            'Bug Buzz', 'Dark Pulse', 'Outrage', 'Thunderbolt', 'Moonblast',
+            'Close Combat', 'Flamethrower', 'Sky Attack', 'Shadow Ball',
+            'Solar Beam', 'Earthquake', 'Ice Beam', 'Hyper Beam', 'Sludge Wave',
             'Psychic', 'Rock Slide', 'Flash Cannon', 'Hydro Cannon'
         ]}],
         catchRate: { type: Number, default: 0.6 },
@@ -46,9 +46,9 @@ module.exports = (mongoose) => {
     // Generates a new random pokemon
     PokemonSchema.statics.encounter = function(callback) {
         this.countDocuments()
-            .exec((err, count) => { 
-                if (err) return callback(err); 
-                var rand = Math.floor(Math.random() * count); 
+            .exec((err, count) => {
+                if (err) return callback(err);
+                var rand = Math.floor(Math.random() * count);
                 this.findOne()
                     .skip(rand)
                     .lean()
@@ -63,7 +63,7 @@ module.exports = (mongoose) => {
             });
     };
 
-    // Subtracts HP from a pokemon 
+    // Subtracts HP from a pokemon
     PokemonSchema.methods.subtractHp = function(loss) {
         this.currHp = Math.max(0, this.currHp - loss);
     };
@@ -75,11 +75,11 @@ module.exports = (mongoose) => {
 
     // Attempts to catch this pokemon
     PokemonSchema.methods.attemptCapture = function() {
-        let roll = Math.random(); 
+        let roll = Math.random();
         if (roll <= this.catchRate) { return "caught"; }
         else if (roll <= this.catchRate + this.fleeRate) { return "ran"; }
         else { return "missed"; }
-    } 
+    }
 
     return mongoose.model('Pokemon', PokemonSchema, 'pokemon');
 };

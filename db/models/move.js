@@ -50,6 +50,7 @@ module.exports = (mongoose) => {
                 }
 
                 let result = Math.floor(0.5 * mvDmg * (atk / def) * stab * effectiveness);
+                console.log(attacker.name + ' used: ' + moveName + ' dealing: ' + result);
                 cb(result);
             } else {
                 cb(null);

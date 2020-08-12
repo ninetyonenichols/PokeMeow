@@ -168,8 +168,6 @@ exports.command = function Command(cmdStr, user, database) {
                 .populate('trainer1')
                 .populate('trainer2')
                 .exec((err, battle) => {
-                    console.log('getBattle Error: ' + err);
-                    console.log('getBattle Battle: ' + battle);
                     if (err) {
                         console.log('Error getting battle: ' + err);
                         callback(null);
