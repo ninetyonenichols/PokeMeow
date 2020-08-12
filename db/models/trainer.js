@@ -130,7 +130,7 @@ module.exports = (mongoose) => {
     TrainerSchema.methods.switchActive = function(name) {
         for (let i = 0; i < this.party.length; i++) {
             const poke = this.party[i];
-            if (poke.name == name && poke.currHp != 0) {
+            if (poke.name == name && !poke.fainted) {
                 this.setActive(i);
                 return true;
             }
@@ -139,11 +139,20 @@ module.exports = (mongoose) => {
         return false;
     }
 
-    // Sends out the next pokemon (intended for AI use)
+    // Sends out the next pokemon (tries to use only non-fainted pokemon first)
     TrainerSchema.methods.nextPkmn = function() {
-        const idx = this.active;
-        if (idx < 0 || idx >= this.party.length - 1) { return null; }
-        this.active = idx + 1;
+        for (let i = 0; i < this.party.length; i++) {
+            const poke = this.party[this.active];
+
+            if (!poke.fainted) {
+                this.active = i;
+                this.save();
+                return poke;
+            }
+        }
+
+        //didn't find a non-fainted pokemon, so set it to the first pokemon
+        this.active = 0;
         this.save();
         return this.party[this.active];
     }
