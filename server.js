@@ -2,11 +2,7 @@
 /* Filename: server.js
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
- * Description: This file runs the server. As the project gets larger, we will
- *      likely have to split this up into smaller units while using this file
- *      as the main control/start the server from here. Most notably, the
- *      database schemas and access will be done from (posssibly multiple)
- *      other files.
+ * Description: This file runs the server. It handles the login sessions and routing. Database schemas and command parsing/executing logic is held elsewhere and imported here.
  */
 
 const express = require('express');
@@ -17,7 +13,7 @@ const session = require('express-session');
 // Set up the express server
 const app = express();
 const port = 80;
-const sessionAge = 600000;
+const sessionAge = 1200000; //20 mins
 
 
 /*  Description: This function determines if a session exists in the request
@@ -99,11 +95,15 @@ app.get('/logout', (req, res) => {
 });
 
 
-// Handle a post request that contains a pokemeow command (req.body.command)
+// Handle a post request that contains a pokemeow 'main' command in
+// req.body.command. The command is parsed as a 'main' command and executed.
+// 'Main' command just means it is a command that is valid from the top-most
+// scope (the user is not in an encounter or battle). Any other command will be
+// treated as invalid.
 app.post('/command/', (req, res) => {
     console.log('/command/: ' + req.body.command);
     const cmd = new Command(req.body.command, req.session.user, database);
-    cmd.parseMain();
+    cmd.parseMain(); // Note that this is being parsed as a 'main' command
     cmd.execute((err, output) => {
         if (err) console.log('ERROR: ' + err);
         res.json(output);
@@ -111,7 +111,7 @@ app.post('/command/', (req, res) => {
 });
 
 
-// Handle a post request that contains a random encounter command
+// Handle a post request that contains a 'random encounter' command
 app.post('/command/rand-enc/', (req, res) => {
     console.log('/command/rand-enc/: ' + req.body.command);
     const cmd = new Command(req.body.command, req.session.user, database);
@@ -123,7 +123,7 @@ app.post('/command/rand-enc/', (req, res) => {
 });
 
 
-// Handle a post request with battle command
+// Handle a post request that contains a 'battle' command
 app.post('/command/battle/', (req, res) => {
     console.log('/command/battle/: ' + req.body.command);
     const cmd = new Command(req.body.command, req.session.user, database);

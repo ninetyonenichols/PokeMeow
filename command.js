@@ -369,8 +369,15 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // Helper function for 'this.execBattle'
+    /*  Description: Helper function for 'this.execBattle' that creates a new battle and uses the callback function to pass on the battle object.
+     *  Parameters:
+     *      trainer - the user's trainer object
+     *      output - the object that holds an empty output object
+     *      DB - a reference to the database models
+     *      callback - the callback function used by the .execute functions
+     */
     function setupBattle(trainer, output, DB, callback) {
+        //get a random number to select a random ai trainer name
         const i = Math.floor((Math.random() * 5));
 
         //find the AI trainer
@@ -378,17 +385,22 @@ exports.command = function Command(cmdStr, user, database) {
             if (err) {
                 console.log('Error finding AI trainer: ' + err);
                 callback(err, this.output);
+
             } else if (ai) {
                 DB.battle.create(trainer._id, ai._id, (battle) => {
+                    //prepare the trainers for battle
                     trainer.setBattle(battle);
                     ai.setBattle(battle);
 
+                    //populate the battle with the two trainers before sending
                     battle.trainer1 = trainer;
                     battle.trainer2 = ai;
 
+                    //pass the new battle along
                     output.battle = {message: `${ai.name} wants to battle!`, battleData: battle};
                     callback(null, output);
                 });
+
             } else {
                 callback('Could not find AI trainer', output);
             }

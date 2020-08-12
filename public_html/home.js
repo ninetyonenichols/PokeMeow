@@ -1,7 +1,9 @@
 /* Filename: home.js
  * Authors: Justin Nichols (jdnscieArea.), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
- * Description:
+ * Description: This file contains the functions need to submit a command to
+ *      the server and properly display the output recieved into the output
+ *      window in home.html.
  */
 
 //constants
@@ -23,7 +25,8 @@ $('#command').keypress(function (e) {
 });
 
 /*  Description: This function submits the command string given by the user to
- *      the server, then it handles the response by calling 'printOutput'.
+ *      the server, then it handles the response by possibly changing the
+ *      'modeURL' and calling the appropriate functions to display the response.
  *  Parameters: none.
  */
 function submitCommand() {
@@ -38,6 +41,13 @@ function submitCommand() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (res) => {
+            // This checks what property in the response is populated. The
+            // expected response is of the form {main: null, encounter, null,
+            // battle: null}. Depending on which of the three is populated (or
+            // none for an 'invalid command'), the modeURL is changed. In this
+            // way, if the user is in a random encounter, but sends a 'main'
+            // command, the command is treated as invalid (only 'random
+            // encounter' commands can be used while in a random encounter).
             if (res.main) {
                 mw.empty();
                 chwin('mw');
@@ -53,7 +63,7 @@ function submitCommand() {
                 chwin('bw');
                 console.log(res.battle);
                 if (res.battle.battleData) { printBattle(res.battle.battleData); }
-                msg.text(res.battle.message); 
+                msg.text(res.battle.message);
                 modeURL = '/command/battle/';
             } else {
                 msg.text('Invalid Command');
@@ -74,13 +84,13 @@ function createWindows() {
     bw = $('<div>', { "id":"bw", "class":"outputWindow" });
 
     // Creating messages to populate windows
-    msg = $('<div>', { "id":"msg" }); 
+    msg = $('<div>', { "id":"msg" });
 
     // Creating areas for pokemon / trainers to appear
-    mArea = $('<div>', { "id":"mArea", "class":"xArea" }); 
-    eArea = $('<div>', { "id":"eArea", "class":"xArea" }); 
-    bAreaL = $('<div>', { "id":"bAreaL", "class":"xArea" }); 
-    bAreaR = $('<div>', { "id":"bAreaR", "class":"xArea" }); 
+    mArea = $('<div>', { "id":"mArea", "class":"xArea" });
+    eArea = $('<div>', { "id":"eArea", "class":"xArea" });
+    bAreaL = $('<div>', { "id":"bAreaL", "class":"xArea" });
+    bAreaR = $('<div>', { "id":"bAreaR", "class":"xArea" });
 
     // Adding pokemon/trainer areas
     mw.append(mArea);
@@ -92,7 +102,7 @@ function createWindows() {
 /* Changes the outputWindow
  */
 function chwin(winName) {
-    let win = eval(winName); 
+    let win = eval(winName);
     outs.empty();
     win.prepend(msg);
     outs.append(win);
@@ -130,10 +140,10 @@ function printMain() {
         party<br>`);
     mArea.append(`release name - releases the pokemon
         \'name\' back to the wild<br>`);
-    
+
     // Adding DOM elements to page
     mw.prepend(msg);
-    outs.append(mw); 
+    outs.append(mw);
 }
 
 /* Description: This function prints out the info for one pokemon
@@ -152,12 +162,14 @@ function printEncounter(pkmn) {
     eArea.append('<br>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
     eArea.append(`Type: ${pkmn.pType1}${type2}`);
-    
+
     // Appending DOM elements to page
     ew.prepend(msg);
 }
 
 /* Description: Prints the current state of the battle
+ * Parameters:
+ *     battleData - the object containing the battle's info
  */
 function printBattle(battleData) {
     // Clearing previous content
@@ -171,7 +183,7 @@ function printBattle(battleData) {
     const userPkmn = user.party[user.active];
     const ai = battleData.trainer2;
     const aiPkmn = ai.party[ai.active];
-    
+
     // Player data
     bAreaL.append(`${user.name}<br>`);
     bAreaL.append($('<img>', { src: user.photo, width: '160px',
@@ -200,12 +212,14 @@ function printBattle(battleData) {
 }
 
 /* Description: This funciton prints out an array of pokemon
+ * Parameters:
+ *     rMain - the object containing the response.main object
  */
 function printPkmnArray(rMain) {
     mw.empty();
     mw.prepend(msg);
 
-    var pkmnArray; 
+    var pkmnArray;
     var party = rMain.party;
     var col = rMain.collection;
     if (party) {
@@ -222,7 +236,8 @@ function printPkmnArray(rMain) {
 }
 
 /* Description: prints one pokemon owned by the player
- * Parameters: none.
+ * Parameters:
+ *     pkmn - the object containing the pokemon's info
  */
 function printPkmn(pkmn) {
     var pkmnContainer = $('<div></div>');
@@ -231,7 +246,7 @@ function printPkmn(pkmn) {
     lbox.append(`${pkmn.name}<br>`);
     lbox.append($('<img>', { src: pkmn.sprite, width: '160px',
         alt: `A picture of ${pkmn.name}.` }));
-    // cbox contains pkmn stats + typing 
+    // cbox contains pkmn stats + typing
     var cbox = $('<div style="float:left; width:26%;"></div>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
     cbox.append(`Type: ${pkmn.pType1}${type2}<br>`);
