@@ -406,23 +406,18 @@ exports.command = function Command(cmdStr, user, database) {
     // The 'switch' command - switch out the current pokemon with another in
     // the party. The opponent still gets to attack after you switch pokemon.
     this.execSwitch = (callback) => {
-        this.getTrainer(callback, (trainer) => {
+        this.getBattle(callback, (battle) => {
             //if the given pokemon name is valid (exists and isn't fainted)
-            if (trainer.switchActive(this.pokemon)) {
-                //ai uses a move, then use callback to 'return' the battle
-                this.getBattle(callback, (battle) => {
-                    battle.trainer1 = trainer;
-
+            if (battle.trainer1.switchActive(this.pokemon)) {
                     const userPkmn = battle.trainer1.getActive();
                     const aiPkmn = battle.trainer2.getActive();
 
-                    //have opponent attack
+                    //have opponent attack then send the updated battle
                     const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
                     this.db.move.damage(m, aiPkmn, userPkmn, (damage) => {
                         this.output = aiTrnrTurn(battle, m, damage, '',  this.output);
                         callback(null, this.output);
                     });
-                });
             } else {
                 this.output.battle = {message:'Could not find pokemon.', battleData: battle};
                 callback(null, this.output);
