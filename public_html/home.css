@@ -67,6 +67,20 @@ label {
     font-size: 25px
 }
 
+#bAreaL, #bAreaR {
+    margin: 0 auto 10px auto;
+    width: 45%;
+    font-size: 25px
+}
+
+#bAreaL {
+    float: left;
+}
+
+#bAreaR {
+    float: right;
+}
+
 #gameSection {
     width: 100%;
     height: calc(100% - 195px);
