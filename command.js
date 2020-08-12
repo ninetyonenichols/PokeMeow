@@ -373,6 +373,7 @@ exports.command = function Command(cmdStr, user, database) {
                         } else if (result) {
                             this.db.battle.create(trainer._id, result._id,
                             (battle) => {
+                                //need to make sure that the two trainers are actually saved before getting them from the database in the populate
                                 trainer.setBattle(battle, () => {
                                     result.setBattle(battle, () => {
                                         battle
@@ -458,38 +459,43 @@ exports.command = function Command(cmdStr, user, database) {
                             //check if opponent pokemon fainted
                             if (aiPkmn.fainted) {
                                 aiPkmn = aiTrnr.nextPkmn();
+
+                                //update battle and send
+                                battle.trainer2 = aiTrnr;
+                                this.output.battle = battle;
+                                callback(null, this.output);
                             } else {
                                 aiTrnr.save();
-                            }
 
-                            //have opponent attack
-                            const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
-                            this.db.move.damage(m, aiPkmn, userPkmn, (dmg2) => {
-                                if (dmg2) {
-                                    userTrnr.subtractHp(dmg2);
+                                //have opponent attack
+                                const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
+                                this.db.move.damage(m, aiPkmn, userPkmn, (dmg2) => {
+                                    if (dmg2) {
+                                        userTrnr.subtractHp(dmg2);
 
-                                    //check if user is defeated
-                                    if (userTrnr.defeated) {
-                                        this.output.main = 'DEFEATED BY: ' + aiTrnr.name;
-                                    } else {
-                                        //check if user's pokemon fainted
-                                        if (userPkmn.fainted) {
-                                            userPkmn = userTrnr.nextPkmn();
+                                        //check if user is defeated
+                                        if (userTrnr.defeated) {
+                                            this.output.main = 'DEFEATED BY: ' + aiTrnr.name;
                                         } else {
-                                            userTrnr.save();
-                                        }
+                                            //check if user's pokemon fainted
+                                            if (userPkmn.fainted) {
+                                                userPkmn = userTrnr.nextPkmn();
+                                            } else {
+                                                userTrnr.save();
+                                            }
 
-                                        //update battle and send
-                                        battle.trainer1 = userTrnr;
-                                        battle.trainer2 = aiTrnr;
-                                        this.output.battle = battle;
+                                            //update battle and send
+                                            battle.trainer1 = userTrnr;
+                                            battle.trainer2 = aiTrnr;
+                                            this.output.battle = battle;
+                                        }
+                                    } else {
+                                        this.output.battle = 'Invalid move: ' + m;
                                     }
+
                                     callback(null, this.output);
-                                } else {
-                                    this.output.battle = 'Invalid move: ' + m;
-                                    callback(null, this.output);
-                                }
-                            });
+                                });
+                            }
                         }
                     } else {
                         this.output.battle = 'Invalid move: ' + this.move;
