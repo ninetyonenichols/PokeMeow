@@ -140,18 +140,22 @@ function printMain() {
     var pBtn = $('<input type="button" value="Wild Pokemon">');
     pBtn.on('click', function() { submitCmd('p'); });
     mArea.append(pBtn);
+    mArea.append('<br>');
 
     var partyBtn = $('<input type="button" value="View Party">');
     partyBtn.on('click', function() { submitCmd('party'); });
     mArea.append(partyBtn);
+    mArea.append('<br>');
     
     var storageBtn = $('<input type="button" value="View Storage">');
     storageBtn.on('click', function() { submitCmd('storage'); });
     mArea.append(storageBtn);
+    mArea.append('<br>');
     
-    var battleBtn = $('<input type="button" value="battle">');
+    var battleBtn = $('<input type="button" value="Battle">');
     battleBtn.on('click', function() { submitCmd('battle'); });
     mArea.append(battleBtn);
+    mArea.append('<br>');
 
     // Adding DOM elements to page
     mw.prepend(msg);
@@ -179,10 +183,12 @@ function printEncounter(pkmn) {
     var pbBtn = $('<input type="button" value="Throw Pokeball">');
     pbBtn.on('click', function() { submitCmd('pb'); });
     eArea.append(pbBtn);
+    eArea.append('<br>');
 
-    var runBtn = $('<input type="button" value="run">');
+    var runBtn = $('<input type="button" value="Run">');
     runBtn.on('click', function() { submitCmd('run'); });
     eArea.append(runBtn);
+    eArea.append('<br>');
 
     // Appending DOM elements to page
     ew.prepend(msg);
@@ -228,24 +234,38 @@ function printBattleUser(user){
     bAreaL.append(`HP: ${pkmn.currHp}/${pkmn.maxHp}<br>`);
     bAreaL.append(`<br>`);
     bAreaL.append(`<u>Moves:</u><br>`);
-    bAreaL.append(`${pkmn.moves[0]}<br>`);
-    bAreaL.append(`${pkmn.moves[1]}<br>`);
-    bAreaL.append(`<br>`);
+
+    var mv1 = pkmn.moves[0];
+    var mv1Btn = $(`<input type="button" value=\"${mv1}\">`);
+    mv1Btn.on('click', function() { submitCmd(`use ${mv1}`); });
+    bAreaL.append(mv1Btn);
+    bAreaL.append('<br>');
+
+    var mv2 = pkmn.moves[1];
+    var mv2Btn = $(`<input type="button" value=\"${mv2}\">`);
+    mv2Btn.on('click', function() { submitCmd(`use ${mv2}`); });
+    bAreaL.append(mv2Btn);
+    bAreaL.append('<br>');
 
     bAreaL.append(`<u>Party:</u><br>`);
     if (party.length == 1) {
         bAreaL.append('none');
-        return;
-    }
-
-    for (i in party) {
-        if (i != user.active) { 
-            let partyStr = `${party[i].name}`;
-            if (party[i].currHp == 0) { partyStr += `(fainted)`}
-            partyStr += '<br>';
-            bAreaL.append(`${party[i].name}<br>`); 
+    } else {
+        for (i in party) {
+            if (i != user.active) { 
+                let partyStr = `${party[i].name}`;
+                if (party[i].currHp == 0) { partyStr += `(fainted)`}
+                partyStr += '<br>';
+                bAreaL.append(`${party[i].name}<br>`); 
+            }
         }
     }
+
+    var runBtlBtn = pkmn.moves[1];
+    var runBtlBtn = $(`<input type="button" value="Run">`);
+    runBtlBtn.on('click', function() { submitCmd(`run`); });
+    bAreaL.append(runBtlBtn);
+    bAreaL.append('<br>');
 }
 
 /* Description: This function prints the AI's info in battle
