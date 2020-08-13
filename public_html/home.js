@@ -295,6 +295,10 @@ function printPkmnArray(rMain) {
     mw.prepend(msg);
     addMsg(rMain.message);
     
+    var mainBtn = $(`<input type="button" value="Main Menu">`);
+    mainBtn.on('click', function() { printMain(); });
+    mw.append(mainBtn);
+    mw.append('<br>');
 
     var pkmnArray;
     var party = rMain.party;
