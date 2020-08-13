@@ -50,6 +50,12 @@ label {
     border: 3px solid black;
 }
 
+.xArea, #msg {
+    padding: 25px;
+    font-family: Courier;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
 #ew, #mw, #bw {
     background-position: center;
 }
@@ -66,12 +72,6 @@ label {
     background-image: url('./img/bg/stadium.png');
 }
 
-#msg, .xArea {
-    padding: 15px;
-    font-family: Courier;
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
 #msg {
     margin: 15px auto 23px auto;
     width: 75%;
@@ -80,6 +80,7 @@ label {
 
 #eArea, #mArea {
     margin: 0 auto 23px auto;
+    vertical-align: center;
     width: 45%;
     font-size: 25px
 }
@@ -106,7 +107,7 @@ label {
 
 #outputSection {
     width: 100%;
-    height: calc(100% - 200px);
+    height: 100%;
     padding: 20px;
 }
 

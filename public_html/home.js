@@ -1,5 +1,5 @@
 /* Filename: home.js
- * Authors: Justin Nichols (jdnscieArea.), Charles McLean (mcharlie)
+ * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
  * Description: This file contains the functions need to submit a command to
  *      the server and properly display the output recieved into the output
@@ -114,7 +114,6 @@ function chwin(winName) {
     outs.empty();
     win.prepend(msg);
     outs.append(win);
-    msg.css("font-size", "28px");
 }
 
 /* Checks if an object is a string
@@ -207,7 +206,6 @@ function printBattle(battleData) {
     bAreaR.empty();
 
     outs.append(bw);
-    msg.css("font-size", "23px");
 
     const user = battleData.trainer1;
     const ai = battleData.trainer2;
@@ -227,9 +225,9 @@ function printBattleUser(user){
 
     // Player data
     bAreaL.append(`<b>${user.name}</b><br>`);
-    bAreaL.append($('<img>', { src: user.photo, width: '80px',
+    bAreaL.append($('<img>', { src: user.photo, width: '110px',
         alt: `A picture of ${user.name}` }));
-    bAreaL.append($('<img>', { src: pkmn.sprite, width: '80px',
+    bAreaL.append($('<img>', { src: pkmn.sprite, width: '110px',
         alt: `A picture of ${pkmn.name}.`, class: 'img-hor' }));
     bAreaL.append(`<br>`);
     bAreaL.append(`<b>${pkmn.name}</b><br>`);
@@ -282,9 +280,9 @@ function printBattleAI(ai) {
 
     // AI data
     bAreaR.append(`<b>${ai.name}</b><br>`);
-    bAreaR.append($('<img>', { src: pkmn.sprite, width: '80px',
+    bAreaR.append($('<img>', { src: pkmn.sprite, width: '110px',
         alt: `A picture of ${pkmn.name}.` }));
-    bAreaR.append($('<img>', { src: ai.photo, width: '80px',
+    bAreaR.append($('<img>', { src: ai.photo, width: '110px',
         alt: `A picture of ${ai.name}.` }));
     bAreaR.append(`<br>`);
     bAreaR.append(`<b>${pkmn.name}</b><br>`);
