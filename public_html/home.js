@@ -1,5 +1,5 @@
 /* Filename: home.js
- * Authors: Justin Nichols (jdnscieArea.), Charles McLean (mcharlie)
+ * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
  * Description: This file contains the functions need to submit a command to
  *      the server and properly display the output recieved into the output
@@ -13,6 +13,7 @@ var modeURL = '/command/';
 
 createWindows();
 
+// Printing welcome message / main menu, and saving some shortcuts
 $(document).ready(() => {
     outs = $('#outputSection');
     cmdBox = $('#command');
@@ -27,7 +28,8 @@ $(document).ready(() => {
 /*  Description: This function submits the command string given by the user to
  *      the server, then it handles the response by possibly changing the
  *      'modeURL' and calling the appropriate functions to display the response.
- *  Parameters: none.
+ *  Parameters: 
+ *      cmd - the name of the command
  */
 function submitCmd(cmd) {
     //if no input, do nothing
@@ -48,21 +50,13 @@ function submitCmd(cmd) {
             // command, the command is treated as invalid (only 'random
             // encounter' commands can be used while in a random encounter).
             if (res.main) {
-                mw.empty();
-                chwin('mw');
-                printMain();
-                if (isStr(res.main)) { addMsg(res.main); }
-                else { printPkmnArray(res.main); }
+                handleResMain(res.main);
                 modeURL = '/command/';
             } else if (res.encounter) {
-                chwin('ew');
-                if (isStr(res.encounter)) { addMsg(res.encounter); }
-                else { printEncounter(res.encounter); }
+                handleResEnc(res.encounter);
                 modeURL = '/command/rand-enc/';
             } else if (res.battle) {
-                chwin('bw');
-                if (res.battle.battleData) { printBattle(res.battle.battleData); }
-                addMsg(res.battle.message);
+                handleResBattle(res.battle);
                 modeURL = '/command/battle/';
             } else {
                 addMsg('Invalid Command');
@@ -72,6 +66,38 @@ function submitCmd(cmd) {
 
     //clear input
     $('#command').val("");
+}
+
+/* Description: Dispatches commands when in Main mode
+ * Parameters: 
+ *     rMain - the 'main' portion of the ajax return-data
+ */
+function handleResMain(rMain) {
+    mw.empty();
+    chwin('mw');
+    printMain();
+    if (isStr(rMain)) { addMsg(rMain); }
+    else if (rMain.party || rMain.collection) { printPkmnArray(rMain); }
+}
+
+/* Description: Dispatches commands when in Encounter mode
+ * Parameters: 
+ *     rEnc - the 'encounter' portion of the ajax return-data
+ */
+function handleResEnc(rEnc) {
+    chwin('ew');
+    if (isStr(rEnc)) { addMsg(rEnc); }
+    else { printEncounter(rEnc); }
+}
+
+/* Description: Dispatches commands when in Battle mode
+ * Parameters: 
+ *     rBtl - the 'battle' portion of the ajax return-data
+ */
+function handleResBattle(rBtl) {
+    chwin('bw');
+    if (rBtl.battleData) { printBattle(rBtl.battleData); }
+    addMsg(rBtl.message);
 }
 
 /* Description: Adds a message to the msg bar
@@ -114,7 +140,6 @@ function chwin(winName) {
     outs.empty();
     win.prepend(msg);
     outs.append(win);
-    msg.css("font-size", "28px");
 }
 
 /* Checks if an object is a string
@@ -165,20 +190,24 @@ function printMain() {
 
 /* Description: This function prints out the info for one pokemon
  * Parameters:
- *     pkmn - the object containing the pokemon's info
+ *     rEnc - the encounter data from the ajax response 
  */
-function printEncounter(pkmn) {
+function printEncounter(rEnc) {
+    var pkmn = rEnc.encPkmn;
+
     // Clearing previous content
     eArea.empty();
 
     // Adding content to DOM elements
-    addMsg(`A wild ${pkmn.name} appeared!`);
-    eArea.append(`${pkmn.name}<br>`);
+    addMsg(rEnc.message);
+    eArea.append(`<b>${pkmn.name}</b><br>`);
     eArea.append($('<img>', { src: pkmn.sprite, width: '200px',
         alt: `A picture of ${pkmn.name}.` }));
     eArea.append('<br>');
-    let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
-    eArea.append(`Type: ${pkmn.pType1}${type2}`);
+    eArea.append(`<u>Type:</u><br>`);
+    eArea.append(`${pkmn.pType1}<br>`);
+    if (pkmn.pType2) { eArea.append(`${pkmn.pType2}<br>`) };
+    eArea.append('<br>');
 
     var pbBtn = $('<input type="button" value="Throw Pokeball">');
     pbBtn.on('click', function() { submitCmd('pb'); });
@@ -205,7 +234,6 @@ function printBattle(battleData) {
     bAreaR.empty();
 
     outs.append(bw);
-    msg.css("font-size", "23px");
 
     const user = battleData.trainer1;
     const ai = battleData.trainer2;
@@ -225,9 +253,9 @@ function printBattleUser(user){
 
     // Player data
     bAreaL.append(`<b>${user.name}</b><br>`);
-    bAreaL.append($('<img>', { src: user.photo, width: '80px',
+    bAreaL.append($('<img>', { src: user.photo, width: '110px',
         alt: `A picture of ${user.name}` }));
-    bAreaL.append($('<img>', { src: pkmn.sprite, width: '80px',
+    bAreaL.append($('<img>', { src: pkmn.sprite, width: '110px',
         alt: `A picture of ${pkmn.name}.`, class: 'img-hor' }));
     bAreaL.append(`<br>`);
     bAreaL.append(`<b>${pkmn.name}</b><br>`);
@@ -247,6 +275,7 @@ function printBattleUser(user){
     bAreaL.append(mv2Btn);
     bAreaL.append('<br>');
 
+    bAreaL.append('<br>');
     bAreaL.append(`<u>Party:</u><br>`);
     if (party.length == 1) {
         bAreaL.append('none');
@@ -254,12 +283,14 @@ function printBattleUser(user){
         for (i in party) {
             if (i != user.active) { 
                 let partyStr = `${party[i].name}`;
-                if (party[i].currHp == 0) { partyStr += `(fainted)`}
-                partyStr += '<br>';
-                bAreaL.append(`${party[i].name}<br>`); 
+                var switchBtn = $(`<input type="button" value=\"${partyStr}\">`);
+                switchBtn.on('click', function() { submitCmd(`switch ${partyStr}`); });
+                bAreaL.append(switchBtn);
+                bAreaL.append('<br>');
             }
         }
     }
+    bAreaL.append('<br>');
 
     var runBtlBtn = pkmn.moves[1];
     var runBtlBtn = $(`<input type="button" value="Run">`);
@@ -277,9 +308,9 @@ function printBattleAI(ai) {
 
     // AI data
     bAreaR.append(`<b>${ai.name}</b><br>`);
-    bAreaR.append($('<img>', { src: pkmn.sprite, width: '80px',
+    bAreaR.append($('<img>', { src: pkmn.sprite, width: '110px',
         alt: `A picture of ${pkmn.name}.` }));
-    bAreaR.append($('<img>', { src: ai.photo, width: '80px',
+    bAreaR.append($('<img>', { src: ai.photo, width: '110px',
         alt: `A picture of ${ai.name}.` }));
     bAreaR.append(`<br>`);
     bAreaR.append(`<b>${pkmn.name}</b><br>`);
@@ -303,16 +334,17 @@ function printPkmnArray(rMain) {
     var pkmnArray;
     var party = rMain.party;
     var col = rMain.collection;
+    var loc;
     if (party) {
-        addMsg('Party');
         pkmnArray = party;
+        loc = "party";
     } else if (col) {
-        addMsg('Storage');
         pkmnArray = col;
+        loc = "storage";
     }
 
     for (i in pkmnArray) {
-        printPkmn(pkmnArray[i]);
+        printPkmn(pkmnArray[i], loc);
     }
 }
 
@@ -320,7 +352,7 @@ function printPkmnArray(rMain) {
  * Parameters:
  *     pkmn - the object containing the pokemon's info
  */
-function printPkmn(pkmn) {
+function printPkmn(pkmn, loc) {
     var pkmnContainer = $('<div>', {class:'pkmnContainer'});
     // lbox contains pkmn sprite + name
     var lbox = $('<div style="float:left; width:33%;"></div>');
@@ -341,6 +373,25 @@ function printPkmn(pkmn) {
     rbox.append(`<u>Moves:</u><br>`);
     rbox.append(`${pkmn.moves[0]}<br>`);
     rbox.append(`${pkmn.moves[1]}<br>`);
+    rbox.append('<br>');
+    
+    if (loc == "storage") {
+        var addBtn = $(`<input type="button" value="Add to Party">`);
+        addBtn.on('click', function() { submitCmd(`add ${pkmn.name}`); });
+        rbox.append(addBtn);
+        rbox.append('<br>');
+    } else {
+        var rmBtn = $(`<input type="button" value="Send to Storage">`);
+        rmBtn.on('click', function() { submitCmd(`remove ${pkmn.name}`); });
+        rbox.append(rmBtn);
+        rbox.append('<br>');
+    }
+
+    var releaseBtn = $(`<input type="button" value="Release Pokemon">`);
+    releaseBtn.on('click', function() { submitCmd(`release ${pkmn.name}`); });
+    rbox.append(releaseBtn);
+    rbox.append('<br>');
+
     // Adding everything to DOM
     pkmnContainer.append(lbox);
     pkmnContainer.append(cbox);
