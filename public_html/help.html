@@ -1,8 +1,7 @@
 <!-- Filename: help.html
      Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
      Class: CSc 337 Summer 2020
-     Description: This file contains the html for the help page, where the user
-        can find out how to use the application.
+     Description: This file contains the html for the help/about page, where the user can find out how to use the application.
 -->
 
 <!DOCTYPE html>
@@ -28,74 +27,87 @@
         <div id="mainContent">
             <div id="overview" class="explanation">
                 <p>
-                    PokeMeow is a simplified, command-line version of Pokemon. It is based on the
-                    Discord bot “PokeMeow,” which allows users to catch (and soon, battle) Pokemon
-                    within a chat window.
+                    PokeMeow is a simplified, version of Pokemon. It is based
+                    on the Discord bot “PokeMeow,” which allows users to catch
+                    Pokemon and battle trainers.
                 </p>
-            </div>
-
-            <div id="commandList" class="explanation">
-                Main Commands:
-                <ul>
-                    <li><span class="cmd">random-encounter</span> - starts an encounter with a random
-                        pokemon</li>
-                    <li><span class="cmd">view-party</span> - prints out a list of pokemon in your
-                        party</li>
-                    <li><span class="cmd">view-pokemon</span> - prints out a list of the pokemon you've
-                        caught</li>
-                    <li><span class="cmd">view name</span> - prints out more information about pokemon
-                        'name'</li>
-                    <li><span class="cmd">remove name</span> - removes pokemon 'name' from your
-                        party</li>
-                    <li><span class="cmd">add name</span> - adds pokemon 'name' to your party</li>
-                    <li><span class="cmd">release name</span> - releases the pokemon 'name' back to the
-                        wild</li>
-                </ul>
-
-                Random Encounter Commands:
-                <ul>
-                    <li><span class="cmd">throw-ball</span> - throws a ball to try and catch a pokemon
-                        </li>
-                    <li><span class="cmd">run</span> - run from the random encounter</li>
-                </ul>
             </div>
             <div id="note" class="explanation">
                 <ul>
-                    <li><span class="cmd">Note to Ben + TAs: </span> This section will describe where
-                        the complexities were in creating this project. The major components are
-                        server.js (routing), the db folder (database), and command.js (overall
-                        controller for the app). Server.js handles routing and sends requests to
-                        command.js. command.js then communicates with the database to produce data
-                        which is consumed by the client. Each component is discussed below. </li>
-                    <li><span class="cmd">server.js: </span></li>
-                    <li><span class="cmd">command.js: </span></li>
-                    <li><p><span class="cmd">db: </span> In addition to storing data, the database also
-                        contains many static and instance methods which allow it to perform complex
-                        tasks which are relevant to processing data. This allows it to actively help
-                        with the execution of the app, rather than simply being a repository for data.
-                        </p>
-                        <p>It makes use of export / require statements to allow for better-organized
-                        code. Specifically, the db.js file establishes the conneciton and then passes
-                        this connection to each model, rather than having each model establish its own.
-                        </p>
-                        <p>Each file in db/models contains all the info needed to produce one model.
-                        It makes heavy use of data validation, and it uses virtuals (attributes which
-                        are derived from other attributes at runtime) to cut down on redundant code.
-                        As described above, the static and instance methods allow the models +
-                        documents themselves to execute methods of their own. For example, the Pokemon
-                        model has a 'create' function that allows it to essentially clone a pre-
-                        existing Pokemon document, but with a new _id field. This way, a trainer can
-                        encounter a unique "instance" of that pokemon.
-                        </p>
-                        <p>Much of the data has to be stored prior to starting up the app (for example,
-                        data about each species of Pokemon). To accomplish this, the db/data folder
-                        contains data structures which are imported using the 'mongoimport' utility,
-                        as well as other data structures which are imported directly into other files.
-                        This setup allows for the data to be manipulated with a text-editor and then
-                        imported all at once to MongoDB. It also provdes a backup txt file, in case the
-                        database were ever accidentally cleared.</p>
+                    <li><span class="cmd">Note to Ben + TAs: </span> This
+                        section will describe where the complexities were in
+                        creating this project. The major components are
+                        server.js (routing), the db (database) folder, and
+                        command.js (overall controller for the app). Server.js
+                        handles routing and uses command.js to parse command
+                        strings, execute them on the database, and finally send
+                        back a response containing the output. Each component
+                        is discussed below.
                     </li>
-
+                    <li><span class="cmd">server.js: </span> Server.js mainly
+                        only handles file uploads, session authentication, and
+                        a few different requests. To handle commands, it uses
+                        the Command object constructor to first parse the
+                        commands, then execute the command, and finally send
+                        the output given by Command.execute().
+                    </li>
+                    <li><span class="cmd">command.js: </span> This and the
+                        database are the workhorses of the app, and consists of
+                        a Command object constructor. It contains three
+                        functions for parsing user command strings (this app
+                        started out originally with the intention of having
+                        users submit commands using a text input, but now
+                        utilizes buttons instead). These functions set the
+                        'execute' method in the Command object to be equal to
+                        the appropriate execution method (for example,
+                        'this.execute = this.execParty'). By doing this,
+                        server.js only needs to call Command.execute() after
+                        parsing the command to execute it. The various
+                        execution methods all interact with the database in
+                        some way to generate and format the output from the
+                        command, which is then sent directly to the client in
+                        server.js.
+                    </li>
+                    <li><p><span class="cmd">db: </span> In addition to storing
+                            data, the database alsocontains many static and
+                            instance methods which allow it to perform complex
+                            tasks which are relevant to processing data. This
+                            allows it to actively help with the execution of
+                            the app, rather than simply being a repository for
+                            data.
+                        </p>
+                        <p>It makes use of export / require statements to allow
+                            for better-organized code. Specifically, the db.js
+                            file establishes the conneciton and then passes
+                            this connection to each model, rather than having
+                            each model establish its own connection.
+                        </p>
+                        <p>Each file in db/models contains all the info needed
+                            to produce one model. It makes heavy use of data
+                            validation, and it uses virtuals (attributes which
+                            are derived from other attributes at runtime) to
+                            cut down on redundant code. As described above, the
+                            static and instance methods allow the models +
+                            documents themselves to execute methods of their
+                            own. For example, the Pokemon model has a 'create'
+                            function that allows it to essentially clone a pre-
+                            existing Pokemon document, but with a new _id
+                            field. This way, a trainer can encounter a unique
+                            "instance" of that pokemon.
+                        </p>
+                        <p>Much of the data has to be stored prior to starting
+                            up the app (for example, data about each species of
+                            Pokemon). To accomplish this, the db/data folder
+                            contains data structures which are imported using
+                            the 'mongoimport' utility, as well as other data
+                            structures which are imported directly into other
+                            files. This setup allows for the data to be
+                            manipulated with a text-editor and then imported
+                            all at once to MongoDB. It also provdes a backup
+                            txt file, in case the database were ever
+                            accidentally cleared.
+                        </p>
+                    </li>
                 </ul>
             </div>
         </div>

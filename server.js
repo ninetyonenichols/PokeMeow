@@ -2,7 +2,15 @@
 /* Filename: server.js
  * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
  * Class: CSc 337 Summer 2020
- * Description: This file runs the server. It handles the login sessions and routing. Database schemas and command parsing/executing logic is held elsewhere and imported here.
+ * Description: This file runs the server. It handles the login sessions and
+ *      routing. Database schemas and command parsing/executing logic is held
+ *      elsewhere and imported here.
+ * Node Modules:
+ *      express
+ *      express-session
+ *      mongoose
+ *      crypto
+ *      multer
  */
 
 const express = require('express');

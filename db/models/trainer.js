@@ -56,11 +56,14 @@ module.exports = (mongoose) => {
             delete trainerObj['_id'];
             let newParty = [];
             for (let p of trainerObj.party) {
+                //copy the pokemon and add it to 'newParty'
                 newParty.push(mongoose.model('Pokemon').copy(p))
             }
-            trainerObj.party = [];
+            trainerObj.party = []; //get rid of the party in the trainer object
+
+            //make a new trainer document
             let newTrainer = new mongoose.model('Trainer')(trainerObj);
-            newTrainer.party = newParty;
+            newTrainer.party = newParty; //add the new party to it
             callback(newTrainer);
         });
     };

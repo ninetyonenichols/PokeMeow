@@ -92,7 +92,7 @@ module.exports = (mongoose) => {
         this.currHp = this.maxHp;
     };
 
-    // Attempts to catch this pokemon, and returns the result
+    // Attempts to catch this pokemon, and returns 'caught'/'missed'/'ran'
     PokemonSchema.methods.attemptCapture = function() {
         let roll = Math.random();
         if (roll <= this.catchRate) { return "caught"; }

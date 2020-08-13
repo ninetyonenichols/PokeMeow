@@ -1,4 +1,4 @@
-This directory will contain raw-data files.
+This directory (db/data) will contain raw-data files.
 
 Some of these files can be used to initialize a
 collection. For example, types.json contains all the info needed to rebuild

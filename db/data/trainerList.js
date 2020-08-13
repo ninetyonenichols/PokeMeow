@@ -1,3 +1,9 @@
+/* Filename: trainerList.js
+ * Authors: Justin Nichols (jdnscience), Charles McLean (mcharlie)
+ * Class: CSc 337 Summer 2020
+ * Description: This file contains a JSON object for importing preset trainers into the database for use in battles. See note.txt.
+ */
+
 [
     {
         "name": "Bug Catcher",

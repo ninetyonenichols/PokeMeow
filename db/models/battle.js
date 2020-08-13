@@ -26,6 +26,7 @@ module.exports = (mongoose) => {
     BattleSchema.statics.create = function(id1, name, callback) {
         this.deleteOne({trainer1: id1}, (err, removed) => {
             if (err) console.log(err);
+            //make a copy of the trainer with 'name'
             Trainer.copy(name, (aiTrainer) => {
                 const battle = new mongoose.model('Battle')({trainer1: id1,
                     trainer2: aiTrainer});
