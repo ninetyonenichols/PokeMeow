@@ -32,7 +32,6 @@ $(document).ready(() => {
  *      cmd - the name of the command
  */
 function submitCmd(cmd) {
-    //if no input, do nothing
     if (cmd == '') { return; }
 
     $.ajax({
@@ -42,13 +41,8 @@ function submitCmd(cmd) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (res) => {
-            // This checks what property in the response is populated. The
-            // expected response is of the form {main: null, encounter, null,
-            // battle: null}. Depending on which of the three is populated (or
-            // none for an 'invalid command'), the modeURL is changed. In this
-            // way, if the user is in a random encounter, but sends a 'main'
-            // command, the command is treated as invalid (only 'random
-            // encounter' commands can be used while in a random encounter).
+            // res will have either main, encounter, or battle populated for any valid cmd
+            // if none populated, cmd invalid
             if (res.main) {
                 handleResMain(res.main);
                 modeURL = '/command/';
@@ -64,7 +58,6 @@ function submitCmd(cmd) {
         }
     });
 
-    //clear input
     $('#command').val("");
 }
 
@@ -152,6 +145,7 @@ function isStr(x) {
 
 /* Description: This function prints out the options available to the player at
  *     the main game-screen.
+ * Parameters: none.
  */
 function printMain() {
     // Clearing previous content
@@ -162,6 +156,17 @@ function printMain() {
     // Adding content to DOM elements
     addMsg('Welcome to PokeMeow!');
 
+    // Adding DOM elements to page
+    addMMBtns();
+    mw.prepend(msg);
+    mw.append(mArea);
+    outs.append(mw);
+}
+
+/* Description: Adds buttons to the main menu
+ * Parameters: none.
+ */
+function addMMBtns() {
     var pBtn = $('<input type="button" value="Wild Pokemon">');
     pBtn.on('click', function() { submitCmd('p'); });
     mArea.append(pBtn);
@@ -181,11 +186,6 @@ function printMain() {
     battleBtn.on('click', function() { submitCmd('battle'); });
     mArea.append(battleBtn);
     mArea.append('<br>');
-
-    // Adding DOM elements to page
-    mw.prepend(msg);
-    mw.append(mArea);
-    outs.append(mw);
 }
 
 /* Description: This function prints out the info for one pokemon
