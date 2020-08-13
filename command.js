@@ -49,16 +49,16 @@ exports.command = function Command(cmdStr, user, database) {
     // calling that 'main') and set execute to the appropriate function
     this.parseMain = function() {
         switch (this.cmd[0]) {
-            case 'random-encounter':
+            case 'p':
                 this.execute = this.execEncounter;
                 break;
             case 'battle':
                 this.execute = this.execBattle;
                 break;
-            case 'view-party':
+            case 'party':
                 this.execute = this.execParty;
                 break;
-            case 'view-pokemon':
+            case 'storage':
                 this.execute = this.execViewCaught;
                 break;
             case 'view':
@@ -95,7 +95,7 @@ exports.command = function Command(cmdStr, user, database) {
     // to the appropriate function
     this.parseEnc = function() {
         switch (this.cmd[0]) {
-            case 'throw-ball':
+            case 'pb':
                 this.execute = this.execThrow;
                 break;
             case 'run':
@@ -209,11 +209,11 @@ exports.command = function Command(cmdStr, user, database) {
         callback('Invalid Command', this.output);
     }
 
-    // The 'view-party' command - returns the user's party pokemon
+    // The 'party' command - returns the user's party pokemon
     this.execParty = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.party.length == 0) {
-                this.output.main = 'No party pokemon';
+                this.output.main = 'No Pokemon in party.';
 
             } else {
                 this.output.main = {party: trainer.party, collection: null};
@@ -223,11 +223,11 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'view-pokemon' command - returns the user's other pokemon
+    // The 'storage' command - returns the user's other pokemon
     this.execViewCaught = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.pokemon.length == 0) {
-                this.output.main = 'No caught pokemon';
+                this.output.main = 'No Pokemon in storage.';
 
             } else {
                 this.output.main = {party:null, collection:trainer.pokemon};
@@ -259,11 +259,11 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRemove = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.removeParty(this.pokemon)) {
-                this.output.main = 'REMOVED FROM PARTY: '
-                + this.pokemon;
+                this.output.main = {message: `Removed ${this.pokemon} from party.`, 
+                    party: trainer.party};
 
             } else {
-                this.output.main = 'Could not find pokemon';
+                this.output.main = {message:'Could not find pokemon'};
             }
 
             callback(null, this.output);
@@ -274,11 +274,10 @@ exports.command = function Command(cmdStr, user, database) {
     this.execAdd = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.addParty(this.pokemon)) {
-                this.output.main = 'ADDED TO PARTY: '
-                + this.pokemon;
-
+                this.output.main = {message:`Added ${this.pokemon} to party.`, 
+                    party: trainer.party};
             } else {
-                this.output.main = 'Could not add pokemon';
+                this.output.main = {message:'Could not add pokemon'};
             }
 
             callback(null, this.output);
@@ -289,17 +288,17 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRelease = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.release(this.pokemon)) {
-                this.output.main = 'RELEASED: ' + this.pokemon;
-
+                this.output.main = {message:`Released ${this.pokemon}.`,
+                    collection: trainer.pokemon};
             } else {
-                this.output.main = 'Could not find pokemon';
+                this.output.main = {message:'Could not find pokemon'};
             }
 
             callback(null, this.output);
         });
     }
 
-    // The 'random-encounter' command - starts a random encounter
+    // The 'p' command - starts a random encounter with a Pokemon
     this.execEncounter = (callback) => {
         //get a random pokemon from the database
         this.db.pokemon.encounter((poke) => {
@@ -315,7 +314,7 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    // The 'throw-ball' command - attempt to catch an encountered pokemon
+    // The 'pb' command - throws a PokeBall (in attempt to capture Pokemon).
     this.execThrow = (callback) => {
         //access the pokemon in the encounter (it is in trainer.encounter)
         this.getTrainer(callback, (trainer) => {
@@ -327,17 +326,17 @@ exports.command = function Command(cmdStr, user, database) {
                     //caught, add pokemon to trainer
                     trainer.add();
                     //set output to 'main' to return to the 'Main' scope
-                    this.output.main = 'CAUGHT: ' + trainer.encounter.name;
+                    this.output.main = `${trainer.encounter.name} was caught!`;
                     break;
 
                 case "missed":
                     //pokeball missed, continue encounter
-                    this.output.encounter = 'POKEBALL MISSED';
+                    this.output.encounter = 'The Pokemon broke free!';
                     break;
 
                 case "ran":
                     //pokemon ran away, so end encounter
-                    this.output.main = 'POKEMON ESCAPED';
+                    this.output.main = `${trainer.encounter.name} fled.`;
                     break;
 
                 default:
@@ -350,7 +349,7 @@ exports.command = function Command(cmdStr, user, database) {
 
     // The 'run' command - run from an encountered pokemon
     this.execRun = (callback) => {
-        this.output.main = 'YOU RAN AWAY';
+        this.output.main = 'Got away successfully!';
         callback(null, this.output);
     }
 
@@ -449,12 +448,13 @@ exports.command = function Command(cmdStr, user, database) {
             this.db.move.damage(this.move, userPkmn, aiPkmn, (damage) => {
                 if (damage != null) {
                     aiTrnr.subtractHp(damage);
-                    let msg = `${userPkmn.name} dealt: ${damage}\n`;
+                    let msg = `${userPkmn.name} used ${this.move}!\n`;
+                    //let msg = `${userPkmn.name} dealt: ${damage} dmg` + '\n';
 
                     //if opponent is defeated end the battle
                     if (aiTrnr.defeated) {
-                        this.output.main = 'DEFEATED: ' + aiTrnr.name;
-                        callback(null, output);
+                        this.output.main = `You defeated ${aiTrnr.name}!`;
+                        callback(null, this.output);
                     } else {
                         battle.trainer2 = aiTrnr;
                         checkAI(battle, this.db, msg, this.output, callback);
@@ -487,7 +487,7 @@ exports.command = function Command(cmdStr, user, database) {
             msg += `${aiPkmn.name} fainted!\n`;
             //send out next pokemon
             aiPkmn = aiTrnr.nextPkmn();
-            msg += `They sent out: ${aiPkmn.name}`;
+            msg += `${aiTrnr.name} send ${aiPkmn.name}`;
 
             //update battle and send
             battle.trainer2 = aiTrnr;
@@ -525,11 +525,12 @@ exports.command = function Command(cmdStr, user, database) {
 
         if (damage != null) {
             userTrnr.subtractHp(damage);
-            msg += `${aiPkmn.name} dealt: ${damage}\n`;
+            //msg += `${aiPkmn.name} dealt: ${damage}\n`;
+            msg += `Enemy ${aiPkmn.name} used ${move}!\n`;
 
             //if user is defeated end the battle
             if (userTrnr.defeated) {
-                output.main = 'DEFEATED BY: ' + aiTrnr.name;
+                output.main =`You were defeaded by ${aiTrnr.name}.`;
                 return output;
             } else {
                 //check if user's pokemon fainted
@@ -556,7 +557,7 @@ exports.command = function Command(cmdStr, user, database) {
     // The 'run' battle command - used to exit from a battle
     this.execBtlExit = (callback) => {
         this.getTrainer(callback, (trainer) => {
-            this.output.main = 'YOU RAN AWAY';
+            this.output.main = `Withdrew from battle.`;
             callback(null, this.output);
         });
     }

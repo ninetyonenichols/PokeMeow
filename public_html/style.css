@@ -17,7 +17,7 @@ html, body {
 header {
     padding-left: 30px;
     width: 100%;
-    height: 195px;
+    height: 135px;
     color: #99B3E6;
     background-color: #315436;
     box-sizing: border-box;
@@ -25,7 +25,7 @@ header {
 }
 
 header > * {
-    margin-top: 70px;
+    margin-top: 10px;
 }
 
 nav {

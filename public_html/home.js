@@ -61,7 +61,6 @@ function submitCommand() {
                 modeURL = '/command/rand-enc/';
             } else if (res.battle) {
                 chwin('bw');
-                console.log(res.battle);
                 if (res.battle.battleData) { printBattle(res.battle.battleData); }
                 msg.text(res.battle.message);
                 modeURL = '/command/battle/';
@@ -106,6 +105,7 @@ function chwin(winName) {
     outs.empty();
     win.prepend(msg);
     outs.append(win);
+    msg.css("font-size", "28px");
 }
 
 /* Checks if an object is a string
@@ -122,10 +122,12 @@ function isStr(x) {
 function printMain() {
     // Clearing previous content
     outs.empty();
+    mw.empty();
     mArea.empty();
 
     // Adding content to DOM elements
-    msg.text('Options');
+    msg.text('Welcome to PokeMeow!');
+    /*msg.text('Options');
     mArea.append(`random-encounter - starts an encounter
         with a random pokemon<br>`);
     mArea.append(`view-party - prints out a list of pokemon
@@ -140,6 +142,7 @@ function printMain() {
         party<br>`);
     mArea.append(`release name - releases the pokemon
         \'name\' back to the wild<br>`);
+    */ 
 
     // Adding DOM elements to page
     mw.prepend(msg);
@@ -157,7 +160,7 @@ function printEncounter(pkmn) {
     // Adding content to DOM elements
     msg.text(`A wild ${pkmn.name} appeared!`);
     eArea.append(`${pkmn.name}<br>`);
-    eArea.append($('<img>', { src: pkmn.sprite, width: '160px',
+    eArea.append($('<img>', { src: pkmn.sprite, width: '200px',
         alt: `A picture of ${pkmn.name}.` }));
     eArea.append('<br>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
@@ -178,6 +181,7 @@ function printBattle(battleData) {
     bAreaR.empty();
 
     outs.append(bw);
+    msg.css("font-size", "23px");
 
     const user = battleData.trainer1;
     const userPkmn = user.party[user.active];
@@ -185,27 +189,35 @@ function printBattle(battleData) {
     const aiPkmn = ai.party[ai.active];
 
     // Player data
-    bAreaL.append(`${user.name}<br>`);
+    bAreaL.append(`<b>${user.name}</b><br>`);
     bAreaL.append($('<img>', { src: user.photo, width: '80px',
         alt: `A picture of ${user.name}` }));
     bAreaL.append($('<img>', { src: userPkmn.sprite, width: '80px',
         alt: `A picture of ${userPkmn.name}.`, class: 'img-hor' }));
     bAreaL.append(`<br>`);
-    bAreaL.append(`${userPkmn.name}<br>`);
+    bAreaL.append(`<b>${userPkmn.name}</b><br>`);
     bAreaL.append(`HP: ${userPkmn.currHp}/${userPkmn.maxHp}<br>`);
     bAreaL.append(`<br>`);
-    bAreaL.append(`Moves:<br>`);
+    bAreaL.append(`<u>Moves:</u><br>`);
     bAreaL.append(`${userPkmn.moves[0]}<br>`);
     bAreaL.append(`${userPkmn.moves[1]}<br>`);
+    bAreaL.append(`<br>`);
+
+    bAreaL.append(`<u>Party:</u><br>`);
+    for (i in user.party) {
+        if (i != user.active) { 
+            bAreaL.append(`${user.party[i].name}<br>`); 
+        }
+    }
 
     // AI data
-    bAreaR.append(`${ai.name}<br>`);
+    bAreaR.append(`<b>${ai.name}</b><br>`);
     bAreaR.append($('<img>', { src: aiPkmn.sprite, width: '80px',
         alt: `A picture of ${aiPkmn.name}.` }));
     bAreaR.append($('<img>', { src: ai.photo, width: '80px',
         alt: `A picture of ${ai.name}.` }));
     bAreaR.append(`<br>`);
-    bAreaR.append(`${aiPkmn.name}<br>`);
+    bAreaR.append(`<b>${aiPkmn.name}</b><br>`);
     bAreaR.append(`HP: ${aiPkmn.currHp}/${aiPkmn.maxHp}<br>`);
 }
 
@@ -216,6 +228,8 @@ function printBattle(battleData) {
 function printPkmnArray(rMain) {
     mw.empty();
     mw.prepend(msg);
+    msg.text(rMain.message);
+    
 
     var pkmnArray;
     var party = rMain.party;
@@ -224,7 +238,7 @@ function printPkmnArray(rMain) {
         msg.text('Party');
         pkmnArray = party;
     } else if (col) {
-        msg.text('Collection');
+        msg.text('Storage');
         pkmnArray = col;
     }
 
