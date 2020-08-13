@@ -5,3 +5,61 @@
         account.html page, such as styling the display for a user's trainer
         information.
 */
+
+#sidePanel {
+    position: fixed;
+    padding: 20px;
+    width: 350px;
+    height: calc(100% - 135px);
+    background-color: #411551;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+#avatar {
+    display: block;
+    margin: 0 auto;
+    border: 5px solid darkgoldenrod;
+    border-radius: 5px;
+}
+
+.userInfo {
+    margin-top: 20px;
+}
+
+ol {
+    margin: 10px 0 0;
+}
+
+li {
+    margin: 10px 0 0;
+}
+
+#mainPanel {
+    position: fixed;
+    right: 0;
+    padding: 30px;
+    width: calc(100% - 350px);
+    color: silver;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.mainPanelComponent {
+    margin-bottom: 30px;
+    border-bottom: 3px solid darkgoldenrod;
+}
+
+#avatarUpload {
+}
+
+label {
+    display: block;
+    margin-bottom: 20px;
+    width: auto;
+}
+
+input {
+    margin-bottom: 20px;
+    width: auto;
+}

@@ -71,7 +71,7 @@ $('#createBtn').click(() => {
         dataType: "json",
         success: (response) => {
             if (response.validUser) {
-                window.location.href = './home.html';
+                window.location.href = './help.html';
             } else {
                 alert('Could not add user.');
             }

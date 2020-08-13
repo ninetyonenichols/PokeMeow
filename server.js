@@ -56,6 +56,7 @@ app.use(session({
 app.use('/home.html', authenticate);
 app.use('/accountPage.html', authenticate);
 app.use('/avatar/', authenticate);
+app.use('/get/trainer/', authenticate);
 app.use(/\/command\/.*/, authenticate);
 app.use('/', express.static('public_html'));
 
@@ -100,6 +101,25 @@ app.get('/logout', (req, res) => {
         if (err) console.log('Problem logging out: ' + err);
         console.log('Logged out');
         res.redirect('/');
+    });
+});
+
+
+// Handle a get request for the user's trainer
+app.get('/get/trainer/', (req, res) => {
+    //find the user's trainer
+    database.account.getTrainer(req.session.user, (err, trainer) => {
+        if (err) {
+            console.log('Error getting trainer: ' + err);
+            res.json({trainer: null});
+
+        } else if (trainer) {
+            //found a trainer, send to client
+            res.json({trainer: trainer});
+
+        } else {
+            res.json({trainer: null});
+        }
     });
 });
 
