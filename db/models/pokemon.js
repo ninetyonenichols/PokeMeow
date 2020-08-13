@@ -46,7 +46,11 @@ module.exports = (mongoose) => {
         return this.currHp == 0;
     });
 
-    // Generates a new random pokemon
+    /*  Description: Returns a new pokemon document using the callback after
+     *      finding a random pokemon in the database and copying it.
+     *  Parameters:
+     *      callback - the function to call with the new pokemon
+     */
     PokemonSchema.statics.encounter = function(callback) {
         this.countDocuments()
             .exec((err, count) => {
@@ -56,15 +60,27 @@ module.exports = (mongoose) => {
                     .skip(rand)
                     .lean()
                     .exec((err, pkmnObj) => {
-                        delete pkmnObj['_id'];
-                        if (pkmnObj['moves'].length != 2) { return; }
-                        let mv1 = pkmnObj['moves'][0];
-                        let mv2 = pkmnObj['moves'][1];
-                        pkmnObj['moves'] = [mv1, mv2];
-                        callback(new mongoose.model('Pokemon')(pkmnObj));
+                        const newPkmn = this.copy(pkmnObj);
+                        if (newPkmn) {
+                            callback(newPkmn);
+                        }
                     });
             });
     };
+
+    /*  Description: Returns a new pokemon document using the callback after
+     *      finding a random pokemon in the database and copying it.
+     *  Parameters:
+     *      pkmnObj - the lean() pokemon object
+     */
+    PokemonSchema.statics.copy = function(pkmnObj) {
+        delete pkmnObj['_id'];
+        if (pkmnObj['moves'].length != 2) { return null; }
+        let mv1 = pkmnObj['moves'][0];
+        let mv2 = pkmnObj['moves'][1];
+        pkmnObj['moves'] = [mv1, mv2];
+        return new mongoose.model('Pokemon')(pkmnObj);
+    }
 
     // Subtracts HP from a pokemon
     PokemonSchema.methods.subtractHp = function(loss) {
@@ -76,7 +92,7 @@ module.exports = (mongoose) => {
         this.currHp = this.maxHp;
     };
 
-    // Attempts to catch this pokemon
+    // Attempts to catch this pokemon, and returns the result
     PokemonSchema.methods.attemptCapture = function() {
         let roll = Math.random();
         if (roll <= this.catchRate) { return "caught"; }

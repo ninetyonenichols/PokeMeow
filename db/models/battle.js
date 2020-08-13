@@ -7,20 +7,33 @@
 module.exports = (mongoose) => {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.Types.ObjectId;
+    const TrainerSchema = mongoose.model('Trainer').schema;
+    const Trainer = mongoose.model('Trainer');
 
     // Ongoing battles
     const BattleSchema = new Schema({
         trainer1: {type: ObjectId, ref: 'Trainer'},
-        trainer2: {type: ObjectId, ref: 'Trainer'}
+        trainer2: TrainerSchema
     });
 
-    // Createes and returns a new battle document
-    BattleSchema.statics.create = function(id1, id2, callback) {
+    /*  Description: Creates and returns a new battle document. Will first
+     *      delete a battle that the user's trainer is already a part of.
+     *  Parameters:
+     *      id1 - the _id of the first (user) trainer
+     *      name - the 'name' of the second (ai) trainer
+     *      callback - the function to call when done. passes in the new battle
+     */
+    BattleSchema.statics.create = function(id1, name, callback) {
         this.deleteOne({trainer1: id1}, (err, removed) => {
             if (err) console.log(err);
-            const btl = new mongoose.model('Battle')({trainer1: id1, trainer2: id2});
-            btl.save();
-            callback(btl);
+            Trainer.copy(name, (aiTrainer) => {
+                const battle = new mongoose.model('Battle')({trainer1: id1,
+                    trainer2: aiTrainer});
+
+                battle.save(() => {
+                    callback(battle);
+                });
+            });
         });
     }
 
