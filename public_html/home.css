@@ -27,13 +27,6 @@ label {
     background-size: cover;
 }
 
-.outputWindow:after {
-  content: "";
-  display: block;
-  height: 20px;
-  width: 100%;
-}
-
 /* Note: this block was taken from StackOverflow, since I did not know how
  * to flip an image horizontally.
  */
@@ -48,12 +41,13 @@ label {
 
 .pkmnContainer {
     width: 100%;
-    height: 238px;
+    height: 245px;
     margin: 0 auto;
     font-size: 25px;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 15px;
     font-family: Courier;
+    border: 3px solid black;
 }
 
 #ew, #mw, #bw {
