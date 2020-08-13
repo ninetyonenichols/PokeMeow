@@ -54,7 +54,7 @@ app.use(session({
     }
 }));
 app.use('/home.html', authenticate);
-app.use('/account.html', authenticate);
+app.use('/accountPage.html', authenticate);
 app.use('/avatar/', authenticate);
 app.use(/\/command\/.*/, authenticate);
 app.use('/', express.static('public_html'));
