@@ -7,8 +7,8 @@
  */
 
 //constants
-//const serverURL = 'http://157.245.236.86';
-const serverURL = 'http://64.227.49.233';
+const serverURL = 'http://157.245.236.86';
+//const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
 createWindows();
@@ -424,9 +424,9 @@ function addMgmtBtns(pkmn, loc, rbox) {
 }
 
 /* Description: Populates the central box in a pokemon's display-area
- * Parameters: 
+ * Parameters:
  *     pkmn - the pokemon to be displayed
- * Returns: 
+ * Returns:
  *     cBox - the central box in the pokemon's display-area
  */
 function addCbox(pkmn) {
