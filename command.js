@@ -449,7 +449,6 @@ exports.command = function Command(cmdStr, user, database) {
                 if (damage != null) {
                     aiTrnr.subtractHp(damage);
                     let msg = `${userPkmn.name} used ${this.move}!\n`;
-                    //let msg = `${userPkmn.name} dealt: ${damage} dmg` + '\n';
 
                     //if opponent is defeated end the battle
                     if (aiTrnr.defeated) {
@@ -487,7 +486,7 @@ exports.command = function Command(cmdStr, user, database) {
             msg += `${aiPkmn.name} fainted!\n`;
             //send out next pokemon
             aiPkmn = aiTrnr.nextPkmn();
-            msg += `${aiTrnr.name} send ${aiPkmn.name}`;
+            msg += `${aiTrnr.name} sent ${aiPkmn.name}!`;
 
             //update battle and send
             battle.trainer2 = aiTrnr;
@@ -525,12 +524,11 @@ exports.command = function Command(cmdStr, user, database) {
 
         if (damage != null) {
             userTrnr.subtractHp(damage);
-            //msg += `${aiPkmn.name} dealt: ${damage}\n`;
-            msg += `Enemy ${aiPkmn.name} used ${move}!\n`;
+            msg += `Enemy ${aiPkmn.name} used ${move}!`;
 
             //if user is defeated end the battle
             if (userTrnr.defeated) {
-                output.main =`You were defeaded by ${aiTrnr.name}.`;
+                output.main =`You were defeated by ${aiTrnr.name}.`;
                 return output;
             } else {
                 //check if user's pokemon fainted
