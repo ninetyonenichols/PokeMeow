@@ -15,13 +15,14 @@ createWindows();
 
 $(document).ready(() => {
     outs = $('#outputSection');
-    printMain();
+    cmdBox = $('#command');
+    // Submit the command when either the button is clicked or 'Enter' is pressed
+    $('#commandBtn').click(() => { submitCmd(cmdBox.val()); });
+    $('#command').keypress(function (e) {
+    if (e.which == 13) { submitCmd(cmdBox.val()); }
 });
 
-// Submit the command when either the button is clicked or 'Enter' is pressed
-$('#commandBtn').click(() => { submitCommand(); });
-$('#command').keypress(function (e) {
-    if (e.which == 13) { submitCommand(); }
+    printMain();
 });
 
 /*  Description: This function submits the command string given by the user to
@@ -29,15 +30,15 @@ $('#command').keypress(function (e) {
  *      'modeURL' and calling the appropriate functions to display the response.
  *  Parameters: none.
  */
-function submitCommand() {
+function submitCmd(cmd) {
     //if no input, do nothing
-    const commandStr = $('#command').val();
-    if (commandStr == '') { return; }
+    var cmdStr = cmd; 
+    if (cmdStr == '') { return; }
 
     $.ajax({
         type: 'POST',
         url: serverURL + modeURL,
-        data: JSON.stringify({command: commandStr}),
+        data: JSON.stringify({command: cmdStr}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (res) => {
@@ -136,6 +137,10 @@ function printMain() {
 
     // Adding content to DOM elements
     addMsg('Welcome to PokeMeow!');
+
+    var vpBtn = $('<input type="button" value="View Party">');
+    vpBtn.on('click', function() { submitCmd('party'); });
+    mArea.append(vpBtn);
     /*msg.text('Options');
     mArea.append(`random-encounter - starts an encounter
         with a random pokemon<br>`);
@@ -155,6 +160,7 @@ function printMain() {
 
     // Adding DOM elements to page
     mw.prepend(msg);
+    mw.append(mArea);
     outs.append(mw);
 }
 
@@ -296,8 +302,10 @@ function printPkmn(pkmn) {
         alt: `A picture of ${pkmn.name}.` }));
     // cbox contains pkmn stats + typing
     var cbox = $('<div style="float:left; width:26%;"></div>');
-    let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
-    cbox.append(`<u>Type:</u> ${pkmn.pType1}${type2}<br>`);
+    cbox.append(`<u>Type:</u><br>`);
+    cbox.append(`${pkmn.pType1}<br>`);
+    if (pkmn.pType2) { cbox.append(`${pkmn.pType2}<br>`); }
+    cbox.append(`<br>`);
     cbox.append(`<u>Stats:</u><br>`);
     cbox.append(`Atk: ${pkmn.atk}<br>`);
     cbox.append(`Def: ${pkmn.def}<br>`);
