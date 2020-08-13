@@ -102,7 +102,8 @@ function addMsg(message) {
     msg.append(message);
 }
 
-/* Creates the output windows and populates them with elements
+/* Description: Creates the output windows and populates them with elements
+ * Parameters: none.
  */
 function createWindows() {
     // Creating windows (main, eArea.unter, battle)
@@ -126,7 +127,8 @@ function createWindows() {
     bw.append(bAreaR);
 }
 
-/* Changes the outputWindow
+/* Description: Changes the outputWindow
+ * Parameters: none.
  */
 function chwin(winName) {
     let win = eval(winName);
@@ -263,6 +265,20 @@ function printBattleUser(user){
     bAreaL.append(`<br>`);
     bAreaL.append(`<u>Moves:</u><br>`);
 
+    addMvBtns(pkmn);
+    addPartyBtns(user);
+
+    var runBtlBtn = $(`<input type="button" value="Run">`);
+    runBtlBtn.on('click', function() { submitCmd(`run`); });
+    bAreaL.append(runBtlBtn);
+    bAreaL.append('<br>');
+}
+
+/* Description: adds the 'move' buttons to the user's active pokemon
+ * Parameters:
+ *     pkmn - the user's active pokemon
+ */
+function addMvBtns(pkmn) {
     var mv1 = pkmn.moves[0];
     var mv1Btn = $(`<input type="button" value=\"${mv1}\">`);
     mv1Btn.on('click', function() { submitCmd(`use ${mv1}`); });
@@ -274,6 +290,15 @@ function printBattleUser(user){
     mv2Btn.on('click', function() { submitCmd(`use ${mv2}`); });
     bAreaL.append(mv2Btn);
     bAreaL.append('<br>');
+}
+
+/* Description: adds the 'switch' buttons to the user's party-pokemon
+ * Parameters:
+ *     user - an object w the user's data
+ */
+function addPartyBtns(user) {
+    var party = user.party;
+    var pkmn = party[user.active];
 
     bAreaL.append('<br>');
     bAreaL.append(`<u>Party:</u><br>`);
@@ -290,12 +315,6 @@ function printBattleUser(user){
             }
         }
     }
-    bAreaL.append('<br>');
-
-    var runBtlBtn = pkmn.moves[1];
-    var runBtlBtn = $(`<input type="button" value="Run">`);
-    runBtlBtn.on('click', function() { submitCmd(`run`); });
-    bAreaL.append(runBtlBtn);
     bAreaL.append('<br>');
 }
 
