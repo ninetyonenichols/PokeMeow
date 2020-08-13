@@ -136,10 +136,22 @@ function printMain() {
 
     // Adding content to DOM elements
     addMsg('Welcome to PokeMeow!');
+    
+    var pBtn = $('<input type="button" value="Wild Pokemon">');
+    pBtn.on('click', function() { submitCmd('p'); });
+    mArea.append(pBtn);
 
-    var vpBtn = $('<input type="button" value="View Party">');
-    vpBtn.on('click', function() { submitCmd('party'); });
-    mArea.append(vpBtn);
+    var partyBtn = $('<input type="button" value="View Party">');
+    partyBtn.on('click', function() { submitCmd('party'); });
+    mArea.append(partyBtn);
+    
+    var storageBtn = $('<input type="button" value="View Storage">');
+    storageBtn.on('click', function() { submitCmd('storage'); });
+    mArea.append(storageBtn);
+    
+    var battleBtn = $('<input type="button" value="battle">');
+    battleBtn.on('click', function() { submitCmd('battle'); });
+    mArea.append(battleBtn);
     /*msg.text('Options');
     mArea.append(`random-encounter - starts an encounter
         with a random pokemon<br>`);
