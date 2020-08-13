@@ -216,7 +216,7 @@ exports.command = function Command(cmdStr, user, database) {
                 this.output.main = 'No Pokemon in party.';
 
             } else {
-                this.output.main = {party: trainer.party, collection: null};
+                this.output.main = {message:"Party", party: trainer.party, collection: null};
             }
 
             callback(null, this.output);
@@ -227,10 +227,10 @@ exports.command = function Command(cmdStr, user, database) {
     this.execViewCaught = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.pokemon.length == 0) {
-                this.output.main = 'No Pokemon in storage.';
+                this.output.main = {message:'No Pokemon in storage.'};
 
             } else {
-                this.output.main = {party:null, collection:trainer.pokemon};
+                this.output.main = {message:'Storage', collection:trainer.pokemon};
             }
 
             callback(null, this.output);
@@ -249,7 +249,7 @@ exports.command = function Command(cmdStr, user, database) {
                 callback(null, this.output);
 
             } else {
-                this.output.main = 'Could not find pokemon.';
+                this.output.main = {message:'Could not find pokemon.'};
                 callback(null, this.output);
             }
         });
@@ -275,9 +275,9 @@ exports.command = function Command(cmdStr, user, database) {
         this.getTrainer(callback, (trainer) => {
             if (trainer.addParty(this.pokemon)) {
                 this.output.main = {message:`Added ${this.pokemon} to party.`, 
-                    party: trainer.party};
+                    collection: trainer.pokemon};
             } else {
-                this.output.main = {message:'Could not add pokemon'};
+                this.output.main = {message:'Could not add pokemon', collection:trainer.pokemon};
             }
 
             callback(null, this.output);

@@ -52,7 +52,7 @@ function submitCmd(cmd) {
                 chwin('mw');
                 printMain();
                 if (isStr(res.main)) { addMsg(res.main); }
-                else { printPkmnArray(res.main); }
+                else if (res.main.party || res.main.collection) { printPkmnArray(res.main); }
                 modeURL = '/command/';
             } else if (res.encounter) {
                 chwin('ew');
@@ -303,16 +303,17 @@ function printPkmnArray(rMain) {
     var pkmnArray;
     var party = rMain.party;
     var col = rMain.collection;
+    var loc;
     if (party) {
-        addMsg('Party');
         pkmnArray = party;
+        loc = "party";
     } else if (col) {
-        addMsg('Storage');
         pkmnArray = col;
+        loc = "storage";
     }
 
     for (i in pkmnArray) {
-        printPkmn(pkmnArray[i]);
+        printPkmn(pkmnArray[i], loc);
     }
 }
 
@@ -320,7 +321,7 @@ function printPkmnArray(rMain) {
  * Parameters:
  *     pkmn - the object containing the pokemon's info
  */
-function printPkmn(pkmn) {
+function printPkmn(pkmn, loc) {
     var pkmnContainer = $('<div>', {class:'pkmnContainer'});
     // lbox contains pkmn sprite + name
     var lbox = $('<div style="float:left; width:33%;"></div>');
@@ -341,6 +342,25 @@ function printPkmn(pkmn) {
     rbox.append(`<u>Moves:</u><br>`);
     rbox.append(`${pkmn.moves[0]}<br>`);
     rbox.append(`${pkmn.moves[1]}<br>`);
+    rbox.append('<br>');
+    
+    if (loc == "storage") {
+        var addBtn = $(`<input type="button" value="Add to Party">`);
+        addBtn.on('click', function() { submitCmd(`add ${pkmn.name}`); });
+        rbox.append(addBtn);
+        rbox.append('<br>');
+    } else {
+        var rmBtn = $(`<input type="button" value="Send to Storage">`);
+        rmBtn.on('click', function() { submitCmd(`remove ${pkmn.name}`); });
+        rbox.append(rmBtn);
+        rbox.append('<br>');
+    }
+
+    var releaseBtn = $(`<input type="button" value="Release Pokemon">`);
+    releaseBtn.on('click', function() { submitCmd(`release ${pkmn.name}`); });
+    rbox.append(releaseBtn);
+    rbox.append('<br>');
+
     // Adding everything to DOM
     pkmnContainer.append(lbox);
     pkmnContainer.append(cbox);
