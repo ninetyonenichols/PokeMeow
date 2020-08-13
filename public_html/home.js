@@ -7,8 +7,8 @@
  */
 
 //constants
-const serverURL = 'http://157.245.236.86';
-//const serverURL = 'http://64.227.49.233';
+//const serverURL = 'http://157.245.236.86';
+const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
 createWindows();
@@ -242,7 +242,6 @@ function printBattle(battleData) {
 
     printBattleUser(user);
     printBattleAI(ai);
-
 }
 
 /* Description: This function prints the user's info in battle
@@ -370,30 +369,42 @@ function printPkmnArray(rMain) {
 /* Description: prints one pokemon owned by the player
  * Parameters:
  *     pkmn - the object containing the pokemon's info
+ *     loc - the location of the pokemon (party or storage)
  */
 function printPkmn(pkmn, loc) {
     var pkmnContainer = $('<div>', {class:'pkmnContainer'});
+
     // lbox contains pkmn sprite + name
     var lbox = $('<div style="float:left; width:33%;"></div>');
     lbox.append(`<b>${pkmn.name}</b><br>`);
     lbox.append($('<img>', { src: pkmn.sprite, width: '160px',
         alt: `A picture of ${pkmn.name}.` }));
+
     // cbox contains pkmn stats + typing
-    var cbox = $('<div style="float:left; width:26%;"></div>');
-    cbox.append(`<u>Type:</u><br>`);
-    cbox.append(`${pkmn.pType1}<br>`);
-    if (pkmn.pType2) { cbox.append(`${pkmn.pType2}<br>`); }
-    cbox.append(`<br>`);
-    cbox.append(`<u>Stats:</u><br>`);
-    cbox.append(`Atk: ${pkmn.atk}<br>`);
-    cbox.append(`Def: ${pkmn.def}<br>`);
-    cbox.append(`HP: ${pkmn.maxHp}<br>`);
+    var cbox = addCbox(pkmn);
+
+    // rbox contains moves + mgmt buttons
     var rbox = $('<div style="float:left; width:41%;"></div>');
     rbox.append(`<u>Moves:</u><br>`);
     rbox.append(`${pkmn.moves[0]}<br>`);
     rbox.append(`${pkmn.moves[1]}<br>`);
     rbox.append('<br>');
+    addMgmtBtns(pkmn, loc, rbox);
 
+    // Adding everything to DOM
+    pkmnContainer.append(lbox);
+    pkmnContainer.append(cbox);
+    pkmnContainer.append(rbox);
+    mw.append(pkmnContainer);
+}
+
+/* Description: Adds buttons to manage party or storage
+ * Parameters:
+ *     pkmn - the object containing the pokemon's info
+ *     loc - the location of the pokemon (party or storage)
+ *     rbox - the right-most box of the pokemon's display-area
+ */
+function addMgmtBtns(pkmn, loc, rbox) {
     if (loc == "storage") {
         var addBtn = $(`<input type="button" value="Add to Party">`);
         addBtn.on('click', function() { submitCmd(`add ${pkmn.name}`); });
@@ -410,10 +421,23 @@ function printPkmn(pkmn, loc) {
     releaseBtn.on('click', function() { submitCmd(`release ${pkmn.name}`); });
     rbox.append(releaseBtn);
     rbox.append('<br>');
+}
 
-    // Adding everything to DOM
-    pkmnContainer.append(lbox);
-    pkmnContainer.append(cbox);
-    pkmnContainer.append(rbox);
-    mw.append(pkmnContainer);
+/* Description: Populates the central box in a pokemon's display-area
+ * Parameters: 
+ *     pkmn - the pokemon to be displayed
+ * Returns: 
+ *     cBox - the central box in the pokemon's display-area
+ */
+function addCbox(pkmn) {
+    let cBox = $('<div style="float:left; width:26%;"></div>');
+    cBox.append(`<u>Type:</u><br>`);
+    cBox.append(`${pkmn.pType1}<br>`);
+    if (pkmn.pType2) { cBox.append(`${pkmn.pType2}<br>`); }
+    cBox.append(`<br>`);
+    cBox.append(`<u>Stats:</u><br>`);
+    cBox.append(`Atk: ${pkmn.atk}<br>`);
+    cBox.append(`Def: ${pkmn.def}<br>`);
+    cBox.append(`HP: ${pkmn.maxHp}<br>`);
+    return cBox;
 }
