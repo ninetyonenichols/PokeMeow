@@ -13,6 +13,7 @@ var modeURL = '/command/';
 
 createWindows();
 
+// Printing welcome message / main menu, and saving some shortcuts
 $(document).ready(() => {
     outs = $('#outputSection');
     cmdBox = $('#command');
@@ -27,7 +28,8 @@ $(document).ready(() => {
 /*  Description: This function submits the command string given by the user to
  *      the server, then it handles the response by possibly changing the
  *      'modeURL' and calling the appropriate functions to display the response.
- *  Parameters: none.
+ *  Parameters: 
+ *      cmd - the name of the command
  */
 function submitCmd(cmd) {
     //if no input, do nothing
@@ -48,21 +50,13 @@ function submitCmd(cmd) {
             // command, the command is treated as invalid (only 'random
             // encounter' commands can be used while in a random encounter).
             if (res.main) {
-                mw.empty();
-                chwin('mw');
-                printMain();
-                if (isStr(res.main)) { addMsg(res.main); }
-                else if (res.main.party || res.main.collection) { printPkmnArray(res.main); }
+                handleResMain(res.main);
                 modeURL = '/command/';
             } else if (res.encounter) {
-                chwin('ew');
-                if (isStr(res.encounter)) { addMsg(res.encounter); }
-                else { printEncounter(res.encounter); }
+                handleResEnc(res.encounter);
                 modeURL = '/command/rand-enc/';
             } else if (res.battle) {
-                chwin('bw');
-                if (res.battle.battleData) { printBattle(res.battle.battleData); }
-                addMsg(res.battle.message);
+                handleResBattle(res.battle);
                 modeURL = '/command/battle/';
             } else {
                 addMsg('Invalid Command');
@@ -72,6 +66,38 @@ function submitCmd(cmd) {
 
     //clear input
     $('#command').val("");
+}
+
+/* Description: Dispatches commands when in Main mode
+ * Parameters: 
+ *     rMain - the 'main' portion of the ajax return-data
+ */
+function handleResMain(rMain) {
+    mw.empty();
+    chwin('mw');
+    printMain();
+    if (isStr(rMain)) { addMsg(rMain); }
+    else if (rMain.party || rMain.collection) { printPkmnArray(rMain); }
+}
+
+/* Description: Dispatches commands when in Encounter mode
+ * Parameters: 
+ *     rEnc - the 'encounter' portion of the ajax return-data
+ */
+function handleResEnc(rEnc) {
+    chwin('ew');
+    if (isStr(rEnc)) { addMsg(rEnc); }
+    else { printEncounter(rEnc); }
+}
+
+/* Description: Dispatches commands when in Battle mode
+ * Parameters: 
+ *     rBtl - the 'battle' portion of the ajax return-data
+ */
+function handleResBattle(rBtl) {
+    chwin('bw');
+    if (rBtl.battleData) { printBattle(rBtl.battleData); }
+    addMsg(rBtl.message);
 }
 
 /* Description: Adds a message to the msg bar
