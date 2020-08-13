@@ -152,22 +152,6 @@ function printMain() {
     var battleBtn = $('<input type="button" value="battle">');
     battleBtn.on('click', function() { submitCmd('battle'); });
     mArea.append(battleBtn);
-    /*msg.text('Options');
-    mArea.append(`random-encounter - starts an encounter
-        with a random pokemon<br>`);
-    mArea.append(`view-party - prints out a list of pokemon
-        in your party<br>`);
-    mArea.append(`<view-pokemon - prints out a list of the
-        pokemon you\'ve caught<br>`);
-    mArea.append(`view name - prints out more information
-        about pokemon \'name\'<br>`);
-    mArea.append(`remove name - removes pokemon \'name\'
-        from your party<br>`);
-    mArea.append(`add name - adds pokemon \'name\' to your
-        party<br>`);
-    mArea.append(`release name - releases the pokemon
-        \'name\' back to the wild<br>`);
-    */ 
 
     // Adding DOM elements to page
     mw.prepend(msg);
@@ -191,6 +175,14 @@ function printEncounter(pkmn) {
     eArea.append('<br>');
     let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
     eArea.append(`Type: ${pkmn.pType1}${type2}`);
+
+    var pbBtn = $('<input type="button" value="Throw Pokeball">');
+    pbBtn.on('click', function() { submitCmd('pb'); });
+    eArea.append(pbBtn);
+
+    var runBtn = $('<input type="button" value="run">');
+    runBtn.on('click', function() { submitCmd('run'); });
+    eArea.append(runBtn);
 
     // Appending DOM elements to page
     ew.prepend(msg);
