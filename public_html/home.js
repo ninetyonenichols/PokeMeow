@@ -174,12 +174,14 @@ function printEncounter(rEnc) {
 
     // Adding content to DOM elements
     addMsg(rEnc.message);
-    eArea.append(`${pkmn.name}<br>`);
+    eArea.append(`<b>${pkmn.name}</b><br>`);
     eArea.append($('<img>', { src: pkmn.sprite, width: '200px',
         alt: `A picture of ${pkmn.name}.` }));
     eArea.append('<br>');
-    let type2 = pkmn.pType2 ? ` / ${pkmn.pType2}<br>` : '<br>';
-    eArea.append(`Type: ${pkmn.pType1}${type2}`);
+    eArea.append(`<u>Type:</u><br>`);
+    eArea.append(`${pkmn.pType1}<br>`);
+    if (pkmn.pType2) { eArea.append(`${pkmn.pType2}<br>`) };
+    eArea.append('<br>');
 
     var pbBtn = $('<input type="button" value="Throw Pokeball">');
     pbBtn.on('click', function() { submitCmd('pb'); });
