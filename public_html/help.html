@@ -21,14 +21,14 @@
             <nav>
                 <a href="./home.html">Gamepage</a>
                 <a href="./help.html">About</a>
-                <a href="./account.html">Account</a>
+                <a href="./accountPage.html">Account</a>
                 <a href="/logout">Logout</a>
             </nav>
         </header>
         <div id="mainContent">
             <div id="overview" class="explanation">
                 <p>
-                    PokeMeow is a simplified, command-line version of Pokemon. It is based on the 
+                    PokeMeow is a simplified, command-line version of Pokemon. It is based on the
                     Discord bot “PokeMeow,” which allows users to catch (and soon, battle) Pokemon
                     within a chat window.
                 </p>
@@ -39,13 +39,13 @@
                 <ul>
                     <li><span class="cmd">random-encounter</span> - starts an encounter with a random
                         pokemon</li>
-                    <li><span class="cmd">view-party</span> - prints out a list of pokemon in your 
+                    <li><span class="cmd">view-party</span> - prints out a list of pokemon in your
                         party</li>
                     <li><span class="cmd">view-pokemon</span> - prints out a list of the pokemon you've
                         caught</li>
                     <li><span class="cmd">view name</span> - prints out more information about pokemon
                         'name'</li>
-                    <li><span class="cmd">remove name</span> - removes pokemon 'name' from your 
+                    <li><span class="cmd">remove name</span> - removes pokemon 'name' from your
                         party</li>
                     <li><span class="cmd">add name</span> - adds pokemon 'name' to your party</li>
                     <li><span class="cmd">release name</span> - releases the pokemon 'name' back to the
@@ -62,12 +62,12 @@
             <div id="note" class="explanation">
                 <ul>
                     <li><span class="cmd">Note to Ben + TAs: </span> This section will describe where
-                        the complexities were in creating this project. The major components are 
-                        server.js (routing), the db folder (database), and command.js (overall 
-                        controller for the app). Server.js handles routing and sends requests to 
-                        command.js. command.js then communicates with the database to produce data 
+                        the complexities were in creating this project. The major components are
+                        server.js (routing), the db folder (database), and command.js (overall
+                        controller for the app). Server.js handles routing and sends requests to
+                        command.js. command.js then communicates with the database to produce data
                         which is consumed by the client. Each component is discussed below. </li>
-                    <li><span class="cmd">server.js: </span></li> 
+                    <li><span class="cmd">server.js: </span></li>
                     <li><span class="cmd">command.js: </span></li>
                     <li><p><span class="cmd">db: </span> In addition to storing data, the database also
                         contains many static and instance methods which allow it to perform complex
@@ -81,7 +81,7 @@
                         <p>Each file in db/models contains all the info needed to produce one model.
                         It makes heavy use of data validation, and it uses virtuals (attributes which
                         are derived from other attributes at runtime) to cut down on redundant code.
-                        As described above, the static and instance methods allow the models + 
+                        As described above, the static and instance methods allow the models +
                         documents themselves to execute methods of their own. For example, the Pokemon
                         model has a 'create' function that allows it to essentially clone a pre-
                         existing Pokemon document, but with a new _id field. This way, a trainer can
@@ -95,7 +95,7 @@
                         imported all at once to MongoDB. It also provdes a backup txt file, in case the
                         database were ever accidentally cleared.</p>
                     </li>
-                    
+
                 </ul>
             </div>
         </div>
