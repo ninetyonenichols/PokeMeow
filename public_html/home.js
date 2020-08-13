@@ -249,6 +249,7 @@ function printBattleUser(user){
     bAreaL.append(mv2Btn);
     bAreaL.append('<br>');
 
+    bAreaL.append('<br>');
     bAreaL.append(`<u>Party:</u><br>`);
     if (party.length == 1) {
         bAreaL.append('none');
@@ -256,12 +257,14 @@ function printBattleUser(user){
         for (i in party) {
             if (i != user.active) { 
                 let partyStr = `${party[i].name}`;
-                if (party[i].currHp == 0) { partyStr += `(fainted)`}
-                partyStr += '<br>';
-                bAreaL.append(`${party[i].name}<br>`); 
+                var switchBtn = $(`<input type="button" value=\"${partyStr}\">`);
+                switchBtn.on('click', function() { submitCmd(`switch ${partyStr}`); });
+                bAreaL.append(switchBtn);
+                bAreaL.append('<br>');
             }
         }
     }
+    bAreaL.append('<br>');
 
     var runBtlBtn = pkmn.moves[1];
     var runBtlBtn = $(`<input type="button" value="Run">`);
