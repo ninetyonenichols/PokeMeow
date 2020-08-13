@@ -43,6 +43,28 @@ module.exports = (mongoose) => {
         return trainer;
     };
 
+    /*  Description: Create a new trainer document by copying the trainer named
+     *      'name'. Does not save it to the database.
+     *  Parameters:
+     *      name - the name of the trainer
+     *      callback - the callback to use when completed
+     */
+    TrainerSchema.statics.copy = function(name, callback) {
+        this.findOne({name: name})
+        .lean()
+        .exec((err, trainerObj) => {
+            delete trainerObj['_id'];
+            let newParty = [];
+            for (let p of trainerObj.party) {
+                newParty.push(mongoose.model('Pokemon').copy(p))
+            }
+            trainerObj.party = [];
+            let newTrainer = new mongoose.model('Trainer')(trainerObj);
+            newTrainer.party = newParty;
+            callback(newTrainer);
+        });
+    };
+
     /*  Description: Removes the first pokemon whose name matches 'pkmn',
      *      looking first in the trainer's pokemon, then the party. Returns
      *      true if a pokemon was removed, false otherwise.

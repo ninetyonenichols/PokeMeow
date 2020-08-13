@@ -180,7 +180,6 @@ exports.command = function Command(cmdStr, user, database) {
             //find the trainer's battle
             this.db.battle.findById(trainer.battle)
             .populate('trainer1')
-            .populate('trainer2')
             .exec((err, battle) => {
                 if (err) {
                     console.log('Error getting battle: ' + err);
@@ -259,7 +258,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRemove = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.removeParty(this.pokemon)) {
-                this.output.main = {message: `Removed ${this.pokemon} from party.`, 
+                this.output.main = {message: `Removed ${this.pokemon} from party.`,
                     party: trainer.party};
 
             } else {
@@ -274,7 +273,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.execAdd = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.addParty(this.pokemon)) {
-                this.output.main = {message:`Added ${this.pokemon} to party.`, 
+                this.output.main = {message:`Added ${this.pokemon} to party.`,
                     collection: trainer.pokemon};
             } else {
                 this.output.main = {message:'Could not add pokemon', collection:trainer.pokemon};
@@ -368,7 +367,8 @@ exports.command = function Command(cmdStr, user, database) {
         });
     }
 
-    /*  Description: Helper function for 'this.execBattle' that creates a new battle and uses the callback function to pass on the battle object.
+    /*  Description: Helper function for 'this.execBattle' that creates a new
+     *      battle and uses the callback function to pass on the battle object.
      *  Parameters:
      *      trainer - the user's trainer object
      *      output - the object that holds an empty output object
@@ -379,30 +379,17 @@ exports.command = function Command(cmdStr, user, database) {
         //get a random number to select a random ai trainer name
         const i = Math.floor((Math.random() * 5));
 
-        //find the AI trainer
-        DB.trainer.findOne({name: trainerAIs[i]}, (err, ai) => {
-            if (err) {
-                console.log('Error finding AI trainer: ' + err);
-                callback(err, this.output);
+        DB.battle.create(trainer._id, trainerAIs[i], (battle) => {
+            //prepare the trainers for battle
+            trainer.setBattle(battle);
+            ai.setBattle(battle);
 
-            } else if (ai) {
-                DB.battle.create(trainer._id, ai._id, (battle) => {
-                    //prepare the trainers for battle
-                    trainer.setBattle(battle);
-                    ai.setBattle(battle);
+            //populate the battle with the two trainers before sending
+            battle.trainer1 = trainer;
 
-                    //populate the battle with the two trainers before sending
-                    battle.trainer1 = trainer;
-                    battle.trainer2 = ai;
-
-                    //pass the new battle along
-                    output.battle = {message: `${ai.name} wants to battle!`, battleData: battle};
-                    callback(null, output);
-                });
-
-            } else {
-                callback('Could not find AI trainer', output);
-            }
+            //pass the new battle along
+            output.battle = {message: `${ai.name} wants to battle!`, battleData: battle};
+            callback(null, output);
         });
     }
 
