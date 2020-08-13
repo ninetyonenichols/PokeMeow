@@ -228,6 +228,8 @@ function printBattle(battleData) {
 function printPkmnArray(rMain) {
     mw.empty();
     mw.prepend(msg);
+    msg.text(rMain.message);
+    
 
     var pkmnArray;
     var party = rMain.party;

@@ -259,10 +259,11 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRemove = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.removeParty(this.pokemon)) {
-                this.output.main = `Removed ${this.pokemon} from party.`;
+                this.output.main = {message: `Removed ${this.pokemon} from party.`, 
+                    party: trainer.party};
 
             } else {
-                this.output.main = 'Could not find pokemon';
+                this.output.main = {message:'Could not find pokemon'};
             }
 
             callback(null, this.output);
@@ -273,9 +274,10 @@ exports.command = function Command(cmdStr, user, database) {
     this.execAdd = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.addParty(this.pokemon)) {
-                this.output.main =`Added ${this.pokemon} to party.`;
+                this.output.main = {message:`Added ${this.pokemon} to party.`, 
+                    party: trainer.party};
             } else {
-                this.output.main = 'Could not add pokemon';
+                this.output.main = {message:'Could not add pokemon'};
             }
 
             callback(null, this.output);
@@ -286,9 +288,10 @@ exports.command = function Command(cmdStr, user, database) {
     this.execRelease = (callback) => {
         this.getTrainer(callback, (trainer) => {
             if (trainer.release(this.pokemon)) {
-                this.output.main = `Released ${this.pokemon}.`;
+                this.output.main = {message:`Released ${this.pokemon}.`,
+                    collection: trainer.pokemon};
             } else {
-                this.output.main = 'Could not find pokemon';
+                this.output.main = {message:'Could not find pokemon'};
             }
 
             callback(null, this.output);
