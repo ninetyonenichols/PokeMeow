@@ -19,9 +19,8 @@ $(document).ready(() => {
     // Submit the command when either the button is clicked or 'Enter' is pressed
     $('#commandBtn').click(() => { submitCmd(cmdBox.val()); });
     $('#command').keypress(function (e) {
-    if (e.which == 13) { submitCmd(cmdBox.val()); }
-});
-
+        if (e.which == 13) { submitCmd(cmdBox.val()); }
+    });
     printMain();
 });
 
@@ -32,13 +31,12 @@ $(document).ready(() => {
  */
 function submitCmd(cmd) {
     //if no input, do nothing
-    var cmdStr = cmd; 
-    if (cmdStr == '') { return; }
+    if (cmd == '') { return; }
 
     $.ajax({
         type: 'POST',
         url: serverURL + modeURL,
-        data: JSON.stringify({command: cmdStr}),
+        data: JSON.stringify({command: cmd}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (res) => {
@@ -52,6 +50,7 @@ function submitCmd(cmd) {
             if (res.main) {
                 mw.empty();
                 chwin('mw');
+                printMain();
                 if (isStr(res.main)) { addMsg(res.main); }
                 else { printPkmnArray(res.main); }
                 modeURL = '/command/';
