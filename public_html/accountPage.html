@@ -26,17 +26,27 @@
             </nav>
         </header>
         <div id="mainContent">
-            <div id="userInfo">
-                <div id="username">Username</div>
-                <img src="./img/avatars/default.png"
-                alt="the user's avatar" width="100">
+            <div id="sidePanel">
+                <img id="avatar" src="./img/avatars/default.png"
+                    alt="the user's avatar" width="300">
+                <div class="userInfo">
+                    <span id="username">Username</span>
+                </div>
+                <div class="userInfo">
+                    Number of Pokemon: <span id="numPokemon">?</span>
+                </div>
+                <div class="userInfo">
+                    Party Pokemon:
+                    <ol id="partyList"></ol>
+                </div>
             </div>
-
-            <div id="avatarUpload" class="inputSection">
-                <label for="avatarFile">Image: </label>
-                <input type="file" id="avatarFile" class="itemInput"
-                accept="image/*" name="avatarFile">
-                <input type="button" id="uploadAvatar" value="Upload Avatar">
+            <div id="mainPanel">
+                <div id="avatarUpload" class="mainPanelComponent">
+                    <label for="avatarFile">Select an image: </label>
+                    <input type="file" id="avatarFile" class="itemInput"
+                    accept="image/*" name="avatarFile">
+                    <input type="button" id="uploadAvatar" value="Upload Avatar">
+                </div>
             </div>
         </div>
 
