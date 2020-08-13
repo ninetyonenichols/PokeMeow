@@ -108,7 +108,7 @@ app.get('/logout', (req, res) => {
 app.post('/avatar/', upload.single('image'), (req, res) => {
     // req.file is the `image` file
     //find the user's trainer
-    database.account.getTrainer(req.body.username, (err, trainer) => {
+    database.account.getTrainer(req.session.user, (err, trainer) => {
         if (err) {
             console.log('Error getting trainer: ' + err);
             res.json({failed: true});

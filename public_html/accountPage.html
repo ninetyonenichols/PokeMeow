@@ -25,20 +25,21 @@
                 <a href="/logout">Logout</a>
             </nav>
         </header>
-
-        <div id="userInfo">
-            <div id="username">Username</div>
-            <img src="./img/avatars/default.png"
+        <div id="mainContent">
+            <div id="userInfo">
+                <div id="username">Username</div>
+                <img src="./img/avatars/default.png"
                 alt="the user's avatar" width="100">
+            </div>
+
+            <div id="avatarUpload" class="inputSection">
+                <label for="avatarFile">Image: </label>
+                <input type="file" id="avatarFile" class="itemInput"
+                accept="image/*" name="avatarFile">
+                <input type="button" id="uploadAvatar" value="Upload Avatar">
+            </div>
         </div>
 
-        <div id="avatarUpload" class="inputSection">
-            <label for="avatarFile">Image: </label>
-            <input type="file" id="avatarFile" class="itemInput"
-            accept="image/*" name="avatarFile">
-            <input type="button" id="uploadAvatar" value="Upload Avatar">
-        </div>
-
-        <script src="./account.js"></script>
+        <script src="./accountPage.js"></script>
     </body>
 </html>
