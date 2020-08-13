@@ -149,8 +149,7 @@ module.exports = (mongoose) => {
 
     /*  Description: Sets a reference to a battle and prepares the trainer for
      *      battle by setting their active pokemon to be the first in the party
-     *      and resetting all of their party pokemon's currHp to full. Then it
-     *      saves the trainer.
+     *      and resetting all of their party pokemon's currHp to full.
      *  Parameters:
      *      newBattle - the newly created battle object
      */
@@ -158,7 +157,6 @@ module.exports = (mongoose) => {
         this.battle = newBattle._id;
         this.active = 0;
         this.resetAll();
-        this.save();
     };
 
     /*  Description: Returns the pokemon that is at position 'active' in the
@@ -189,8 +187,7 @@ module.exports = (mongoose) => {
     }
 
     /*  Description: Sends out the next pokemon (tries to use only non-fainted
-     *      pokemon first) by setting 'active' to the appropriate pokemon and
-     *      then saving.
+     *      pokemon first) by setting 'active' to the appropriate pokemon.
      *  Parameters: none.
      */
     TrainerSchema.methods.nextPkmn = function() {
@@ -200,14 +197,12 @@ module.exports = (mongoose) => {
 
             if (!(poke.fainted)) {
                 this.active = i;
-                this.save();
                 return poke;
             }
         }
 
         //didn't find a non-fainted pokemon, so set it to the first pokemon
         this.active = 0;
-        this.save();
         return this.party[this.active];
     }
 

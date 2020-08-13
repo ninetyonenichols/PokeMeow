@@ -382,13 +382,16 @@ exports.command = function Command(cmdStr, user, database) {
         DB.battle.create(trainer._id, trainerAIs[i], (battle) => {
             //prepare the trainers for battle
             trainer.setBattle(battle);
-            ai.setBattle(battle);
+            trainer.save();
+            battle.trainer2.setBattle(battle);
+            battle.save();
 
             //populate the battle with the two trainers before sending
             battle.trainer1 = trainer;
 
             //pass the new battle along
-            output.battle = {message: `${ai.name} wants to battle!`, battleData: battle};
+            output.battle = {message: `${battle.trainer2.name}
+                wants to battle!`, battleData: battle};
             callback(null, output);
         });
     }
@@ -477,12 +480,13 @@ exports.command = function Command(cmdStr, user, database) {
 
             //update battle and send
             battle.trainer2 = aiTrnr;
+            battle.save();
             output.battle = {message: msg, battleData: battle};
             callback(null, output);
 
         //if not, have opponent attack the user
         } else {
-            aiTrnr.save();
+            battle.save();
 
             //have opponent attack
             const m = aiPkmn.moves[Math.floor((Math.random() * 2))];
@@ -524,9 +528,8 @@ exports.command = function Command(cmdStr, user, database) {
                     //send out next pokemon
                     userPkmn = userTrnr.nextPkmn();
                     msg += `You sent out: ${userPkmn.name}`;
-                } else {
-                    userTrnr.save();
                 }
+                userTrnr.save();
 
                 //update battle and send
                 battle.trainer1 = userTrnr;
