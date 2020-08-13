@@ -43,13 +43,12 @@ module.exports = (mongoose) => {
         return trainer;
     };
 
-    // Adds a pokemon to this trainer's collection
-    TrainerSchema.methods.addPokemon = function(pkmn) {
-        this.pokemon.push(pkmn);
-        this.save();
-    };
-
-    // Releases a pokemon into the wild
+    /*  Description: Removes the first pokemon whose name matches 'pkmn',
+     *      looking first in the trainer's pokemon, then the party. Returns
+     *      true if a pokemon was removed, false otherwise.
+     *  Parameters:
+     *      pkmn - the name of a pokemon
+     */
     TrainerSchema.methods.release = function(pkmn) {
         for (let i = 0; i < this.pokemon.length; i++) {
             if (this.pokemon[i].name == pkmn) {
@@ -70,7 +69,11 @@ module.exports = (mongoose) => {
         return false;
     }
 
-    // Adds a pokemon to this trainer's party
+    /*  Description: Adds a pokemon from the trainer's pokemon to the party if
+     *      there is room. Returns true if it succeeds, false otherwise.
+     *  Parameters:
+     *      pkmn - the name of a pokemon
+     */
     TrainerSchema.methods.addParty = function(pkmn) {
         for (let i = 0; i < this.pokemon.length; i++) {
             if (this.pokemon[i].name == pkmn) {
@@ -88,7 +91,11 @@ module.exports = (mongoose) => {
         return false;
     };
 
-    // Removes a pokemon from this trainer's party
+    /*  Description: Removes a pokemon from the party and puts it into the
+     *      trainer's pokemon. Returns true on success, false otherwise.
+     *  Parameters:
+     *      pkmn - the name of a pokemon
+     */
     TrainerSchema.methods.removeParty = function(pkmn) {
         for (let i = 0; i < this.party.length; i++) {
             if (this.party[i].name == pkmn) {
@@ -102,15 +109,11 @@ module.exports = (mongoose) => {
         return false;
     };
 
-    // Sets a reference to the battle that this trainer is currently fighting
-    TrainerSchema.methods.setBattle = function(newBattle) {
-        this.battle = newBattle._id;
-        this.active = 0;
-        this.resetAll();
-        this.save();
-    };
-
-    // Adds a pokemon to trainer's party or collection, whichever is appropriate
+    /*  Description: Adds the pokemon in the trainer's encounter property to
+    *      the trainer's party or pokemon, whichever is appropriate. Then it
+    *      saves the trainer.
+    *  Parameters: none.
+    */
     TrainerSchema.methods.add = function() {
         const pkmn = this.encounter;
         if (this.party.length < MAX_PARTY_SIZE) {
@@ -122,21 +125,40 @@ module.exports = (mongoose) => {
         }
     }
 
-    // Sets this trainer's active pokemon
-    TrainerSchema.methods.setActive = function(num) {
-        this.active = num;
+    /*  Description: Sets a reference to a battle and prepares the trainer for
+     *      battle by setting their active pokemon to be the first in the party
+     *      and resetting all of their party pokemon's currHp to full. Then it
+     *      saves the trainer.
+     *  Parameters:
+     *      newBattle - the newly created battle object
+     */
+    TrainerSchema.methods.setBattle = function(newBattle) {
+        this.battle = newBattle._id;
+        this.active = 0;
+        this.resetAll();
         this.save();
-    }
+    };
 
+    /*  Description: Returns the pokemon that is at position 'active' in the
+     *      trainer's party.
+     *  Parameters: none.
+     */
     TrainerSchema.methods.getActive = function() {
         return this.party[this.active];
     }
 
+    /*  Description: Searches the party for the pokemon matching 'name' and
+     *      sets that pokemon to be active if it is not fainted (hp != 0).
+     *      Saves the trainer and returns true on success, false otherwise.
+     *  Parameters:
+     *      name - the name of a pokemon
+     */
     TrainerSchema.methods.switchActive = function(name) {
         for (let i = 0; i < this.party.length; i++) {
             const poke = this.party[i];
             if (poke.name == name && !(poke.fainted)) {
-                this.setActive(i);
+                this.active = i;
+                this.save();
                 return true;
             }
         }
@@ -144,7 +166,11 @@ module.exports = (mongoose) => {
         return false;
     }
 
-    // Sends out the next pokemon (tries to use only non-fainted pokemon first)
+    /*  Description: Sends out the next pokemon (tries to use only non-fainted
+     *      pokemon first) by setting 'active' to the appropriate pokemon and
+     *      then saving.
+     *  Parameters: none.
+     */
     TrainerSchema.methods.nextPkmn = function() {
         let poke;
         for (let i = 0; i < this.party.length; i++) {
@@ -163,14 +189,33 @@ module.exports = (mongoose) => {
         return this.party[this.active];
     }
 
+    /*  Description: Calls pokemon.subtractHp on the active pokemon to subtract
+     *      'dmg' from the pokemon's currHp without dropping below zero.
+     *  Parameters:
+     *      dmg - a number representing the damage to the pokemon
+     */
     TrainerSchema.methods.subtractHp = function(dmg) {
-        this.party[this.active].subtractHp(dmg);
+        this.getActive().subtractHp(dmg);
     }
 
-    // Resets all this trainer's party-pokemon back to full health
+    /*  Description: Resets all this trainer's party-pokemon back to full
+     *      health.
+     *  Parameters: none.
+     */
     TrainerSchema.methods.resetAll = function() {
         this.party.forEach(function(pkmn) { pkmn.resetHp(); });
     }
 
+    /*  Description: Sets the 'photo' property to be a path to a photo 'name'
+     *      in the public_html/img/avatars directory.
+     *  Parameters:
+     *      name - the name of the photo
+     */
+    TrainerSchema.methods.setPhoto = function(name) {
+        this.photo = './img/avatars/' + name;
+        this.save();
+    }
+
+    // Return/Export the Trainer model
     return mongoose.model('Trainer', TrainerSchema);
 };

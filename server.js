@@ -9,6 +9,15 @@ const express = require('express');
 const database = require('./db/db.js');
 const Command = require('./command.js').command;
 const session = require('express-session');
+const multer  = require('multer');
+//setup where to store and what to name the file
+const storage = multer.diskStorage({
+  destination: './public_html/img/avatars/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
 
 // Set up the express server
 const app = express();
@@ -47,6 +56,7 @@ app.use(session({
 app.use('/home.html', authenticate);
 app.use('/account.html', authenticate);
 app.use('/help.html', authenticate);
+app.use('/avatar/', authenticate);
 app.use(/\/command\/.*/, authenticate);
 app.use('/', express.static('public_html'));
 
@@ -91,6 +101,27 @@ app.get('/logout', (req, res) => {
         if (err) console.log('Problem logging out: ' + err);
         console.log('Logged out');
         res.redirect('/');
+    });
+});
+
+
+// Handle a post request to upload an avatar image for the user
+app.post('/avatar/', upload.single('image'), (req, res) => {
+    // req.file is the `image` file
+    //find the user's trainer
+    database.account.getTrainer(req.body.username, (err, trainer) => {
+        if (err) {
+            console.log('Error getting trainer: ' + err);
+            res.json({failed: true});
+
+        } else if (trainer) {
+            //found a trainer, add the image to the trainer
+            trainer.setPhoto(req.file.filename);
+            res.json({failed: false});
+
+        } else {
+            res.json({failed: true});
+        }
     });
 });
 
