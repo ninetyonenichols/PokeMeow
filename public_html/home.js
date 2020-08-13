@@ -7,8 +7,8 @@
  */
 
 //constants
-//const serverURL = 'http://157.245.236.86';
-const serverURL = 'http://64.227.49.233';
+const serverURL = 'http://157.245.236.86';
+//const serverURL = 'http://64.227.49.233';
 var modeURL = '/command/';
 
 createWindows();
@@ -28,7 +28,7 @@ $(document).ready(() => {
 /*  Description: This function submits the command string given by the user to
  *      the server, then it handles the response by possibly changing the
  *      'modeURL' and calling the appropriate functions to display the response.
- *  Parameters: 
+ *  Parameters:
  *      cmd - the name of the command
  */
 function submitCmd(cmd) {
@@ -62,7 +62,7 @@ function submitCmd(cmd) {
 }
 
 /* Description: Dispatches commands when in Main mode
- * Parameters: 
+ * Parameters:
  *     rMain - the 'main' portion of the ajax return-data
  */
 function handleResMain(rMain) {
@@ -74,7 +74,7 @@ function handleResMain(rMain) {
 }
 
 /* Description: Dispatches commands when in Encounter mode
- * Parameters: 
+ * Parameters:
  *     rEnc - the 'encounter' portion of the ajax return-data
  */
 function handleResEnc(rEnc) {
@@ -84,7 +84,7 @@ function handleResEnc(rEnc) {
 }
 
 /* Description: Dispatches commands when in Battle mode
- * Parameters: 
+ * Parameters:
  *     rBtl - the 'battle' portion of the ajax return-data
  */
 function handleResBattle(rBtl) {
@@ -178,12 +178,12 @@ function addMMBtns() {
     partyBtn.on('click', function() { submitCmd('party'); });
     mArea.append(partyBtn);
     mArea.append('<br>');
-    
+
     var storageBtn = $('<input type="button" value="View Storage">');
     storageBtn.on('click', function() { submitCmd('storage'); });
     mArea.append(storageBtn);
     mArea.append('<br>');
-    
+
     var battleBtn = $('<input type="button" value="Battle">');
     battleBtn.on('click', function() { submitCmd('battle'); });
     mArea.append(battleBtn);
@@ -192,7 +192,7 @@ function addMMBtns() {
 
 /* Description: This function prints out the info for one pokemon
  * Parameters:
- *     rEnc - the encounter data from the ajax response 
+ *     rEnc - the encounter data from the ajax response
  */
 function printEncounter(rEnc) {
     var pkmn = rEnc.encPkmn;
@@ -306,7 +306,7 @@ function addPartyBtns(user) {
         bAreaL.append('none');
     } else {
         for (i in party) {
-            if (i != user.active) { 
+            if (i != user.active) {
                 let partyStr = `${party[i].name}`;
                 var switchBtn = $(`<input type="button" value=\"${partyStr}\">`);
                 switchBtn.on('click', function() { submitCmd(`switch ${partyStr}`); });
@@ -344,7 +344,7 @@ function printPkmnArray(rMain) {
     mw.empty();
     mw.prepend(msg);
     addMsg(rMain.message);
-    
+
     var mainBtn = $(`<input type="button" value="Main Menu">`);
     mainBtn.on('click', function() { printMain(); });
     mw.append(mainBtn);
@@ -393,7 +393,7 @@ function printPkmn(pkmn, loc) {
     rbox.append(`${pkmn.moves[0]}<br>`);
     rbox.append(`${pkmn.moves[1]}<br>`);
     rbox.append('<br>');
-    
+
     if (loc == "storage") {
         var addBtn = $(`<input type="button" value="Add to Party">`);
         addBtn.on('click', function() { submitCmd(`add ${pkmn.name}`); });

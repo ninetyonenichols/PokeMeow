@@ -6,8 +6,8 @@
  */
 
 //constants
-//const serverURL = 'http://157.245.236.86';
-const serverURL = 'http://64.227.49.233';
+const serverURL = 'http://157.245.236.86';
+//const serverURL = 'http://64.227.49.233';
 
 
 // Get the user's trainer from the server and display some of it on the page.
