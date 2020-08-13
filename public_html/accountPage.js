@@ -60,8 +60,14 @@ function getTrainer() {
         dataType: "json",
         success: (response) => {
             if (response.trainer) {
-                setupPage(trainer);
+                setupPage(response.trainer);
             } else {
+                setupPage({
+                    name: 'username',
+                    photo: './img/avatars/default.png',
+                    party: [],
+                    pokemon: []
+                });
                 alert('Could not find your trainer info.');
             }
         }
@@ -84,12 +90,13 @@ function setupPage(trainer) {
     $('#numPokemon').text(numPokemon);
 
     //list party pokemon
+    $('#partyList').empty();
     if (trainer.party.length == 0) {
-        $('#partyList').append($('li').text('None'));
+        $('#partyList').append($('<li></li>').text('None'));
         $('#partyList').css('list-style', 'none');
     } else {
         for (let p of trainer.party) {
-            $('#partyList').append($('li').text(p));
+            $('#partyList').append($('<li></li>').text(p.name));
         }
     }
 }
