@@ -165,14 +165,16 @@ function printMain() {
 
 /* Description: This function prints out the info for one pokemon
  * Parameters:
- *     pkmn - the object containing the pokemon's info
+ *     rEnc - the encounter data from the ajax response 
  */
-function printEncounter(pkmn) {
+function printEncounter(rEnc) {
+    var pkmn = rEnc.encPkmn;
+
     // Clearing previous content
     eArea.empty();
 
     // Adding content to DOM elements
-    addMsg(`A wild ${pkmn.name} appeared!`);
+    addMsg(rEnc.message);
     eArea.append(`${pkmn.name}<br>`);
     eArea.append($('<img>', { src: pkmn.sprite, width: '200px',
         alt: `A picture of ${pkmn.name}.` }));

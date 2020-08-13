@@ -308,7 +308,7 @@ exports.command = function Command(cmdStr, user, database) {
                 trainer.save();
 
                 //return the pokemon
-                this.output.encounter = poke;
+                this.output.encounter = {message:`A wild ${poke.name} appeared!`, encPkmn:poke};
                 callback(null, this.output);
             });
         });
@@ -331,7 +331,7 @@ exports.command = function Command(cmdStr, user, database) {
 
                 case "missed":
                     //pokeball missed, continue encounter
-                    this.output.encounter = 'The Pokemon broke free!';
+                    this.output.encounter = {message: 'The Pokemon broke free!', encPkmn:trainer.encounter};
                     break;
 
                 case "ran":
