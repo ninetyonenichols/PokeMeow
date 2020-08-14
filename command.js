@@ -31,7 +31,7 @@ exports.command = function Command(cmdStr, user, database) {
     this.cmd = (cmdStr) => {
         let tmp = cmdStr.split(' ');
         for (let i = 2; i < tmp.length; i++) {
-            tmp[1] += ' ' tmp[i];
+            tmp[1] += ' ' + tmp[i];
         }
         return [tmp[0], tmp[1]];
     }
