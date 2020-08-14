@@ -27,7 +27,7 @@ const trainerAIs = ['Bug Catcher', 'Blue', 'Lorelei', 'Giovanni', 'Lance'];
 exports.command = function Command(cmdStr, user, database) {
     this.db = database;
     this.user = user;
-    this.cmd = cmdStr.split(' ');
+    this.cmd = cmdStr.split(/ (.+)/);
 
     // This is the object that is populated with command output and ultimately
     // sent back to the client. Depending on which properties are populated,
@@ -120,12 +120,8 @@ exports.command = function Command(cmdStr, user, database) {
                 this.execute = this.execMoves;
                 break;
             case 'use':
-                if (this.cmd.length > 1) {
+                if (this.cmd.length == 2) {
                     this.move = this.cmd[1];
-                    //if the move is a two-word move, add the second word
-                    if (this.cmd.length > 2) {
-                        this.move += ' ' + this.cmd[2];
-                    }
                     this.execute = this.execUse;
                     break;
                 }
