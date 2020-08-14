@@ -12,7 +12,7 @@ module.exports = (mongoose) => {
     const PokemonSchema = mongoose.model('Pokemon').schema;
 
     const TrainerSchema = new Schema({
-        name: { type: String, unique: true, required: true },
+        name: { type: String, required: true },
         photo: { type: String, default: './img/avatars/default.png' },
         pokemon: [ PokemonSchema ],
         party: [ PokemonSchema ],
