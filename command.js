@@ -27,7 +27,14 @@ const trainerAIs = ['Bug Catcher', 'Blue', 'Lorelei', 'Giovanni', 'Lance'];
 exports.command = function Command(cmdStr, user, database) {
     this.db = database;
     this.user = user;
-    this.cmd = cmdStr.split(/ (.+)/);
+    //grab the first word, and put the other words if they exist in cmd[1]
+    this.cmd = (cmdStr) => {
+        let tmp = cmdStr.split(' ');
+        for (let i = 2; i < tmp.length; i++) {
+            tmp[1] += ' ' tmp[i];
+        }
+        return [tmp[0], tmp[1]];
+    }
 
     // This is the object that is populated with command output and ultimately
     // sent back to the client. Depending on which properties are populated,
